@@ -1,12 +1,35 @@
 import os
 import re
 import sys
+import distutils.ccompiler as cc
+from distutils.msvccompiler import MSVCCompiler
+from distutils.errors import DistutilsExecError, DistutilsPlatformError, CompileError
 
 from cffi import FFI
 
 from pyvx import __backend_version__
 
 mydir = os.path.dirname(os.path.abspath(__file__))
+
+class MyMSVCCompiler(MSVCCompiler):
+    
+    #def compile(self, *args, **kwargs):
+    #    print("It's me!")
+    #    super().compile(*args, **kwargs)
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.initialize()
+        
+    def preprocess(self, source):
+        try:
+            self.spawn([self.cc, '/E', '/Tc'+source] + ["-I%s" % dir for dir in self.include_dirs])
+        except DistutilsExecError as msg:
+            raise CompileError(msg)
+        
+
+# The following doesn't work because new_compiler() imports the compiler class on-the-fly        
+#distutils.msvccompiler.MSVCCompiler = MyMSVCCompiler
 
 def build(name, openvx_install, default):
     pwd = os.getcwd()
@@ -18,17 +41,39 @@ def build(name, openvx_install, default):
         print("ERROR: Can't find header", hdr)
         exit(-1)
 
-    lib = os.path.join(openvx_install, 'bin', 'libopenvx.so')
-    if not os.path.exists(lib):
-        print("ERROR: Can't find lib", lib)
-        exit(-1)
+    libpaths = [os.path.join(openvx_install, 'bin', name) for name in ['libopenvx.so', 'VisionWorks.dll']]
+    if not any([os.path.exists(lib) for lib in libpaths]):
+        print("Can't find a loadable library implementing OpenVX, tried: {}".format(libpaths))
+        exit(-1)  
+    #if not os.path.exists(lib):
+    #    print("ERROR: Can't find lib", lib)
+    #    exit(-1)
 
+    ffi = FFI()
+    #print(os.environ['ProgramFiles(x86)'])
+    #cc.show_compilers()
+    from distutils.ccompiler import CCompiler, new_compiler
+    dflt_compiler = cc.get_default_compiler(os.name, sys.platform)
+    compiler = MyMSVCCompiler() if dflt_compiler == 'msvc' else new_compiler()
+    print("compiler: {}".format(compiler))
+    compiler.add_include_dir(os.path.join(openvx_install, 'include'))
+    #compiler.compile([hdr])
+    compiler.preprocess(hdr)
+    print("Done")
+    exit(-1)
+
+    
+    
+    
+    
+    
+    
+    
+    
     defs= dict(VX_API_ENTRY='', VX_API_CALL='', VX_CALLBACK='', VX_MAX_KERNEL_NAME='256')
     if os.name == 'nt':
         defs['VX_API_CALL'] = '__stdcall'
         defs['VX_CALLBACK'] = '__stdcall'
-
-    ffi = FFI()
 
     # vx.h
     vx = open(os.path.join(mydir, "cdefs", "vx.h")).read()

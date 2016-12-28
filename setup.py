@@ -43,6 +43,7 @@ Further details are provided in the `Documentation`_
                            'cdefs/vx_nodes.h',
                            'cdefs/vx_types.h',
                            'cdefs/vx_vendors.h',
+                           'cdefs/vxu.h'
                           ]},
     zip_safe=False,
     url='http://pyvx.readthedocs.org',
