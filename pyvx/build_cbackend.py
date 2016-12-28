@@ -4,6 +4,7 @@ import sys
 import distutils.ccompiler as cc
 from distutils.msvccompiler import MSVCCompiler
 from distutils.errors import DistutilsExecError, DistutilsPlatformError, CompileError
+#from tempfile import gettempdir
 
 from cffi import FFI
 
@@ -23,10 +24,40 @@ class MyMSVCCompiler(MSVCCompiler):
         
     def preprocess(self, source):
         try:
-            self.spawn([self.cc, '/E', '/Tc'+source] + ["-I%s" % dir for dir in self.include_dirs])
+            #self.spawn([self.cc, '/E', '/Tc'+source] + ["-I%s" % dir for dir in self.include_dirs])
+            return _popen([self.cc, '/E', '/Tc'+source] + ["-I%s" % dir for dir in self.include_dirs]).read()
         except DistutilsExecError as msg:
             raise CompileError(msg)
         
+
+# Ripped and adapted from distutils/spawn.py
+
+def _popen(cmd, search_path=1, verbose=0, dry_run=0):
+    executable = cmd[0]
+    cmd = _nt_quote_args(cmd)
+    #if search_path:
+    #    # either we find one or it stays the same
+    #    executable = find_executable(executable) or executable
+    #log.info(' '.join([executable] + cmd[1:]))
+    return os.popen(' '.join(cmd))
+
+# Verbatim from distutils/spawn.py
+
+def _nt_quote_args(args):
+    """Quote command-line arguments for DOS/Windows conventions.
+
+    Just wraps every argument which contains blanks in double quotes, and
+    returns a new argument list.
+    """
+    # XXX this doesn't seem very robust to me -- but if the Windows guys
+    # say it'll work, I guess I'll have to accept it.  (What if an arg
+    # contains quotes?  What other magic characters, other than spaces,
+    # have to be escaped?  Is there an escaping mechanism other than
+    # quoting?)
+    for i, arg in enumerate(args):
+        if ' ' in arg:
+            args[i] = '"%s"' % arg
+    return args
 
 # The following doesn't work because new_compiler() imports the compiler class on-the-fly        
 #distutils.msvccompiler.MSVCCompiler = MyMSVCCompiler
@@ -58,8 +89,8 @@ def build(name, openvx_install, default):
     print("compiler: {}".format(compiler))
     compiler.add_include_dir(os.path.join(openvx_install, 'include'))
     #compiler.compile([hdr])
-    compiler.preprocess(hdr)
-    print("Done")
+    code = compiler.preprocess(hdr)
+    print("Code:\n%s" % code)
     exit(-1)
 
     
