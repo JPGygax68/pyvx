@@ -5,6 +5,10 @@ import distutils.ccompiler as cc
 from distutils.msvccompiler import MSVCCompiler
 from distutils.errors import DistutilsExecError, DistutilsPlatformError, CompileError
 #from tempfile import gettempdir
+#from pycparser import preprocess_file #, parse_file
+#from pycparser import parse_file
+from cpip.core import PpLexer, IncludeHandler
+from pycparser.c_parser import CParser
 
 from cffi import FFI
 
@@ -87,22 +91,58 @@ def build(name, openvx_install, default):
     lib = next(lib for lib in ['libopenvx', 'VisionWorks'] 
         if  any(os.path.exists(os.path.join(bindir, lib) + '.'+ext) for ext in ['so', 'dll'])
         and any(os.path.exists(os.path.join(libdir, lib) + '.'+ext) for ext in ['lib', 'a' ]) )
-    print('lib: %s' % lib)
+    print('Found OpenVX library: %s' % lib)
     libs = [lib] + (['vxu'] if lib != 'VisionWorks' else []) 
     print("libs: {}".format(libs))
 
-    if True:
+    ffi = FFI()
+    
+    if False:
         # Parsing the header files may not be necessary after all
-        ffi = FFI()
         #print(os.environ['ProgramFiles(x86)'])
         #cc.show_compilers()
         from distutils.ccompiler import CCompiler, new_compiler
         dflt_compiler = cc.get_default_compiler(os.name, sys.platform)
         compiler = MyMSVCCompiler() if dflt_compiler == 'msvc' else new_compiler()
         #print("compiler: {}".format(compiler))
+        compiler.add_include_dir(os.path.join(mydir, 'fake_libc_include'))
         compiler.add_include_dir(os.path.join(openvx_install, 'include'))
+        # define_macro doesn't appear to work
+        #compiler.define_macro("__pragma(x)", "")
+        #compiler.define_macro("__cdecl", "")
+        #compiler.define_macro("__fastcall", "")
         #compiler.compile([hdr])
         code = compiler.preprocess(hdr)
+        
+    if True:
+        inc_hndlr = IncludeHandler.CppIncludeStdOs([], [incdir, os.path.join(mydir, 'fake_libc_include')])
+        lexer = PpLexer.PpLexer(hdr, inc_hndlr)
+        #for tok in lexer.ppTokens():
+        #    print(tok.t)
+        code = ''.join([tok.t for tok in lexer.ppTokens()])
+        #exit(-1)
+        
+    if False:
+        code = re.subn(r'(^\w*$)+', r'', code, flags=re.MULTILINE)[0]
+        code = re.subn(r'#line\s+.*', r'', code)[0] # Remove #line ... comments
+        code = re.subn(r'__pragma.*', r'', code)[0] # Remove __pragma annotations
+        code = re.subn(r'#pragma.*', r'', code)[0] # Remove __pragma directives
+        code = re.subn(r'\b__cdecl\b', r'', code)[0] # Remove __cdecl
+        code = re.subn(r'\b__stdcall\b', r'', code)[0] # Remove __stdcall
+        code = re.subn(r'\b__declspec\(.*\)', r'', code)[0] # Remove __declspec(...)
+                
+    open("preproc_out.c", "w").write(code)
+
+    if False:
+        parser = CParser()
+        ast = parser.parse(code)
+        print("AST: \n");
+        ast.show()
+        #for child in ast.children():
+        #    child.show()
+        #exit(-1)
+        
+    if False:
         code = re.subn(r'(#line\s+.*)', r'//\1', code)[0] # Remove #line ... comments
         code = re.subn(r'(__pragma.*)', r'//\1', code)[0] # Remove __pragma directives
         code = re.subn(r'(__fastcall)', r'', code)[0] # __fastcall
@@ -110,8 +150,8 @@ def build(name, openvx_install, default):
         code = re.subn(r'(\b__int[^\s]*\b)', r'int...', code)[0]
         #code = re.subn(r'(\b__time32_t\b)', r'...', code)[0]
         #code = re.subn(r'(\b__time64_t\b)', r'...', code)[0]
-        open("preproc_out.c", "w").write(code)
         
+    if True:
         ffi.cdef(code)
         
         ffi.set_source("pyvx.backend.%s" % name, 
