@@ -9,7 +9,11 @@ from cffi import FFI
 
 from pyvx import __backend_version__
 
+from .api_filter import *
+
 mydir = os.path.dirname(os.path.abspath(__file__))
+
+DEFS = {"VX_API_ENTRY": '', "VX_API_CALL": '', "VX_CALLBACK": ''}
 
 def build(name, openvx_install, default):
     pwd = os.getcwd()
@@ -32,37 +36,41 @@ def build(name, openvx_install, default):
     libs = [lib] + (['vxu'] if lib != 'VisionWorks' else []) 
     print("libs: {}".format(libs))
 
+    apifilter = APIFilter([os.path.join(incdir, "VX", "vx.h")], include_dirs = [incdir], ppdefs = DEFS)
+
     ffi = FFI()
     
     if True:
-        # TODO: the following is not necessarily correct - should be extract from include files
-        defs= dict(VX_API_ENTRY='', VX_API_CALL='', VX_CALLBACK='', VX_MAX_KERNEL_NAME='256')
-        if os.name == 'nt':
-            defs['VX_API_CALL'] = '__stdcall'
-            defs['VX_CALLBACK'] = '__stdcall'
 
-        # vx.h
-        if True:
-            vx = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx.h"))
-            #print("vx.h:\n{}".format(vx))
-            ffi.cdef(vx)
+        def get_token(t) -> Token:
+            return DEFS[t.spelling] if t.spelling in DEFS else t.spelling
+            return t
 
-        # vx_vendors.h
-        if True:
-            vendors = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx_vendors.h"))
-            #print("Vendors:\n{}".format(vendors))
-            ffi.cdef(vendors)
+        code = ''
+        for c in apifilter.tu.cursor.get_children():
+            #print("Name: {}, kind: {}".format(c.displayname, c.kind))
+            if c.kind == CursorKind.ENUM_DECL:
+                #defs += "enum %s {\n" % c.displayname
+                #for v in c.get_children():
+                #    defs += "    %s = ...,\n" % v.displayname
+                #defs += "};\n"
+                s = ' '.join([get_token(t) for t in c.get_tokens() if t.kind != TokenKind.COMMENT])
+                code += s + "\n"
+            elif c.kind == CursorKind.TYPEDEF_DECL:
+                #s = ' '.join([get_token(t) for t in c.get_tokens() if t.kind != TokenKind.COMMENT])
+                print(c.displayname)
+                for c in c.get_children():
+                    print("child: %s" % c.displayname)
+                #print(s)
+                code += s + "\n"
+            else:
+                #print("name: %s, kind: %s" % (c.displayname, c.kind))
+                pass
+        exit(-1)
+        print(code)
+        ffi.cdef(code)
+        exit(-1)
 
-        # vx_types.h
-        if True:
-            #types = open(os.path.join(mydir, "cdefs", "vx_types.h")).read()
-            types = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx_types.h"))
-            #for k,v in defs.items():
-            #    types = types.replace(k, v)
-            types = re.subn(r'(#if defined\(EXPERIMENTAL_PLATFORM_SUPPORTS_16_FLOAT\).*#endif)', r'', types, 0, re.DOTALL|re.MULTILINE)[0]
-            #print("vx_types.h:\n%s" % types)
-            ffi.cdef(types)
-        
         # Metadata query declarations
         ffi.cdef('''
             char *_get_FMT_REF(void);
@@ -73,18 +81,58 @@ def build(name, openvx_install, default):
             char *_get_backend_install_path();
         ''')
 
+        #exit(-1)
+        
+    if False:
+        # TODO: the following is not necessarily correct - should be extracted from include files?
+        code= dict(VX_API_ENTRY='', VX_API_CALL='', VX_CALLBACK='', VX_MAX_KERNEL_NAME='256')
+        if os.name == 'nt':
+            code['VX_API_CALL'] = '__stdcall'
+            code['VX_CALLBACK'] = '__stdcall'
+
+        # vx.h
+        if True:
+            vx = open(os.path.join(mydir, "cdefs", "vx.h")).read()
+            #vx = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx.h"))
+            #print("vx.h:\n{}".format(vx))
+            ffi.cdef(vx)
+
+        # vx_vendors.h
+        if True:
+            vendors = open(os.path.join(mydir, "cdefs", "vx_vendors.h")).read()
+            #vendors = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx_vendors.h"))
+            #print("Vendors:\n{}".format(vendors))
+            ffi.cdef(vendors)
+
+        # vx_types.h
+        if True:
+            #types = open(os.path.join(mydir, "cdefs", "vx_types.h")).read()
+            types = get_and_cleanup_header_file("vx_types.h")
+            for k,v in code.items():
+                types = types.replace(k, v)
+            # The following only works because
+            #types = re.subn(r'(#if defined\(EXPERIMENTAL_PLATFORM_SUPPORTS_16_FLOAT\).*?#endif)', 
+            #    r'', types, 0, re.DOTALL|re.MULTILINE)[0]
+            #types = re.subn(r'(typedef)\s+((?:struct\s+)[^\s]+)\s+(.*);', r'\1 ... \3;', types)[0]
+            #typedef vx_action (VX_CALLBACK *vx_nodecomplete_f)(vx_node node);
+            #types = re.subn(r'typedef\s+[^\(]+\([^\*]+\*([^\)]+)\)\s*\([^\)]*\);', r'typedef ... \1;', types)[0]
+            #print("vx_types.h:\n%s" % types)
+            #open(os.path.join(mydir, "pp_vx_types.h"), "w").write(types)
+            ffi.cdef(types)
+        
         # vx_kernels.h
         if False:
             #kernels = open(os.path.join(mydir, "cdefs", "vx_kernels.h")).read()
             kernels = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx_kernels.h"))
-            kernels = re.subn(r'=.*,', r'= ...,', kernels)[0] # Remove specifics from enums
+            #kernels = re.subn(r'=.*,', r'= ...,', kernels)[0] # Remove specifics from enums
+            print("vx_kernels.h\n%s" % kernels)
             ffi.cdef(kernels)
 
         # vx_api.h
         if False:
             #api = open(os.path.join(mydir, "cdefs", "vx_api.h")).read()
             api = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx_api.h"))
-            for k, v in defs.items():
+            for k, v in code.items():
                 api = api.replace(k, v)
             ffi.cdef(api)
 
@@ -92,7 +140,7 @@ def build(name, openvx_install, default):
         if False:
             #nodes = open(os.path.join(mydir, "cdefs", "vx_nodes.h")).read()
             nodes = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx_nodes.h"))
-            for k, v in defs.items():
+            for k, v in code.items():
                 nodes = nodes.replace(k, v)
             ffi.cdef(nodes)
 
@@ -100,7 +148,7 @@ def build(name, openvx_install, default):
         if False:
             #vxu = open(os.path.join(mydir, "cdefs", "vxu.h")).read()
             vxu = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vxu.h"))
-            for k, v in defs.items():
+            for k, v in code.items():
                 vxu = vxu.replace(k, v)
             ffi.cdef(vxu)
 
@@ -147,22 +195,24 @@ def build(name, openvx_install, default):
         print('')
         
 
-_RE_REMOVE_COMMENTS = re.compile(r'//.*?$|/\*.*?\*/|\'(?:\\.|[^\\\'])*\'|"(?:\\.|[^\\"])*"', re.DOTALL|re.MULTILINE)
+#_RE_REMOVE_COMMENTS = re.compile(r'//.*?$|/\*.*?\*/|\'(?:\\.|[^\\\'])*\'|"(?:\\.|[^\\"])*"', re.DOTALL|re.MULTILINE)
+_RE_REMOVE_COMMENTS = re.compile(r'/\*.*?\*/', re.DOTALL|re.MULTILINE)
 
 def get_and_cleanup_header_file(filename):
-    code = open(filename).read()
+    IDENTIFIER = '[_A-Za-z][_A-Za-z0-9]*'
+    FLOAT = '[+-]?[0-9]*(?:\.[0-9]+)[fd]?' # TODO: e...
+    
+    code = open(os.path.join(mydir, "cdefs", filename)).read()
     code = re.subn(_RE_REMOVE_COMMENTS, '', code)[0]
-    code = re.subn(r'(#\s*ifn?def\s+[^\s]+)', r'//\1', code)[0] # Remove preproc conditionals (old style)
-    code = re.subn(r'(#\s*if\s+.*)', r'//\1', code)[0] # Remove preproc conditionals (new style)
-    code = re.subn(r'(#\s*else\b.*)', r'//\1', code)[0] # "
-    code = re.subn(r'(#\s*end\b.*)', r'//\1', code)[0] # "
-    code = re.subn(r'(#\s*include\s+<[^\>]+>)', r'//\1', code)[0] # Remove directives
-    code = re.subn(r'(#\s*endif.*)', r'//\1', code)[0] # Remove directives
-    code = re.subn(r'(#\s*define\s+[^\s]+.*)', r'//\1', code)[0] # Remove all #define's
-    #code = re.subn(r'(#\s*define\s+[^\s]+)\s+[^\s]+.*', r'\1 ...', code)[0] # Remove specifics from #defines
-    #code = re.subn(r'(#\s*define\s+[^\s]+\s*\([^\)]*\)\s.*)', r'//\1', code)[0] # Remove parameterized macros
-    #code = re.subn(r'#\s*(define\s+.*)', r'#\1', code)[0] # remove whitespace between '#' and directive
-    #code = re.subn(r'(extern\s+"C"\s*{)', r'if (1) {', code)[0]
+    #code = re.subn(r'#ifdef\s+__cplusplus\b.*#endif\b', r'', code, 0, re.DOTALL|re.MULTILINE)[0]
+    #code = re.subn(r'(#\s*ifn?def\s+[^\s]+)', r'//\1', code)[0] # Remove preproc conditionals (old style)
+    #code = re.subn(r'(#\s*if\s+.*)', r'//\1', code)[0] # Remove preproc conditionals (new style)
+    #code = re.subn(r'(#\s*else\b.*)', r'//\1', code)[0] # "
+    #code = re.subn(r'(#\s*end\b.*)', r'//\1', code)[0] # "
+    #code = re.subn(r'(#\s*include\s+<[^\>]+>)', r'//\1', code)[0] # Remove directives
+    #code = re.subn(r'(#\s*endif.*)', r'//\1', code)[0] # Remove directives
+    #code = re.subn(r'(#\s*define\s+[^\s]+.*)', r'//\1', code)[0] # Remove all #define's
+    code = re.subn(r'(#\s*define\s+'+IDENTIFIER+'\s+)\((0x[0-9A-Fa-f]+|[0-9]+u?|'+FLOAT+')\)', r'\1\2', code)[0]
     
     return code
 
