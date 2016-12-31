@@ -38,38 +38,15 @@ def build(name, openvx_install, default):
 
     apifilter = APIFilter([os.path.join(incdir, "VX", "vx.h")], include_dirs = [incdir], ppdefs = DEFS)
 
+    #apifilter.dbg_print_all()
+    code = apifilter.apply()
+    print("Filtered header code:\n%s" % code)
+
     ffi = FFI()
+    ffi.cdef(code)
+    exit(-1)
     
     if True:
-
-        def get_token(t) -> Token:
-            return DEFS[t.spelling] if t.spelling in DEFS else t.spelling
-            return t
-
-        code = ''
-        for c in apifilter.tu.cursor.get_children():
-            #print("Name: {}, kind: {}".format(c.displayname, c.kind))
-            if c.kind == CursorKind.ENUM_DECL:
-                #defs += "enum %s {\n" % c.displayname
-                #for v in c.get_children():
-                #    defs += "    %s = ...,\n" % v.displayname
-                #defs += "};\n"
-                s = ' '.join([get_token(t) for t in c.get_tokens() if t.kind != TokenKind.COMMENT])
-                code += s + "\n"
-            elif c.kind == CursorKind.TYPEDEF_DECL:
-                #s = ' '.join([get_token(t) for t in c.get_tokens() if t.kind != TokenKind.COMMENT])
-                print(c.displayname)
-                for c in c.get_children():
-                    print("child: %s" % c.displayname)
-                #print(s)
-                code += s + "\n"
-            else:
-                #print("name: %s, kind: %s" % (c.displayname, c.kind))
-                pass
-        exit(-1)
-        print(code)
-        ffi.cdef(code)
-        exit(-1)
 
         # Metadata query declarations
         ffi.cdef('''

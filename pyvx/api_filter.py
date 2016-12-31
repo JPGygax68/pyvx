@@ -16,3 +16,22 @@ class APIFilter:
         args = ["-I"+incdir for incdir in self.include_dirs]
         args += ["-D%s=%s" % (k,v) for k, v in self.ppdefs.items()]
         self.tu = self.index.parse(filename, args=args)
+
+    def apply(self):
+
+        def filtered_tokens(c: Cursor) -> list:
+            return [
+                self.ppdefs[t.spelling] if t.spelling in self.ppdefs else t.spelling
+                for t in c.get_tokens() if t.kind != TokenKind.COMMENT]
+
+        def reassemble(c: Cursor):
+            return ' '.join(filtered_tokens(c))
+
+        return '\n'.join([reassemble(c) for c in self.tu.cursor.get_children()
+                          if c.spelling[:2].lower() == "vx"])
+
+    def dbg_print_all(self):
+        for c in self.tu.cursor.get_children():
+            if c.spelling[:2].lower() == 'vx':
+                s = ' '.join([t.spelling for t in c.get_tokens() if t.kind != TokenKind.COMMENT])
+                print(s)
