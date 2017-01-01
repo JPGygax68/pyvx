@@ -13,7 +13,7 @@ from .api_filter import *
 
 mydir = os.path.dirname(os.path.abspath(__file__))
 
-DEFS = {"VX_API_ENTRY": '', "VX_API_CALL": '', "VX_CALLBACK": ''}
+DEFS = {"VX_API_ENTRY": '__cdecl', "VX_API_CALL": '__cdecl', "VX_CALLBACK": '__cdecl'}
 
 def build(name, openvx_install, default):
     pwd = os.getcwd()
@@ -41,13 +41,14 @@ def build(name, openvx_install, default):
     #apifilter.dbg_print_all()
     #exit(-1)
     code = apifilter.apply()
+    open(os.path.join(mydir, "cdef.c"), "w").write(code)
+
     print(code)
     #print("Filtered header code:\n%s" % code)
 
     ffi = FFI()
     ffi.cdef(code)
-    exit(-1)
-    
+
     if True:
 
         # Metadata query declarations

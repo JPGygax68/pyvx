@@ -1,3 +1,4 @@
+import re
 from clang.cindex import *
 
 class APIFilter:
@@ -49,28 +50,34 @@ class APIFilter:
                 defs = ["%s = %s" % (c.displayname, c.enum_value) for c in cursor.get_children()]
                 return 'enum %s { %s };' % (cursor.displayname, ', '.join(defs))
             elif cursor.kind == CursorKind.TYPEDEF_DECL:
-                c = [_ for _ in cursor.get_children()] # children
+                ch = [_ for _ in cursor.get_children()] # children
                 utdt = cursor.underlying_typedef_type # type: Type
-                fc = c and c[0] # type:Cursor; first child
+                if utdt.kind == TypeKind.POINTER:
+                    pe = utdt.get_pointee()  # type: Type
+                    if pe.get_canonical().kind == TypeKind.FUNCTIONPROTO:
+                        ca = pe.get_canonical() # type: Type
+                        rt = pe.get_result()  # type: Type
+                        args = ['%s' % var_decl_to_str(_) for _ in ch[1:]]
+                        at = ' '.join(['__'+_ for _ in re.findall(r'__attribute__\(\(([^,\)]+)\)\)', utdt.spelling)])
+                        return 'typedef %s (%s*%s)(%s);' % (rt.spelling, at, cursor.spelling, ', '.join(args))
+                fc = ch and ch[0] # type:Cursor; first child
                 if fc:
                     if fc.kind == CursorKind.STRUCT_DECL:
                         return 'typedef %s %s;' % (struct_or_union_members_to_text('struct', fc), cursor.spelling)
                     elif fc.kind == CursorKind.UNION_DECL:
                         return 'typedef %s %s;' % (struct_or_union_members_to_text('union', fc), cursor.spelling)
-                    elif fc.kind in [CursorKind.TYPE_REF, CursorKind.PARM_DECL]:
-                        if utdt.kind == TypeKind.POINTER:
-                            pe = utdt.get_pointee() # type: Type
-                            # Is this a function ?
-                            ca = pe.get_canonical() # type: Type
-                            rt = pe.get_result() # type: Type
-                            if ca.kind == TypeKind.FUNCTIONPROTO:
-                                args = ['%s' % var_decl_to_str(_) for _ in c[1:]]
-                                return 'typedef %s (*%s)(%s);' % (rt.spelling, cursor.spelling, ', '.join(args))
+                    #elif fc.kind in [CursorKind.TYPE_REF, CursorKind.PARM_DECL]:
                     elif fc.kind == CursorKind.ENUM_DECL:
                         return 'typedef %s %s;' % (utdt.spelling, cursor.spelling)
-                    else:
-                        raise NotImplementedError("unsupported typedef variant")
                 return 'typedef %s %s;' % (utdt.spelling, cursor.spelling)
+            elif cursor.kind == CursorKind.FUNCTION_DECL:
+                rt = cursor.type.get_result()  # type: Type
+                ch = [_ for _ in cursor.get_children()]
+                args = ['%s' % var_decl_to_str(_) for _ in ch[1:]]
+                return '%s %s(%s);' % (rt.spelling, cursor.spelling, ', '.join(args))
+            else:
+                return "/* NOT IMPLEMENTED YET: %s: %s */" % (cursor.spelling, cursor.kind)
+                pass
 
             # TODO (the following is a placeholder)
             return "/* %s: %s */" % (cursor.spelling, cursor.kind)
