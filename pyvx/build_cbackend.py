@@ -39,8 +39,10 @@ def build(name, openvx_install, default):
     apifilter = APIFilter([os.path.join(incdir, "VX", "vx.h")], include_dirs = [incdir], ppdefs = DEFS)
 
     #apifilter.dbg_print_all()
+    #exit(-1)
     code = apifilter.apply()
-    print("Filtered header code:\n%s" % code)
+    print(code)
+    #print("Filtered header code:\n%s" % code)
 
     ffi = FFI()
     ffi.cdef(code)
