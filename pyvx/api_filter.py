@@ -13,7 +13,8 @@ class APIFilter:
 
     def read_header(self, filename):
         args = ["-I"+incdir for incdir in self.include_dirs]
-        args += ["-D%s=%s" % (k,v) for k, v in self.ppdefs.items()]
+        args += ["-D%s%s%s" % (k, '=' if len(v) > 0 else '', v) for k, v in self.ppdefs.items()]
+        #self.tu = self.index.parse(filename, args=args, options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD)
         self.tu = self.index.parse(filename, args=args)
 
     def apply(self):
@@ -29,16 +30,39 @@ class APIFilter:
 
         def node_to_string(cursor: Cursor) -> str:
 
+            ARRAY_KINDS = [TypeKind.CONSTANTARRAY, TypeKind.INCOMPLETEARRAY, TypeKind.VARIABLEARRAY,
+                           TypeKind.DEPENDENTSIZEDARRAY]
+
+            def is_func_ptr_tdef(t: Type) -> bool:
+                """"Pass the underlying_typedef_type of a Cursor here."""
+                #u = node.underlying_typedef_type
+                ca = t.get_canonical() # type: Type
+                return ca.kind == TypeKind.POINTER and ca.get_pointee().get_canonical().kind == TypeKind.FUNCTIONPROTO
+
             def type_name(t: Type) -> str:
-                return t.spelling
+                if True:
+                    # DO NOT CANONICALIZE
+                    if t.kind in ARRAY_KINDS:
+                        return t.element_type.spelling
+                    return t.spelling
+                else:
+                    if is_func_ptr_tdef(t):
+                        return t.spelling
+                    else:
+                        ca = t.get_canonical() # type: Type
+                        if ca.kind in ARRAY_KINDS:
+                            return ca.element_type.spelling
+                        return ca.spelling
 
             def var_decl_to_str(c: Cursor) -> str:
                 t = c.type # type: Type
+                t = t.get_canonical() #
                 if t.kind == TypeKind.INCOMPLETEARRAY:
-                    return '%s %s[]' % (t.element_type.spelling, c.displayname)
+                    return '%s %s[]' % (type_name(c.type), c.displayname)
                 elif t.kind == TypeKind.CONSTANTARRAY:
                     t = c.type # type: Type
-                    return '%s %s[%d]' % (t.element_type.spelling, c.displayname, t.element_count)
+                    return '%s %s[%d]' % (type_name(t), c.displayname, t.element_count)
+                # TODO: other array types (see ARRAY_KINDS definition)
                 else:
                     return '%s %s' % (type_name(c.type), c.displayname)
 
@@ -54,12 +78,13 @@ class APIFilter:
                 utdt = cursor.underlying_typedef_type # type: Type
                 if utdt.kind == TypeKind.POINTER:
                     pe = utdt.get_pointee()  # type: Type
-                    if pe.get_canonical().kind == TypeKind.FUNCTIONPROTO:
-                        ca = pe.get_canonical() # type: Type
+                    ca = pe.get_canonical()  # type: Type
+                    if ca.kind == TypeKind.FUNCTIONPROTO:
                         rt = pe.get_result()  # type: Type
-                        args = ['%s' % var_decl_to_str(_) for _ in ch[1:]]
+                        args = ['%s' % var_decl_to_str(_) for _ in ch[1:]] # 1 if ch[0].kind == CursorKind.TYPE_REF else 0:]]
+                        if ca.is_function_variadic(): args += ['...']
                         at = ' '.join(['__'+_ for _ in re.findall(r'__attribute__\(\(([^,\)]+)\)\)', utdt.spelling)])
-                        return 'typedef %s (%s*%s)(%s);' % (rt.spelling, at, cursor.spelling, ', '.join(args))
+                        return 'typedef %s (%s *%s)(%s);' % (type_name(rt), at, cursor.spelling, ', '.join(args))
                 fc = ch and ch[0] # type:Cursor; first child
                 if fc:
                     if fc.kind == CursorKind.STRUCT_DECL:
@@ -73,8 +98,14 @@ class APIFilter:
             elif cursor.kind == CursorKind.FUNCTION_DECL:
                 rt = cursor.type.get_result()  # type: Type
                 ch = [_ for _ in cursor.get_children()]
-                args = ['%s' % var_decl_to_str(_) for _ in ch[1:]]
+                args = ['%s' % var_decl_to_str(_) for _ in ch[1 if ch[0].kind == CursorKind.TYPE_REF else 0:]]
+                ca = cursor.type.get_canonical() # type: Type
+                if ca.kind == TypeKind.FUNCTIONPROTO and ca.is_function_variadic(): args += ['...']
                 return '%s %s(%s);' % (rt.spelling, cursor.spelling, ', '.join(args))
+            #elif cursor.kind == CursorKind.MACRO_DEFINITION:
+            #    #return "/* IMPLEMENTING NOW: MACRO DEFINITION */"
+            #    #return '#define %s %s' % (cursor.spelling, ''.join([_.spelling for _ in cursor.get_tokens()][:1]))
+            #    return '#define %s ...' % cursor.spelling
             else:
                 return "/* NOT IMPLEMENTED YET: %s: %s */" % (cursor.spelling, cursor.kind)
                 pass

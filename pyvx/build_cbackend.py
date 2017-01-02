@@ -13,7 +13,8 @@ from .api_filter import *
 
 mydir = os.path.dirname(os.path.abspath(__file__))
 
-DEFS = {"VX_API_ENTRY": '__cdecl', "VX_API_CALL": '__cdecl', "VX_CALLBACK": '__cdecl'}
+#DEFS = {"VX_API_ENTRY": '__cdecl', "VX_API_CALL": '__cdecl', "VX_CALLBACK": '__cdecl'}
+DEFS = {"VX_API_ENTRY": '', "VX_API_CALL": '', "VX_CALLBACK": ''}
 
 def build(name, openvx_install, default):
     pwd = os.getcwd()
