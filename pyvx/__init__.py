@@ -5,14 +5,13 @@
 
 __version_info__ = (0, 3, 0)
 __version__ = '.'.join(str(i) for i in __version_info__)
-__backend_version__ = b'1.0.1-2'
+__backend_version__ = b'1.0.1-2' # TODO: probably wrong - should be extracted from header files ?
 
 _default_backend_name = '_default'
 
 import sys
 if sys.version_info > (3,):
     from importlib import reload
-
 
 def use_backend(backend):
     """
