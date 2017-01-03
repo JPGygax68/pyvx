@@ -38,23 +38,25 @@ def build(name, openvx_install, default):
     libs = [lib] + (['vxu'] if lib != 'VisionWorks' else []) 
     print("libs: {}".format(libs))
 
-    apifilter = APIFilter([os.path.join(incdir, "VX", "vx.h")], include_dirs = [incdir], ppdefs = DEFS)
-
-    code = apifilter.apply()
-
-    # FOR DEBUGGING ONLY
-    # open("cdef.c", "w").write(code)
-
-    print("Preprocessor definitions:\n%s" % '\n'.join('%s %s' % (k, v) for k, v in apifilter.ppdefs.items()))
-    # code += '\n' + '\n'.join(["#define %s %s" % (k, v) for k, v in DEFS.items() if re.match(r'[0-9]+', v)])
-    # Remove parentheses and keep only integer definitions
-    code += '\n' + '\n'.join(['#define %s %s' % (k, m[1]) for (k, m) in
-        [(k, re.match(r'^\s*(([0-9]+[uU]?)|(0[xX][0-9a-fA-F]+))\s*$', v.strip('()')))
-         for k, v in apifilter.ppdefs.items()] if m])
-    print("Code:\n%s" % code)
-
     ffi = FFI()
-    ffi.cdef(code)
+
+    vx_file  = os.path.join(incdir, "VX", "vx.h" )
+    vxu_file = os.path.join(incdir, "VX", "vxu.h")
+
+    apifilter = APIFilter([vx_file], r'^(vx[A-Z_]|VX_).*$', include_dirs = [incdir], ppdefs = DEFS)
+    vx_code = apifilter.get_api_declaration()
+    #print("Preprocessor definitions:\n%s" % '\n'.join('%s %s' % (k, v) for k, v in apifilter.ppdefs.items()))
+    #code += '\n' + '\n'.join(["#define %s %s" % (k, v) for k, v in DEFS.items() if re.match(r'[0-9]+', v)])
+    # Remove parentheses and keep only integer definitions
+    vx_code += '\n' + '\n'.join(apifilter.get_simple_macro_definitions())
+    print("vx.h code:\n%s" % vx_code)
+    ffi.cdef(vx_code)
+
+    apifilter = APIFilter([vxu_file], r'^vxu[A-Z_].*$', include_dirs=[incdir], ppdefs = DEFS, include_before=[vx_file])
+    vxu_code = apifilter.get_api_declaration()
+    #vxu_code += '\n' + '\n'.join(apifilter.get_simple_macro_definitions())
+    print("vxu.h code:\n%s" % vxu_code)
+    ffi.cdef(vxu_code)
 
     # Metadata query declarations
     ffi.cdef('''
