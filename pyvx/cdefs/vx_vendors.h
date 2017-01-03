@@ -21,8 +21,8 @@
  * MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
  */
 
-//#ifndef _OPENVX_VENDORS_H_
-//#define _OPENVX_VENDORS_H_
+#ifndef _OPENVX_VENDORS_H_
+#define _OPENVX_VENDORS_H_
 
 /*!
  * \file
@@ -68,5 +68,5 @@ enum vx_vendor_id_e {
     VX_ID_DEFAULT = VX_ID_MAX,
 };
 
-//#endif
+#endif
 

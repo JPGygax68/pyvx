@@ -1,4 +1,5 @@
-from pyvx.backend.sample import ffi, lib
+#from pyvx.backend.sample import ffi, lib
+from pyvx.backend import ffi, lib
 import os
 import re
 
@@ -13,6 +14,8 @@ for n in dir(lib):
 vxu_fd = open(os.path.join('pyvx', '_auto_vxu.py'), 'w')
 vxu_fd.write("from pyvx.backend import lib, ffi\n")
 
+# TODO: use directory of implementation library ?
+# TODO: obtain this data from CLang ?
 api = open("pyvx/cdefs/vx_api.h").read() + open("pyvx/cdefs/vx_nodes.h").read() + open("pyvx/cdefs/vxu.h").read()
 for entry in api.split('/*!'):
     if 'VX_API_ENTRY' not in entry:
@@ -27,10 +30,10 @@ for entry in api.split('/*!'):
     args = [re.split(r'\s+', a.strip())[-1] for a in args.split(',')]
     if args[-1] == '...':
         args.pop()
-    doc = re.sub(r' \*[ \/]?', '', doc)
-    doc = re.subn(r'\\ref\s+', '', doc)[0]
-    doc = re.subn(r'\\([a-z]+)', r':\1:', doc)[0]
-    doc = re.subn(r'<\/?tt>', r'*', doc)[0]
+    doc = re.sub(r' \*[ \/]?', '', doc) # remove comment closure */
+    doc = re.subn(r'\\ref\s+', '', doc)[0] # remove \ref markers
+    doc = re.subn(r'\\([a-z]+)', r':\1:', doc)[0] # re-wrap other markers in colons
+    doc = re.subn(r'<\/?tt>', r'*', doc)[0] # replace "typewriter" tags with asterisks *
     doc = doc.strip()
 
     fullname = re.split(r'\s+', name.strip())[-1]

@@ -13,8 +13,9 @@ from .api_filter import *
 
 mydir = os.path.dirname(os.path.abspath(__file__))
 
-#DEFS = {"VX_API_ENTRY": '__cdecl', "VX_API_CALL": '__cdecl', "VX_CALLBACK": '__cdecl'}
-DEFS = {"VX_API_ENTRY": '', "VX_API_CALL": '', "VX_CALLBACK": ''}
+# TODO: extract VX_MAX_KERNEL_NAME from actual header files
+DEFS = {"VX_API_ENTRY": '', "VX_API_CALL": '__cdecl', "VX_CALLBACK": '__cdecl', "VX_MAX_KERNEL_NAME": '256'}
+#DEFS = {"VX_API_ENTRY": '', "VX_API_CALL": '', "VX_CALLBACK": '', "VX_MAX_KERNEL_NAME": '256'}
 
 def build(name, openvx_install, default):
     pwd = os.getcwd()
@@ -39,163 +40,75 @@ def build(name, openvx_install, default):
 
     apifilter = APIFilter([os.path.join(incdir, "VX", "vx.h")], include_dirs = [incdir], ppdefs = DEFS)
 
-    #apifilter.dbg_print_all()
-    #exit(-1)
     code = apifilter.apply()
-    open(os.path.join(mydir, "cdef.c"), "w").write(code)
 
-    print(code)
-    #print("Filtered header code:\n%s" % code)
+    # FOR DEBUGGING ONLY
+    # open("cdef.c", "w").write(code)
+
+    print("Preprocessor definitions:\n%s" % '\n'.join('%s %s' % (k, v) for k, v in apifilter.ppdefs.items()))
+    # code += '\n' + '\n'.join(["#define %s %s" % (k, v) for k, v in DEFS.items() if re.match(r'[0-9]+', v)])
+    # Remove parentheses and keep only integer definitions
+    code += '\n' + '\n'.join(['#define %s %s' % (k, m[1]) for (k, m) in
+        [(k, re.match(r'^\s*(([0-9]+[uU]?)|(0[xX][0-9a-fA-F]+))\s*$', v.strip('()')))
+         for k, v in apifilter.ppdefs.items()] if m])
+    print("Code:\n%s" % code)
 
     ffi = FFI()
     ffi.cdef(code)
 
-    if True:
+    # Metadata query declarations
+    ffi.cdef('''
+        char *_get_FMT_REF(void);
+        char *_get_FMT_SIZE(void);
+        int _get_KERNEL_BASE(int vendor, int lib);
+        char *_get_backend_version();
+        char *_get_backend_name();
+        char *_get_backend_install_path();
+    ''')
 
-        # Metadata query declarations
-        ffi.cdef('''
-            char *_get_FMT_REF(void);
-            char *_get_FMT_SIZE(void);
-            int _get_KERNEL_BASE(int vendor, int lib);
-            char *_get_backend_version();
-            char *_get_backend_name();
-            char *_get_backend_install_path();
-        ''')
-
-        #exit(-1)
+    #exit(-1)
         
-    if False:
-        # TODO: the following is not necessarily correct - should be extracted from include files?
-        code= dict(VX_API_ENTRY='', VX_API_CALL='', VX_CALLBACK='', VX_MAX_KERNEL_NAME='256')
-        if os.name == 'nt':
-            code['VX_API_CALL'] = '__stdcall'
-            code['VX_CALLBACK'] = '__stdcall'
+    ffi.set_source("pyvx.backend.%s" % name,
+        """
+            #include <VX/vx.h>
+            //#include <VX/vx_compatibility.h>
+            #include <VX/vxu.h>
+            char *_get_FMT_REF(void) {return VX_FMT_REF;}
+            char *_get_FMT_SIZE(void) {return VX_FMT_SIZE;}
+            int _get_KERNEL_BASE(int vendor, int lib) {return VX_KERNEL_BASE(vendor, lib);}
+            char *_get_backend_version() {return "%s";}
+            char *_get_backend_name() {return "%s";}
+            char *_get_backend_install_path() {return "%s";}
+        """ % (__backend_version__.decode("utf8"), name.replace('\\', '\\\\'), openvx_install.replace('\\', '\\\\')),
+       include_dirs=[os.path.join(openvx_install, 'include')],
+       library_dirs=[os.path.join(openvx_install, 'lib')],
+       #extra_link_args=['-Wl,-rpath=' + os.path.abspath(os.path.join(openvx_install, 'bin'))],
+       libraries=libs)
 
-        # vx.h
-        if True:
-            vx = open(os.path.join(mydir, "cdefs", "vx.h")).read()
-            #vx = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx.h"))
-            #print("vx.h:\n{}".format(vx))
-            ffi.cdef(vx)
+    ffi.compile()
 
-        # vx_vendors.h
-        if True:
-            vendors = open(os.path.join(mydir, "cdefs", "vx_vendors.h")).read()
-            #vendors = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx_vendors.h"))
-            #print("Vendors:\n{}".format(vendors))
-            ffi.cdef(vendors)
+    default_file_name = os.path.join('pyvx', 'backend', '_default.py')
+    if default or not os.path.exists(default_file_name):
+        fd = open(default_file_name, 'w')
+        fd.write("from pyvx.backend.%s import ffi, lib\n" % name)
+        fd.close()
 
-        # vx_types.h
-        if True:
-            #types = open(os.path.join(mydir, "cdefs", "vx_types.h")).read()
-            types = get_and_cleanup_header_file("vx_types.h")
-            for k,v in code.items():
-                types = types.replace(k, v)
-            # The following only works because
-            #types = re.subn(r'(#if defined\(EXPERIMENTAL_PLATFORM_SUPPORTS_16_FLOAT\).*?#endif)', 
-            #    r'', types, 0, re.DOTALL|re.MULTILINE)[0]
-            #types = re.subn(r'(typedef)\s+((?:struct\s+)[^\s]+)\s+(.*);', r'\1 ... \3;', types)[0]
-            #typedef vx_action (VX_CALLBACK *vx_nodecomplete_f)(vx_node node);
-            #types = re.subn(r'typedef\s+[^\(]+\([^\*]+\*([^\)]+)\)\s*\([^\)]*\);', r'typedef ... \1;', types)[0]
-            #print("vx_types.h:\n%s" % types)
-            #open(os.path.join(mydir, "pp_vx_types.h"), "w").write(types)
-            ffi.cdef(types)
-        
-        # vx_kernels.h
-        if False:
-            #kernels = open(os.path.join(mydir, "cdefs", "vx_kernels.h")).read()
-            kernels = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx_kernels.h"))
-            #kernels = re.subn(r'=.*,', r'= ...,', kernels)[0] # Remove specifics from enums
-            print("vx_kernels.h\n%s" % kernels)
-            ffi.cdef(kernels)
-
-        # vx_api.h
-        if False:
-            #api = open(os.path.join(mydir, "cdefs", "vx_api.h")).read()
-            api = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx_api.h"))
-            for k, v in code.items():
-                api = api.replace(k, v)
-            ffi.cdef(api)
-
-        # vx_nodes.h
-        if False:
-            #nodes = open(os.path.join(mydir, "cdefs", "vx_nodes.h")).read()
-            nodes = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vx_nodes.h"))
-            for k, v in code.items():
-                nodes = nodes.replace(k, v)
-            ffi.cdef(nodes)
-
-        # vxu.h
-        if False:
-            #vxu = open(os.path.join(mydir, "cdefs", "vxu.h")).read()
-            vxu = get_and_cleanup_header_file(os.path.join(incdir, "VX", "vxu.h"))
-            for k, v in code.items():
-                vxu = vxu.replace(k, v)
-            ffi.cdef(vxu)
-
-    if True:
-        ffi.set_source("pyvx.backend.%s" % name, 
-            """
-                #include <VX/vx.h>
-                //#include <VX/vx_compatibility.h>
-                #include <VX/vxu.h>
-                char *_get_FMT_REF(void) {return VX_FMT_REF;}
-                char *_get_FMT_SIZE(void) {return VX_FMT_SIZE;}
-                int _get_KERNEL_BASE(int vendor, int lib) {return VX_KERNEL_BASE(vendor, lib);}
-                char *_get_backend_version() {return "%s";}
-                char *_get_backend_name() {return "%s";}
-                char *_get_backend_install_path() {return "%s";}
-            """ % (__backend_version__.decode("utf8"), name.replace('\\', '\\\\'), openvx_install.replace('\\', '\\\\')),
-           include_dirs=[os.path.join(openvx_install, 'include')],
-           library_dirs=[os.path.join(openvx_install, 'lib')],
-           #extra_link_args=['-Wl,-rpath=' + os.path.abspath(os.path.join(openvx_install, 'bin'))],
-           libraries=libs)
-        
-        ffi.compile()
-        
-        default_file_name = os.path.join('pyvx', 'backend', '_default.py')
-        if default or not os.path.exists(default_file_name):
-            fd = open(default_file_name, 'w')
-            fd.write("from pyvx.backend.%s import ffi, lib\n" % name)
-            fd.close()
-
-            import pyvx.backend as backend
-            assert backend.ffi.string(backend.lib._get_backend_version()) == __backend_version__
-            assert backend.ffi.string(backend.lib._get_backend_name()).decode("utf8") == name
-            assert backend.ffi.string(backend.lib._get_backend_install_path()).decode("utf8") == openvx_install
-
-        names = {}
-        exec("import pyvx.backend.%s as backend" % name, names)
-        backend = names['backend']
+        import pyvx.backend as backend
         assert backend.ffi.string(backend.lib._get_backend_version()) == __backend_version__
         assert backend.ffi.string(backend.lib._get_backend_name()).decode("utf8") == name
         assert backend.ffi.string(backend.lib._get_backend_install_path()).decode("utf8") == openvx_install
 
-        print('')
-        print("Successfully built backend pyvx.backend.%s in %s" % (name, mydir))
-        print('')
+    names = {}
+    exec("import pyvx.backend.%s as backend" % name, names)
+    backend = names['backend']
+    assert backend.ffi.string(backend.lib._get_backend_version()) == __backend_version__
+    assert backend.ffi.string(backend.lib._get_backend_name()).decode("utf8") == name
+    assert backend.ffi.string(backend.lib._get_backend_install_path()).decode("utf8") == openvx_install
+
+    print('')
+    print("Successfully built backend pyvx.backend.%s in %s" % (name, mydir))
+    print('')
         
-
-#_RE_REMOVE_COMMENTS = re.compile(r'//.*?$|/\*.*?\*/|\'(?:\\.|[^\\\'])*\'|"(?:\\.|[^\\"])*"', re.DOTALL|re.MULTILINE)
-_RE_REMOVE_COMMENTS = re.compile(r'/\*.*?\*/', re.DOTALL|re.MULTILINE)
-
-def get_and_cleanup_header_file(filename):
-    IDENTIFIER = '[_A-Za-z][_A-Za-z0-9]*'
-    FLOAT = '[+-]?[0-9]*(?:\.[0-9]+)[fd]?' # TODO: e...
-    
-    code = open(os.path.join(mydir, "cdefs", filename)).read()
-    code = re.subn(_RE_REMOVE_COMMENTS, '', code)[0]
-    #code = re.subn(r'#ifdef\s+__cplusplus\b.*#endif\b', r'', code, 0, re.DOTALL|re.MULTILINE)[0]
-    #code = re.subn(r'(#\s*ifn?def\s+[^\s]+)', r'//\1', code)[0] # Remove preproc conditionals (old style)
-    #code = re.subn(r'(#\s*if\s+.*)', r'//\1', code)[0] # Remove preproc conditionals (new style)
-    #code = re.subn(r'(#\s*else\b.*)', r'//\1', code)[0] # "
-    #code = re.subn(r'(#\s*end\b.*)', r'//\1', code)[0] # "
-    #code = re.subn(r'(#\s*include\s+<[^\>]+>)', r'//\1', code)[0] # Remove directives
-    #code = re.subn(r'(#\s*endif.*)', r'//\1', code)[0] # Remove directives
-    #code = re.subn(r'(#\s*define\s+[^\s]+.*)', r'//\1', code)[0] # Remove all #define's
-    code = re.subn(r'(#\s*define\s+'+IDENTIFIER+'\s+)\((0x[0-9A-Fa-f]+|[0-9]+u?|'+FLOAT+')\)', r'\1\2', code)[0]
-    
-    return code
 
 if __name__ == '__main__':
     args = sys.argv[1:]

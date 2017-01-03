@@ -1,15 +1,17 @@
 from pyvx.backend import lib, ffi
 ACTION_ABANDON = lib.VX_ACTION_ABANDON
 ACTION_CONTINUE = lib.VX_ACTION_CONTINUE
-ARRAY_ATTRIBUTE_CAPACITY = lib.VX_ARRAY_ATTRIBUTE_CAPACITY
-ARRAY_ATTRIBUTE_ITEMSIZE = lib.VX_ARRAY_ATTRIBUTE_ITEMSIZE
-ARRAY_ATTRIBUTE_ITEMTYPE = lib.VX_ARRAY_ATTRIBUTE_ITEMTYPE
-ARRAY_ATTRIBUTE_NUMITEMS = lib.VX_ARRAY_ATTRIBUTE_NUMITEMS
+ARRAY_CAPACITY = lib.VX_ARRAY_CAPACITY
+ARRAY_ITEMSIZE = lib.VX_ARRAY_ITEMSIZE
+ARRAY_ITEMTYPE = lib.VX_ARRAY_ITEMTYPE
+ARRAY_NUMITEMS = lib.VX_ARRAY_NUMITEMS
 ATTRIBUTE_ID_MASK = lib.VX_ATTRIBUTE_ID_MASK
 BIDIRECTIONAL = lib.VX_BIDIRECTIONAL
-BORDER_MODE_CONSTANT = lib.VX_BORDER_MODE_CONSTANT
-BORDER_MODE_REPLICATE = lib.VX_BORDER_MODE_REPLICATE
-BORDER_MODE_UNDEFINED = lib.VX_BORDER_MODE_UNDEFINED
+BORDER_CONSTANT = lib.VX_BORDER_CONSTANT
+BORDER_POLICY_DEFAULT_TO_UNDEFINED = lib.VX_BORDER_POLICY_DEFAULT_TO_UNDEFINED
+BORDER_POLICY_RETURN_ERROR = lib.VX_BORDER_POLICY_RETURN_ERROR
+BORDER_REPLICATE = lib.VX_BORDER_REPLICATE
+BORDER_UNDEFINED = lib.VX_BORDER_UNDEFINED
 CHANNEL_0 = lib.VX_CHANNEL_0
 CHANNEL_1 = lib.VX_CHANNEL_1
 CHANNEL_2 = lib.VX_CHANNEL_2
@@ -28,26 +30,28 @@ COLOR_SPACE_BT601_625 = lib.VX_COLOR_SPACE_BT601_625
 COLOR_SPACE_BT709 = lib.VX_COLOR_SPACE_BT709
 COLOR_SPACE_DEFAULT = lib.VX_COLOR_SPACE_DEFAULT
 COLOR_SPACE_NONE = lib.VX_COLOR_SPACE_NONE
-CONTEXT_ATTRIBUTE_CONVOLUTION_MAXIMUM_DIMENSION = lib.VX_CONTEXT_ATTRIBUTE_CONVOLUTION_MAXIMUM_DIMENSION
-CONTEXT_ATTRIBUTE_EXTENSIONS = lib.VX_CONTEXT_ATTRIBUTE_EXTENSIONS
-CONTEXT_ATTRIBUTE_EXTENSIONS_SIZE = lib.VX_CONTEXT_ATTRIBUTE_EXTENSIONS_SIZE
-CONTEXT_ATTRIBUTE_IMMEDIATE_BORDER_MODE = lib.VX_CONTEXT_ATTRIBUTE_IMMEDIATE_BORDER_MODE
-CONTEXT_ATTRIBUTE_IMPLEMENTATION = lib.VX_CONTEXT_ATTRIBUTE_IMPLEMENTATION
-CONTEXT_ATTRIBUTE_MODULES = lib.VX_CONTEXT_ATTRIBUTE_MODULES
-CONTEXT_ATTRIBUTE_OPTICAL_FLOW_WINDOW_MAXIMUM_DIMENSION = lib.VX_CONTEXT_ATTRIBUTE_OPTICAL_FLOW_WINDOW_MAXIMUM_DIMENSION
-CONTEXT_ATTRIBUTE_REFERENCES = lib.VX_CONTEXT_ATTRIBUTE_REFERENCES
-CONTEXT_ATTRIBUTE_UNIQUE_KERNELS = lib.VX_CONTEXT_ATTRIBUTE_UNIQUE_KERNELS
-CONTEXT_ATTRIBUTE_UNIQUE_KERNEL_TABLE = lib.VX_CONTEXT_ATTRIBUTE_UNIQUE_KERNEL_TABLE
-CONTEXT_ATTRIBUTE_VENDOR_ID = lib.VX_CONTEXT_ATTRIBUTE_VENDOR_ID
-CONTEXT_ATTRIBUTE_VERSION = lib.VX_CONTEXT_ATTRIBUTE_VERSION
+CONTEXT_CONVOLUTION_MAX_DIMENSION = lib.VX_CONTEXT_CONVOLUTION_MAX_DIMENSION
+CONTEXT_EXTENSIONS = lib.VX_CONTEXT_EXTENSIONS
+CONTEXT_EXTENSIONS_SIZE = lib.VX_CONTEXT_EXTENSIONS_SIZE
+CONTEXT_IMMEDIATE_BORDER = lib.VX_CONTEXT_IMMEDIATE_BORDER
+CONTEXT_IMMEDIATE_BORDER_POLICY = lib.VX_CONTEXT_IMMEDIATE_BORDER_POLICY
+CONTEXT_IMPLEMENTATION = lib.VX_CONTEXT_IMPLEMENTATION
+CONTEXT_MODULES = lib.VX_CONTEXT_MODULES
+CONTEXT_NONLINEAR_MAX_DIMENSION = lib.VX_CONTEXT_NONLINEAR_MAX_DIMENSION
+CONTEXT_OPTICAL_FLOW_MAX_WINDOW_DIMENSION = lib.VX_CONTEXT_OPTICAL_FLOW_MAX_WINDOW_DIMENSION
+CONTEXT_REFERENCES = lib.VX_CONTEXT_REFERENCES
+CONTEXT_UNIQUE_KERNELS = lib.VX_CONTEXT_UNIQUE_KERNELS
+CONTEXT_UNIQUE_KERNEL_TABLE = lib.VX_CONTEXT_UNIQUE_KERNEL_TABLE
+CONTEXT_VENDOR_ID = lib.VX_CONTEXT_VENDOR_ID
+CONTEXT_VERSION = lib.VX_CONTEXT_VERSION
 CONVERT_POLICY_SATURATE = lib.VX_CONVERT_POLICY_SATURATE
 CONVERT_POLICY_WRAP = lib.VX_CONVERT_POLICY_WRAP
-CONVOLUTION_ATTRIBUTE_COLUMNS = lib.VX_CONVOLUTION_ATTRIBUTE_COLUMNS
-CONVOLUTION_ATTRIBUTE_ROWS = lib.VX_CONVOLUTION_ATTRIBUTE_ROWS
-CONVOLUTION_ATTRIBUTE_SCALE = lib.VX_CONVOLUTION_ATTRIBUTE_SCALE
-CONVOLUTION_ATTRIBUTE_SIZE = lib.VX_CONVOLUTION_ATTRIBUTE_SIZE
-DELAY_ATTRIBUTE_SLOTS = lib.VX_DELAY_ATTRIBUTE_SLOTS
-DELAY_ATTRIBUTE_TYPE = lib.VX_DELAY_ATTRIBUTE_TYPE
+CONVOLUTION_COLUMNS = lib.VX_CONVOLUTION_COLUMNS
+CONVOLUTION_ROWS = lib.VX_CONVOLUTION_ROWS
+CONVOLUTION_SCALE = lib.VX_CONVOLUTION_SCALE
+CONVOLUTION_SIZE = lib.VX_CONVOLUTION_SIZE
+DELAY_SLOTS = lib.VX_DELAY_SLOTS
+DELAY_TYPE = lib.VX_DELAY_TYPE
 DF_IMAGE_IYUV = lib.VX_DF_IMAGE_IYUV
 DF_IMAGE_NV12 = lib.VX_DF_IMAGE_NV12
 DF_IMAGE_NV21 = lib.VX_DF_IMAGE_NV21
@@ -63,16 +67,19 @@ DF_IMAGE_VIRT = lib.VX_DF_IMAGE_VIRT
 DF_IMAGE_YUV4 = lib.VX_DF_IMAGE_YUV4
 DF_IMAGE_YUYV = lib.VX_DF_IMAGE_YUYV
 DIRECTIVE_DISABLE_LOGGING = lib.VX_DIRECTIVE_DISABLE_LOGGING
+DIRECTIVE_DISABLE_PERFORMANCE = lib.VX_DIRECTIVE_DISABLE_PERFORMANCE
 DIRECTIVE_ENABLE_LOGGING = lib.VX_DIRECTIVE_ENABLE_LOGGING
-DISTRIBUTION_ATTRIBUTE_BINS = lib.VX_DISTRIBUTION_ATTRIBUTE_BINS
-DISTRIBUTION_ATTRIBUTE_DIMENSIONS = lib.VX_DISTRIBUTION_ATTRIBUTE_DIMENSIONS
-DISTRIBUTION_ATTRIBUTE_OFFSET = lib.VX_DISTRIBUTION_ATTRIBUTE_OFFSET
-DISTRIBUTION_ATTRIBUTE_RANGE = lib.VX_DISTRIBUTION_ATTRIBUTE_RANGE
-DISTRIBUTION_ATTRIBUTE_SIZE = lib.VX_DISTRIBUTION_ATTRIBUTE_SIZE
-DISTRIBUTION_ATTRIBUTE_WINDOW = lib.VX_DISTRIBUTION_ATTRIBUTE_WINDOW
+DIRECTIVE_ENABLE_PERFORMANCE = lib.VX_DIRECTIVE_ENABLE_PERFORMANCE
+DISTRIBUTION_BINS = lib.VX_DISTRIBUTION_BINS
+DISTRIBUTION_DIMENSIONS = lib.VX_DISTRIBUTION_DIMENSIONS
+DISTRIBUTION_OFFSET = lib.VX_DISTRIBUTION_OFFSET
+DISTRIBUTION_RANGE = lib.VX_DISTRIBUTION_RANGE
+DISTRIBUTION_SIZE = lib.VX_DISTRIBUTION_SIZE
+DISTRIBUTION_WINDOW = lib.VX_DISTRIBUTION_WINDOW
 ENUM_ACCESSOR = lib.VX_ENUM_ACCESSOR
 ENUM_ACTION = lib.VX_ENUM_ACTION
-ENUM_BORDER_MODE = lib.VX_ENUM_BORDER_MODE
+ENUM_BORDER = lib.VX_ENUM_BORDER
+ENUM_BORDER_POLICY = lib.VX_ENUM_BORDER_POLICY
 ENUM_CHANNEL = lib.VX_ENUM_CHANNEL
 ENUM_COLOR_RANGE = lib.VX_ENUM_COLOR_RANGE
 ENUM_COLOR_SPACE = lib.VX_ENUM_COLOR_SPACE
@@ -80,14 +87,18 @@ ENUM_COMPARISON = lib.VX_ENUM_COMPARISON
 ENUM_CONVERT_POLICY = lib.VX_ENUM_CONVERT_POLICY
 ENUM_DIRECTION = lib.VX_ENUM_DIRECTION
 ENUM_DIRECTIVE = lib.VX_ENUM_DIRECTIVE
+ENUM_GRAPH_STATE = lib.VX_ENUM_GRAPH_STATE
 ENUM_HINT = lib.VX_ENUM_HINT
-ENUM_IMPORT_MEM = lib.VX_ENUM_IMPORT_MEM
 ENUM_INTERPOLATION = lib.VX_ENUM_INTERPOLATION
 ENUM_MASK = lib.VX_ENUM_MASK
+ENUM_MEMORY_TYPE = lib.VX_ENUM_MEMORY_TYPE
+ENUM_NONLINEAR = lib.VX_ENUM_NONLINEAR
 ENUM_NORM_TYPE = lib.VX_ENUM_NORM_TYPE
 ENUM_OVERFLOW = lib.VX_ENUM_OVERFLOW
 ENUM_PARAMETER_STATE = lib.VX_ENUM_PARAMETER_STATE
+ENUM_PATTERN = lib.VX_ENUM_PATTERN
 ENUM_ROUND_POLICY = lib.VX_ENUM_ROUND_POLICY
+ENUM_TARGET = lib.VX_ENUM_TARGET
 ENUM_TERM_CRITERIA = lib.VX_ENUM_TERM_CRITERIA
 ENUM_THRESHOLD_TYPE = lib.VX_ENUM_THRESHOLD_TYPE
 ENUM_TYPE_MASK = lib.VX_ENUM_TYPE_MASK
@@ -115,20 +126,28 @@ ERROR_NO_RESOURCES = lib.VX_ERROR_NO_RESOURCES
 ERROR_OPTIMIZED_AWAY = lib.VX_ERROR_OPTIMIZED_AWAY
 ERROR_REFERENCE_NONZERO = lib.VX_ERROR_REFERENCE_NONZERO
 FAILURE = lib.VX_FAILURE
-GRAPH_ATTRIBUTE_NUMNODES = lib.VX_GRAPH_ATTRIBUTE_NUMNODES
-GRAPH_ATTRIBUTE_NUMPARAMETERS = lib.VX_GRAPH_ATTRIBUTE_NUMPARAMETERS
-GRAPH_ATTRIBUTE_PERFORMANCE = lib.VX_GRAPH_ATTRIBUTE_PERFORMANCE
-GRAPH_ATTRIBUTE_STATUS = lib.VX_GRAPH_ATTRIBUTE_STATUS
-HINT_SERIALIZE = lib.VX_HINT_SERIALIZE
+GRAPH_NUMNODES = lib.VX_GRAPH_NUMNODES
+GRAPH_NUMPARAMETERS = lib.VX_GRAPH_NUMPARAMETERS
+GRAPH_PERFORMANCE = lib.VX_GRAPH_PERFORMANCE
+GRAPH_STATE = lib.VX_GRAPH_STATE
+GRAPH_STATE_ABANDONED = lib.VX_GRAPH_STATE_ABANDONED
+GRAPH_STATE_COMPLETED = lib.VX_GRAPH_STATE_COMPLETED
+GRAPH_STATE_RUNNING = lib.VX_GRAPH_STATE_RUNNING
+GRAPH_STATE_UNVERIFIED = lib.VX_GRAPH_STATE_UNVERIFIED
+GRAPH_STATE_VERIFIED = lib.VX_GRAPH_STATE_VERIFIED
+HINT_PERFORMANCE_DEFAULT = lib.VX_HINT_PERFORMANCE_DEFAULT
+HINT_PERFORMANCE_HIGH_SPEED = lib.VX_HINT_PERFORMANCE_HIGH_SPEED
+HINT_PERFORMANCE_LOW_POWER = lib.VX_HINT_PERFORMANCE_LOW_POWER
 ID_AMD = lib.VX_ID_AMD
 ID_ARM = lib.VX_ID_ARM
 ID_AXIS = lib.VX_ID_AXIS
 ID_BDTI = lib.VX_ID_BDTI
 ID_BROADCOM = lib.VX_ID_BROADCOM
+ID_CADENCE = lib.VX_ID_CADENCE
 ID_CEVA = lib.VX_ID_CEVA
-ID_COGNIVUE = lib.VX_ID_COGNIVUE
 ID_DEFAULT = lib.VX_ID_DEFAULT
 ID_FREESCALE = lib.VX_ID_FREESCALE
+ID_HUAWEI = lib.VX_ID_HUAWEI
 ID_IMAGINATION = lib.VX_ID_IMAGINATION
 ID_INTEL = lib.VX_ID_INTEL
 ID_ITSEEZ = lib.VX_ID_ITSEEZ
@@ -138,39 +157,35 @@ ID_MAX = lib.VX_ID_MAX
 ID_MEDIATEK = lib.VX_ID_MEDIATEK
 ID_MOVIDIUS = lib.VX_ID_MOVIDIUS
 ID_NVIDIA = lib.VX_ID_NVIDIA
+ID_NXP = lib.VX_ID_NXP
 ID_QUALCOMM = lib.VX_ID_QUALCOMM
 ID_RENESAS = lib.VX_ID_RENESAS
 ID_SAMSUNG = lib.VX_ID_SAMSUNG
 ID_ST = lib.VX_ID_ST
 ID_SYNOPSYS = lib.VX_ID_SYNOPSYS
 ID_TI = lib.VX_ID_TI
+ID_USER = lib.VX_ID_USER
 ID_VIDEANTIS = lib.VX_ID_VIDEANTIS
 ID_VIVANTE = lib.VX_ID_VIVANTE
 ID_XILINX = lib.VX_ID_XILINX
-IMAGE_ATTRIBUTE_FORMAT = lib.VX_IMAGE_ATTRIBUTE_FORMAT
-IMAGE_ATTRIBUTE_HEIGHT = lib.VX_IMAGE_ATTRIBUTE_HEIGHT
-IMAGE_ATTRIBUTE_PLANES = lib.VX_IMAGE_ATTRIBUTE_PLANES
-IMAGE_ATTRIBUTE_RANGE = lib.VX_IMAGE_ATTRIBUTE_RANGE
-IMAGE_ATTRIBUTE_SIZE = lib.VX_IMAGE_ATTRIBUTE_SIZE
-IMAGE_ATTRIBUTE_SPACE = lib.VX_IMAGE_ATTRIBUTE_SPACE
-IMAGE_ATTRIBUTE_WIDTH = lib.VX_IMAGE_ATTRIBUTE_WIDTH
-IMPORT_TYPE_HOST = lib.VX_IMPORT_TYPE_HOST
-IMPORT_TYPE_NONE = lib.VX_IMPORT_TYPE_NONE
+IMAGE_FORMAT = lib.VX_IMAGE_FORMAT
+IMAGE_HEIGHT = lib.VX_IMAGE_HEIGHT
+IMAGE_MEMORY_TYPE = lib.VX_IMAGE_MEMORY_TYPE
+IMAGE_PLANES = lib.VX_IMAGE_PLANES
+IMAGE_RANGE = lib.VX_IMAGE_RANGE
+IMAGE_SIZE = lib.VX_IMAGE_SIZE
+IMAGE_SPACE = lib.VX_IMAGE_SPACE
+IMAGE_WIDTH = lib.VX_IMAGE_WIDTH
 INPUT = lib.VX_INPUT
-INTERPOLATION_TYPE_AREA = lib.VX_INTERPOLATION_TYPE_AREA
-INTERPOLATION_TYPE_BILINEAR = lib.VX_INTERPOLATION_TYPE_BILINEAR
-INTERPOLATION_TYPE_NEAREST_NEIGHBOR = lib.VX_INTERPOLATION_TYPE_NEAREST_NEIGHBOR
+INTERPOLATION_AREA = lib.VX_INTERPOLATION_AREA
+INTERPOLATION_BILINEAR = lib.VX_INTERPOLATION_BILINEAR
+INTERPOLATION_NEAREST_NEIGHBOR = lib.VX_INTERPOLATION_NEAREST_NEIGHBOR
 KERNEL_ABSDIFF = lib.VX_KERNEL_ABSDIFF
 KERNEL_ACCUMULATE = lib.VX_KERNEL_ACCUMULATE
 KERNEL_ACCUMULATE_SQUARE = lib.VX_KERNEL_ACCUMULATE_SQUARE
 KERNEL_ACCUMULATE_WEIGHTED = lib.VX_KERNEL_ACCUMULATE_WEIGHTED
 KERNEL_ADD = lib.VX_KERNEL_ADD
 KERNEL_AND = lib.VX_KERNEL_AND
-KERNEL_ATTRIBUTE_ENUM = lib.VX_KERNEL_ATTRIBUTE_ENUM
-KERNEL_ATTRIBUTE_LOCAL_DATA_PTR = lib.VX_KERNEL_ATTRIBUTE_LOCAL_DATA_PTR
-KERNEL_ATTRIBUTE_LOCAL_DATA_SIZE = lib.VX_KERNEL_ATTRIBUTE_LOCAL_DATA_SIZE
-KERNEL_ATTRIBUTE_NAME = lib.VX_KERNEL_ATTRIBUTE_NAME
-KERNEL_ATTRIBUTE_PARAMETERS = lib.VX_KERNEL_ATTRIBUTE_PARAMETERS
 KERNEL_BOX_3x3 = lib.VX_KERNEL_BOX_3x3
 KERNEL_CANNY_EDGE_DETECTOR = lib.VX_KERNEL_CANNY_EDGE_DETECTOR
 KERNEL_CHANNEL_COMBINE = lib.VX_KERNEL_CHANNEL_COMBINE
@@ -179,6 +194,7 @@ KERNEL_COLOR_CONVERT = lib.VX_KERNEL_COLOR_CONVERT
 KERNEL_CONVERTDEPTH = lib.VX_KERNEL_CONVERTDEPTH
 KERNEL_CUSTOM_CONVOLUTION = lib.VX_KERNEL_CUSTOM_CONVOLUTION
 KERNEL_DILATE_3x3 = lib.VX_KERNEL_DILATE_3x3
+KERNEL_ENUM = lib.VX_KERNEL_ENUM
 KERNEL_EQUALIZE_HISTOGRAM = lib.VX_KERNEL_EQUALIZE_HISTOGRAM
 KERNEL_ERODE_3x3 = lib.VX_KERNEL_ERODE_3x3
 KERNEL_FAST_CORNERS = lib.VX_KERNEL_FAST_CORNERS
@@ -188,7 +204,9 @@ KERNEL_HALFSCALE_GAUSSIAN = lib.VX_KERNEL_HALFSCALE_GAUSSIAN
 KERNEL_HARRIS_CORNERS = lib.VX_KERNEL_HARRIS_CORNERS
 KERNEL_HISTOGRAM = lib.VX_KERNEL_HISTOGRAM
 KERNEL_INTEGRAL_IMAGE = lib.VX_KERNEL_INTEGRAL_IMAGE
-KERNEL_INVALID = lib.VX_KERNEL_INVALID
+KERNEL_LAPLACIAN_PYRAMID = lib.VX_KERNEL_LAPLACIAN_PYRAMID
+KERNEL_LAPLACIAN_RECONSTRUCT = lib.VX_KERNEL_LAPLACIAN_RECONSTRUCT
+KERNEL_LOCAL_DATA_SIZE = lib.VX_KERNEL_LOCAL_DATA_SIZE
 KERNEL_MAGNITUDE = lib.VX_KERNEL_MAGNITUDE
 KERNEL_MASK = lib.VX_KERNEL_MASK
 KERNEL_MAX_1_0 = lib.VX_KERNEL_MAX_1_0
@@ -196,9 +214,12 @@ KERNEL_MEAN_STDDEV = lib.VX_KERNEL_MEAN_STDDEV
 KERNEL_MEDIAN_3x3 = lib.VX_KERNEL_MEDIAN_3x3
 KERNEL_MINMAXLOC = lib.VX_KERNEL_MINMAXLOC
 KERNEL_MULTIPLY = lib.VX_KERNEL_MULTIPLY
+KERNEL_NAME = lib.VX_KERNEL_NAME
+KERNEL_NON_LINEAR_FILTER = lib.VX_KERNEL_NON_LINEAR_FILTER
 KERNEL_NOT = lib.VX_KERNEL_NOT
 KERNEL_OPTICAL_FLOW_PYR_LK = lib.VX_KERNEL_OPTICAL_FLOW_PYR_LK
 KERNEL_OR = lib.VX_KERNEL_OR
+KERNEL_PARAMETERS = lib.VX_KERNEL_PARAMETERS
 KERNEL_PHASE = lib.VX_KERNEL_PHASE
 KERNEL_REMAP = lib.VX_KERNEL_REMAP
 KERNEL_SCALE_IMAGE = lib.VX_KERNEL_SCALE_IMAGE
@@ -211,61 +232,84 @@ KERNEL_WARP_PERSPECTIVE = lib.VX_KERNEL_WARP_PERSPECTIVE
 KERNEL_XOR = lib.VX_KERNEL_XOR
 LIBRARY_KHR_BASE = lib.VX_LIBRARY_KHR_BASE
 LIBRARY_MASK = lib.VX_LIBRARY_MASK
-LUT_ATTRIBUTE_COUNT = lib.VX_LUT_ATTRIBUTE_COUNT
-LUT_ATTRIBUTE_SIZE = lib.VX_LUT_ATTRIBUTE_SIZE
-LUT_ATTRIBUTE_TYPE = lib.VX_LUT_ATTRIBUTE_TYPE
-MATRIX_ATTRIBUTE_COLUMNS = lib.VX_MATRIX_ATTRIBUTE_COLUMNS
-MATRIX_ATTRIBUTE_ROWS = lib.VX_MATRIX_ATTRIBUTE_ROWS
-MATRIX_ATTRIBUTE_SIZE = lib.VX_MATRIX_ATTRIBUTE_SIZE
-MATRIX_ATTRIBUTE_TYPE = lib.VX_MATRIX_ATTRIBUTE_TYPE
+LUT_COUNT = lib.VX_LUT_COUNT
+LUT_OFFSET = lib.VX_LUT_OFFSET
+LUT_SIZE = lib.VX_LUT_SIZE
+LUT_TYPE = lib.VX_LUT_TYPE
+MATRIX_COLUMNS = lib.VX_MATRIX_COLUMNS
+MATRIX_ORIGIN = lib.VX_MATRIX_ORIGIN
+MATRIX_PATTERN = lib.VX_MATRIX_PATTERN
+MATRIX_ROWS = lib.VX_MATRIX_ROWS
+MATRIX_SIZE = lib.VX_MATRIX_SIZE
+MATRIX_TYPE = lib.VX_MATRIX_TYPE
 MAX_IMPLEMENTATION_NAME = lib.VX_MAX_IMPLEMENTATION_NAME
 MAX_KERNEL_NAME = lib.VX_MAX_KERNEL_NAME
 MAX_LOG_MESSAGE_LEN = lib.VX_MAX_LOG_MESSAGE_LEN
-META_FORMAT_ATTRIBUTE_DELTA_RECTANGLE = lib.VX_META_FORMAT_ATTRIBUTE_DELTA_RECTANGLE
-NODE_ATTRIBUTE_BORDER_MODE = lib.VX_NODE_ATTRIBUTE_BORDER_MODE
-NODE_ATTRIBUTE_LOCAL_DATA_PTR = lib.VX_NODE_ATTRIBUTE_LOCAL_DATA_PTR
-NODE_ATTRIBUTE_LOCAL_DATA_SIZE = lib.VX_NODE_ATTRIBUTE_LOCAL_DATA_SIZE
-NODE_ATTRIBUTE_PERFORMANCE = lib.VX_NODE_ATTRIBUTE_PERFORMANCE
-NODE_ATTRIBUTE_STATUS = lib.VX_NODE_ATTRIBUTE_STATUS
+MAX_REFERENCE_NAME = lib.VX_MAX_REFERENCE_NAME
+MEMORY_TYPE_HOST = lib.VX_MEMORY_TYPE_HOST
+MEMORY_TYPE_NONE = lib.VX_MEMORY_TYPE_NONE
+NODE_BORDER = lib.VX_NODE_BORDER
+NODE_IS_REPLICATED = lib.VX_NODE_IS_REPLICATED
+NODE_LOCAL_DATA_PTR = lib.VX_NODE_LOCAL_DATA_PTR
+NODE_LOCAL_DATA_SIZE = lib.VX_NODE_LOCAL_DATA_SIZE
+NODE_PARAMETERS = lib.VX_NODE_PARAMETERS
+NODE_PERFORMANCE = lib.VX_NODE_PERFORMANCE
+NODE_REPLICATE_FLAGS = lib.VX_NODE_REPLICATE_FLAGS
+NODE_STATUS = lib.VX_NODE_STATUS
+NODE_VALID_RECT_RESET = lib.VX_NODE_VALID_RECT_RESET
+NOGAP_X = lib.VX_NOGAP_X
+NONLINEAR_FILTER_MAX = lib.VX_NONLINEAR_FILTER_MAX
+NONLINEAR_FILTER_MEDIAN = lib.VX_NONLINEAR_FILTER_MEDIAN
+NONLINEAR_FILTER_MIN = lib.VX_NONLINEAR_FILTER_MIN
 NORM_L1 = lib.VX_NORM_L1
 NORM_L2 = lib.VX_NORM_L2
+OBJECT_ARRAY_ITEMTYPE = lib.VX_OBJECT_ARRAY_ITEMTYPE
+OBJECT_ARRAY_NUMITEMS = lib.VX_OBJECT_ARRAY_NUMITEMS
 OUTPUT = lib.VX_OUTPUT
-PARAMETER_ATTRIBUTE_DIRECTION = lib.VX_PARAMETER_ATTRIBUTE_DIRECTION
-PARAMETER_ATTRIBUTE_INDEX = lib.VX_PARAMETER_ATTRIBUTE_INDEX
-PARAMETER_ATTRIBUTE_REF = lib.VX_PARAMETER_ATTRIBUTE_REF
-PARAMETER_ATTRIBUTE_STATE = lib.VX_PARAMETER_ATTRIBUTE_STATE
-PARAMETER_ATTRIBUTE_TYPE = lib.VX_PARAMETER_ATTRIBUTE_TYPE
+PARAMETER_DIRECTION = lib.VX_PARAMETER_DIRECTION
+PARAMETER_INDEX = lib.VX_PARAMETER_INDEX
+PARAMETER_REF = lib.VX_PARAMETER_REF
+PARAMETER_STATE = lib.VX_PARAMETER_STATE
 PARAMETER_STATE_OPTIONAL = lib.VX_PARAMETER_STATE_OPTIONAL
 PARAMETER_STATE_REQUIRED = lib.VX_PARAMETER_STATE_REQUIRED
-PYRAMID_ATTRIBUTE_FORMAT = lib.VX_PYRAMID_ATTRIBUTE_FORMAT
-PYRAMID_ATTRIBUTE_HEIGHT = lib.VX_PYRAMID_ATTRIBUTE_HEIGHT
-PYRAMID_ATTRIBUTE_LEVELS = lib.VX_PYRAMID_ATTRIBUTE_LEVELS
-PYRAMID_ATTRIBUTE_SCALE = lib.VX_PYRAMID_ATTRIBUTE_SCALE
-PYRAMID_ATTRIBUTE_WIDTH = lib.VX_PYRAMID_ATTRIBUTE_WIDTH
+PARAMETER_TYPE = lib.VX_PARAMETER_TYPE
+PATTERN_BOX = lib.VX_PATTERN_BOX
+PATTERN_CROSS = lib.VX_PATTERN_CROSS
+PATTERN_DISK = lib.VX_PATTERN_DISK
+PATTERN_OTHER = lib.VX_PATTERN_OTHER
+PYRAMID_FORMAT = lib.VX_PYRAMID_FORMAT
+PYRAMID_HEIGHT = lib.VX_PYRAMID_HEIGHT
+PYRAMID_LEVELS = lib.VX_PYRAMID_LEVELS
+PYRAMID_SCALE = lib.VX_PYRAMID_SCALE
+PYRAMID_WIDTH = lib.VX_PYRAMID_WIDTH
 READ_AND_WRITE = lib.VX_READ_AND_WRITE
 READ_ONLY = lib.VX_READ_ONLY
 REF_ATTRIBUTE_COUNT = lib.VX_REF_ATTRIBUTE_COUNT
+REF_ATTRIBUTE_NAME = lib.VX_REF_ATTRIBUTE_NAME
 REF_ATTRIBUTE_TYPE = lib.VX_REF_ATTRIBUTE_TYPE
-REMAP_ATTRIBUTE_DESTINATION_HEIGHT = lib.VX_REMAP_ATTRIBUTE_DESTINATION_HEIGHT
-REMAP_ATTRIBUTE_DESTINATION_WIDTH = lib.VX_REMAP_ATTRIBUTE_DESTINATION_WIDTH
-REMAP_ATTRIBUTE_SOURCE_HEIGHT = lib.VX_REMAP_ATTRIBUTE_SOURCE_HEIGHT
-REMAP_ATTRIBUTE_SOURCE_WIDTH = lib.VX_REMAP_ATTRIBUTE_SOURCE_WIDTH
+REMAP_DESTINATION_HEIGHT = lib.VX_REMAP_DESTINATION_HEIGHT
+REMAP_DESTINATION_WIDTH = lib.VX_REMAP_DESTINATION_WIDTH
+REMAP_SOURCE_HEIGHT = lib.VX_REMAP_SOURCE_HEIGHT
+REMAP_SOURCE_WIDTH = lib.VX_REMAP_SOURCE_WIDTH
 ROUND_POLICY_TO_NEAREST_EVEN = lib.VX_ROUND_POLICY_TO_NEAREST_EVEN
 ROUND_POLICY_TO_ZERO = lib.VX_ROUND_POLICY_TO_ZERO
-SCALAR_ATTRIBUTE_TYPE = lib.VX_SCALAR_ATTRIBUTE_TYPE
+SCALAR_TYPE = lib.VX_SCALAR_TYPE
 SCALE_UNITY = lib.VX_SCALE_UNITY
 STATUS_MIN = lib.VX_STATUS_MIN
 SUCCESS = lib.VX_SUCCESS
+TARGET_ANY = lib.VX_TARGET_ANY
+TARGET_STRING = lib.VX_TARGET_STRING
+TARGET_VENDOR_BEGIN = lib.VX_TARGET_VENDOR_BEGIN
 TERM_CRITERIA_BOTH = lib.VX_TERM_CRITERIA_BOTH
 TERM_CRITERIA_EPSILON = lib.VX_TERM_CRITERIA_EPSILON
 TERM_CRITERIA_ITERATIONS = lib.VX_TERM_CRITERIA_ITERATIONS
-THRESHOLD_ATTRIBUTE_DATA_TYPE = lib.VX_THRESHOLD_ATTRIBUTE_DATA_TYPE
-THRESHOLD_ATTRIBUTE_FALSE_VALUE = lib.VX_THRESHOLD_ATTRIBUTE_FALSE_VALUE
-THRESHOLD_ATTRIBUTE_THRESHOLD_LOWER = lib.VX_THRESHOLD_ATTRIBUTE_THRESHOLD_LOWER
-THRESHOLD_ATTRIBUTE_THRESHOLD_UPPER = lib.VX_THRESHOLD_ATTRIBUTE_THRESHOLD_UPPER
-THRESHOLD_ATTRIBUTE_THRESHOLD_VALUE = lib.VX_THRESHOLD_ATTRIBUTE_THRESHOLD_VALUE
-THRESHOLD_ATTRIBUTE_TRUE_VALUE = lib.VX_THRESHOLD_ATTRIBUTE_TRUE_VALUE
-THRESHOLD_ATTRIBUTE_TYPE = lib.VX_THRESHOLD_ATTRIBUTE_TYPE
+THRESHOLD_DATA_TYPE = lib.VX_THRESHOLD_DATA_TYPE
+THRESHOLD_FALSE_VALUE = lib.VX_THRESHOLD_FALSE_VALUE
+THRESHOLD_THRESHOLD_LOWER = lib.VX_THRESHOLD_THRESHOLD_LOWER
+THRESHOLD_THRESHOLD_UPPER = lib.VX_THRESHOLD_THRESHOLD_UPPER
+THRESHOLD_THRESHOLD_VALUE = lib.VX_THRESHOLD_THRESHOLD_VALUE
+THRESHOLD_TRUE_VALUE = lib.VX_THRESHOLD_TRUE_VALUE
+THRESHOLD_TYPE = lib.VX_THRESHOLD_TYPE
 THRESHOLD_TYPE_BINARY = lib.VX_THRESHOLD_TYPE_BINARY
 THRESHOLD_TYPE_RANGE = lib.VX_THRESHOLD_TYPE_RANGE
 TYPE_ARRAY = lib.VX_TYPE_ARRAY
@@ -291,12 +335,15 @@ TYPE_INT8 = lib.VX_TYPE_INT8
 TYPE_INVALID = lib.VX_TYPE_INVALID
 TYPE_KERNEL = lib.VX_TYPE_KERNEL
 TYPE_KEYPOINT = lib.VX_TYPE_KEYPOINT
+TYPE_KHRONOS_OBJECT_END = lib.VX_TYPE_KHRONOS_OBJECT_END
+TYPE_KHRONOS_OBJECT_START = lib.VX_TYPE_KHRONOS_OBJECT_START
+TYPE_KHRONOS_STRUCT_MAX = lib.VX_TYPE_KHRONOS_STRUCT_MAX
 TYPE_LUT = lib.VX_TYPE_LUT
 TYPE_MASK = lib.VX_TYPE_MASK
 TYPE_MATRIX = lib.VX_TYPE_MATRIX
 TYPE_META_FORMAT = lib.VX_TYPE_META_FORMAT
 TYPE_NODE = lib.VX_TYPE_NODE
-TYPE_OBJECT_MAX = lib.VX_TYPE_OBJECT_MAX
+TYPE_OBJECT_ARRAY = lib.VX_TYPE_OBJECT_ARRAY
 TYPE_PARAMETER = lib.VX_TYPE_PARAMETER
 TYPE_PYRAMID = lib.VX_TYPE_PYRAMID
 TYPE_RECTANGLE = lib.VX_TYPE_RECTANGLE
@@ -305,7 +352,6 @@ TYPE_REMAP = lib.VX_TYPE_REMAP
 TYPE_SCALAR = lib.VX_TYPE_SCALAR
 TYPE_SCALAR_MAX = lib.VX_TYPE_SCALAR_MAX
 TYPE_SIZE = lib.VX_TYPE_SIZE
-TYPE_STRUCT_MAX = lib.VX_TYPE_STRUCT_MAX
 TYPE_THRESHOLD = lib.VX_TYPE_THRESHOLD
 TYPE_UINT16 = lib.VX_TYPE_UINT16
 TYPE_UINT32 = lib.VX_TYPE_UINT32
@@ -317,12 +363,9 @@ TYPE_VENDOR_OBJECT_END = lib.VX_TYPE_VENDOR_OBJECT_END
 TYPE_VENDOR_OBJECT_START = lib.VX_TYPE_VENDOR_OBJECT_START
 TYPE_VENDOR_STRUCT_END = lib.VX_TYPE_VENDOR_STRUCT_END
 TYPE_VENDOR_STRUCT_START = lib.VX_TYPE_VENDOR_STRUCT_START
+VALID_RECT_CALLBACK = lib.VX_VALID_RECT_CALLBACK
 VENDOR_MASK = lib.VX_VENDOR_MASK
-VERSION = lib.VX_VERSION
-VERSION_1_0 = lib.VX_VERSION_1_0
 WRITE_ONLY = lib.VX_WRITE_ONLY
-false_e = lib.vx_false_e
-true_e = lib.vx_true_e
 
 def CreateContext():
     '''
@@ -360,7 +403,8 @@ def GetContext(reference):
 :param: [in] reference The reference from which to extract the context.
 :ingroup: group_context
 :return: The overall context that created the particular
-reference.
+reference. Any possible errors preventing a successful creation should be 
+checked using *vxGetStatus*.
     '''
     return lib.vxGetContext(reference)
     
@@ -396,30 +440,34 @@ def SetContextAttribute(context, attribute, ptr, size):
     '''
     return lib.vxSetContextAttribute(context, attribute, ptr, size)
     
-def Hint(reference, hint):
+def Hint(reference, hint, data, data_size):
     '''
 :brief: Provides a generic API to give platform-specific hints to the implementation.
 :param: [in] reference The reference to the object to hint at.
 This could be *vx_context*, *vx_graph*, *vx_node*, *vx_image*, *vx_array*, or any other reference.
-:param: [in] hint A *vx_hint_e* :a: hint to give the OpenVX context. This is a platform-specific optimization or implementation mechanism.
+:param: [in] hint A *vx_hint_e* :a: hint to give to a vx_context. This is a platform-specific optimization or implementation mechanism.
+:param: [in] data Optional vendor specific data. 
+:param: [in] data_size Size of the data structure :p: data.
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS No error.
 :retval: VX_ERROR_INVALID_REFERENCE If context or reference is invalid.
 :retval: VX_ERROR_NOT_SUPPORTED If the hint is not supported.
 :ingroup: group_hint
     '''
-    return lib.vxHint(reference, hint)
+    return lib.vxHint(reference, hint, data, data_size)
     
 def Directive(reference, directive):
     '''
 :brief: Provides a generic API to give platform-specific directives to the implementations.
 :param: [in] reference The reference to the object to set the directive on.
 This could be *vx_context*, *vx_graph*, *vx_node*, *vx_image*, *vx_array*, or any other reference.
-:param: [in] directive The directive to set.
+:param: [in] directive The directive to set. See *vx_directive_e*. 
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS No error.
 :retval: VX_ERROR_INVALID_REFERENCE If context or reference is invalid.
 :retval: VX_ERROR_NOT_SUPPORTED If the directive is not supported.
+:note: The performance counter directives are only available for the reference vx_context. 
+      Error VX_ERROR_NOT_SUPPORTED is returned when used with any other reference.
 :ingroup: group_directive
     '''
     return lib.vxDirective(reference, directive)
@@ -429,7 +477,7 @@ def GetStatus(reference):
 :brief: Provides a generic API to return status values from Object constructors if they
 fail.
 :note: Users do not need to strictly check every object creator as the errors
-should properly propogate and be detected during verification time or run-time.
+should properly propagate and be detected during verification time or run-time.
 :code:
 vx_image img = vxCreateImage(context, 639, 480, VX_DF_IMAGE_UYVY);
 vx_status status = vxGetStatus((vx_reference)img);
@@ -458,10 +506,61 @@ of that structure.
 :note: This call should only be used once within the lifetime of a context for
 a specific structure.
 
-:snippet: vx_arrayrange.c array define
 :ingroup: group_adv_array
     '''
     return lib.vxRegisterUserStruct(context, size)
+    
+def AllocateUserKernelId(context, pKernelEnumId):
+    '''
+:brief: Allocates and registers user-defined kernel enumeration to a context.
+The allocated enumeration is from available pool of 4096 enumerations reserved
+for dynamic allocation from VX_KERNEL_BASE(VX_ID_USER,0).
+:param: [in] context  The reference to the implementation context.
+:param: [out] pKernelEnumId  pointer to return *vx_enum* for user-defined kernel.
+:retval: VX_SUCCESS No errors.
+:retval: VX_ERROR_NO_RESOURCES The enumerations has been exhausted.
+:ingroup: group_user_kernels
+    '''
+    return lib.vxAllocateUserKernelId(context, pKernelEnumId)
+    
+def AllocateUserKernelLibraryId(context, pLibraryId):
+    '''
+:brief: Allocates and registers user-defined kernel library ID to a context.
+
+The allocated library ID is from available pool of library IDs (1..255)
+reserved for dynamic allocation. The returned libraryId can be used by
+user-kernel library developer to specify individual kernel enum IDs in 
+a header file, shown below:
+:code:
+#define MY_KERNEL_ID1(libraryId) (VX_KERNEL_BASE(VX_ID_USER,libraryId) + 0);
+#define MY_KERNEL_ID2(libraryId) (VX_KERNEL_BASE(VX_ID_USER,libraryId) + 1);
+#define MY_KERNEL_ID3(libraryId) (VX_KERNEL_BASE(VX_ID_USER,libraryId) + 2);
+:endcode:
+:param: [in] context  The reference to the implementation context.
+:param: [out] pLibraryId  pointer to *vx_enum* for user-kernel libraryId.
+:retval: VX_SUCCESS No errors.
+:retval: VX_ERROR_NO_RESOURCES The enumerations has been exhausted.
+:ingroup: group_user_kernels
+    '''
+    return lib.vxAllocateUserKernelLibraryId(context, pLibraryId)
+    
+def SetImmediateModeTarget(context, target_enum, target_string):
+    '''
+:brief: Sets the default target of the immediate mode. Upon successful execution of this
+function any future execution of immediate mode function is attempted on the new default
+target of the context.
+:param: [in] context  The reference to the implementation context.
+:param: [in] target_enum  The default immediate mode target enum to be set
+to the *vx_context* object. Use a *vx_target_e*.
+:param: [in] target_string  The target name ASCII string. This contains a valid value 
+when target_enum is set to *VX_TARGET_STRING*, otherwise it is ignored.
+:ingroup: group_context
+:return: A *vx_status_e* enumeration.
+:retval: VX_SUCCESS Default target set.
+:retval: VX_ERROR_INVALID_REFERENCE If the context is not a *vx_context*.
+:retval: VX_ERROR_NOT_SUPPORTED If the specified target is not supported in this context.
+    '''
+    return lib.vxSetImmediateModeTarget(context, target_enum, target_string)
     
 def CreateImage(context, width, height, color):
     '''
@@ -473,7 +572,7 @@ def CreateImage(context, width, height, color):
 :param: [in] color The VX_DF_IMAGE (*vx_df_image_e*) code that represents the format of the image and the color space.
 :returns: An image reference *vx_image*. Any possible errors preventing a successful
 creation should be checked using *vxGetStatus*.
-:see: vxAccessImagePatch to obtain direct memory access to the image data.
+:see: vxMapImagePatch to obtain direct memory access to the image data.
 :ingroup: group_image
     '''
     return lib.vxCreateImage(context, width, height, color)
@@ -496,29 +595,16 @@ successful creation should be checked using *vxGetStatus*.
 def CreateUniformImage(context, width, height, color, value):
     '''
 :brief: Creates a reference to an image object that has a singular,
-uniform value in all pixels.
-:details: The value pointer must reflect the specific format of the desired
-image. For example:
-| Color       | Value Ptr  |
-|:------------|:-----------|
-| *VX_DF_IMAGE_U8*   | vx_uint8|
-| *VX_DF_IMAGE_S16*  | vx_int16|
-| *VX_DF_IMAGE_U16*  | vx_uint16|
-| *VX_DF_IMAGE_S32*  | vx_int32|
-| *VX_DF_IMAGE_U32*  | vx_uint32|
-| *VX_DF_IMAGE_RGB*  | vx_uint8 pixel[3] in R, G, B order |
-| *VX_DF_IMAGE_RGBX* | vx_uint8 pixels[4] |
-| Any YUV     | vx_uint8 pixel[3] in Y, U, V order |
-
+uniform value in all pixels. The uniform image created is read-only. 
 :param: [in] context The reference to the implementation context.
 :param: [in] width The image width in pixels.
 :param: [in] height The image height in pixels.
 :param: [in] color The VX_DF_IMAGE (vx_df_image_e) code that represents the format of the image and the color space.
-:param: [in] value The pointer to the pixel value to which to set all pixels.
+:param: [in] value The pointer to the pixel value to which to set all pixels. See *vx_pixel_value_t*.
 :returns: An image reference *vx_image*. Any possible errors preventing a 
 successful creation should be checked using *vxGetStatus*.
-*:see: vxAccessImagePatch* to obtain direct memory access to the image data.
-:note: *vxAccessImagePatch* and *vxCommitImagePatch* may be called with
+*:see: vxMapImagePatch* to obtain direct memory access to the image data.
+:note: *vxMapImagePatch* and *vxUnmapImagePatch* may be called with
 a uniform image reference.
 :ingroup: group_image
     '''
@@ -552,31 +638,94 @@ vx_image virt[] = {
 :param: [in] color The VX_DF_IMAGE (*vx_df_image_e*) code that represents the format of the image and the color space. A value of *VX_DF_IMAGE_VIRT* informs the interface that the format is unspecified.
 :returns: An image reference *vx_image*. Any possible errors preventing a 
 successful creation should be checked using *vxGetStatus*.
-:note: Passing this reference to *vxAccessImagePatch* will return an error.
+:note: Passing this reference to *vxMapImagePatch* will return an error.
 :ingroup: group_image
     '''
     return lib.vxCreateVirtualImage(graph, width, height, color)
     
-def CreateImageFromHandle(context, color, addrs, ptrs, import_type):
+def CreateImageFromHandle(context, color, addrs, ptrs, memory_type):
     '''
 :brief: Creates a reference to an image object that was externally allocated.
 :param: [in] context The reference to the implementation context.
 :param: [in] color See the *vx_df_image_e* codes. This mandates the
 number of planes needed to be valid in the :a: addrs and :a: ptrs arrays based on the format given.
 :param: [in] addrs[] The array of image patch addressing structures that
-define the dimension and stride of the array of pointers.
-:param: [in] ptrs[] The array of platform-defined references to each plane.
-:param: [in] import_type *vx_import_type_e*. When giving *VX_IMPORT_TYPE_HOST*
+define the dimension and stride of the array of pointers. See note below. 
+:param: [in] ptrs[] The array of platform-defined references to each plane. See note below.
+:param: [in] memory_type *vx_memory_type_e*. When giving *VX_MEMORY_TYPE_HOST*
 the :a: ptrs array is assumed to be HOST accessible pointers to memory.
 :returns: An image reference *vx_image*. Any possible errors preventing a 
 successful creation should be checked using *vxGetStatus*.
-:note: The user must call vxAccessImagePatch prior to accessing the pixels of an image, even if the 
+:note: The user must call vxMapImagePatch prior to accessing the pixels of an image, even if the 
 image was created via *vxCreateImageFromHandle*. Reads or writes to memory referenced 
 by ptrs[ ] after calling *vxCreateImageFromHandle* without first calling 
-*vxAccessImagePatch* will result in undefined behavior.
+*vxMapImagePatch* will result in undefined behavior.
+The property of addr[] and ptrs[] arrays is kept by the caller (It means that the implementation will 
+make an internal copy of the provided information. :a: addr and :a: ptrs can then simply be application's 
+local variables).
+Only :a: dim_x, :a: dim_y, :a: stride_x and :a: stride_y fields of the *vx_imagepatch_addressing_t* need to be 
+provided by the application. Other fields (:a: step_x, :a: step_y, :a: scale_x & :a: scale_y) are ignored by this function.
+The layout of the imported memory must follow a row-major order. In other words, :a: stride_x should be 
+sufficiently large so that there is no overlap between data elements corresponding to different 
+pixels, and :a: stride_y >= :a: stride_x:a: dim_x.
+
+In order to release the image back to the application we should use *vxSwapImageHandle*.
+
+Import type of the created image is available via the image attribute *vx_image_attribute_e* parameter. 
+
 :ingroup: group_image
     '''
-    return lib.vxCreateImageFromHandle(context, color, addrs, ptrs, import_type)
+    return lib.vxCreateImageFromHandle(context, color, addrs, ptrs, memory_type)
+    
+def SwapImageHandle(image, new_ptrs, prev_ptrs, num_planes):
+    '''
+:brief: Swaps the image handle of an image previously created from handle.
+
+This function sets the new image handle (i.e. pointer to all image planes)  
+and returns the previous one.
+
+Once this function call has completed, the application gets back the
+ownership of the memory referenced by the previous handle. This memory
+contains up-to-date pixel data, and the application can safely reuse or 
+release it.
+
+The memory referenced by the new handle must have been allocated
+consistently with the image properties since the import type,
+memory layout and dimensions are unchanged (see addrs, color, and
+memory_type in *vxCreateImageFromHandle*).
+
+All images created from ROI with this image as parent or ancestor
+will automatically use the memory referenced by the new handle.
+
+The behavior of *vxSwapImageHandle* when called from a user node is undefined.
+:param: [in] image The reference to an image created from handle
+:param: [in] new_ptrs[] pointer to a caller owned array that contains
+the new image handle (image plane pointers)
+:arg: new_ptrs is non NULL. new_ptrs[i] must be non NULL for each i such as
+0 < i < nbPlanes, otherwise, this is an error. The address of the storage memory
+for image plane i is set to new_ptrs[i]
+:arg: new_ptrs is NULL: the previous image storage memory is reclaimed by the
+caller, while no new handle is provided.
+:param: [out] prev_ptrs[] pointer to a caller owned array in which
+the application returns the previous image handle 
+:arg: prev_ptrs is non NULL. prev_ptrs must have at least as many
+elements as the number of image planes. For each i such as
+0 < i < nbPlanes , prev_ptrs[i] is set to the address of the previous storage
+memory for plane i.
+:arg: prev_ptrs NULL : the previous handle is not returned.
+:param: [in] num_planes Number of planes in the image. This must be set equal to the number of planes of the input image.
+ The number of elements in new_ptrs and prev_ptrs arrays must be equal to or greater than num_planes. 
+If either array has more than num_planes elements, the extra elements are ignored. If either array is smaller 
+than num_planes, the results are undefined. 
+:return: A *vx_status_e* enumeration.
+:retval: VX_ERROR_INVALID_REFERENCE image is not a valid image
+reference.
+:retval: VX_ERROR_INVALID_PARAMETERS The image was not created from handle or
+the content of new_ptrs is not valid.
+:retval: VX_FAILURE The image was already being accessed.
+:ingroup: group_image
+    '''
+    return lib.vxSwapImageHandle(image, new_ptrs, prev_ptrs, num_planes)
     
 def QueryImage(image, attribute, ptr, size):
     '''
@@ -613,6 +762,16 @@ def ReleaseImage(image):
     '''
 :brief: Releases a reference to an image object.
 The object may not be garbage collected until its total reference count is zero.
+
+An implementation may defer the actual object destruction after its total
+reference count is zero (potentially until context destruction). Thus,
+releasing an image created from handle 
+(see *vxCreateImageFromHandle*) and all others objects that may 
+reference it (nodes, ROI for instance) are not sufficient to get back the
+ownership of the memory referenced by the current image handle. The only way
+for this is to call *vxSwapImageHandle*) before releasing the
+image.
+
 :param: [in] image The pointer to the image to release.
 :post: After returning from this function the reference is zeroed.
 :return: A *vx_status_e* enumeration.
@@ -634,98 +793,14 @@ dimension is width for x and height for y.
     '''
     return lib.vxComputeImagePatchSize(image, rect, plane_index)
     
-def AccessImagePatch(image, rect, plane_index, addr, ptr, usage):
-    '''
-:brief: Allows the User to extract a rectangular patch (subset) of an image from a single plane.
-:param: [in] image The reference to the image from which to extract the patch.
-:param: [in] rect The coordinates from which to get the patch. Must be 0 <= start < end.
-:param: [in] plane_index The plane index from which to get the data.
-:param: [in, out] addr A pointer to a structure describing the addressing information of the 
-image patch to accessed.
-:arg: Input case: ptr is a pointer to a non-NULL pointer. The addr parameter must be the 
-address of an addressing 
-structure that describes how the user will access the requested image data at address (*ptr).
-:arg: Output case: ptr is a pointer to a NULL pointer. The function fills the structure pointed by 
-addr with the 
-addressing information that the user must consult to access the pixel data at address (*ptr). 
-If the image being accessed was created via *vxCreateImageFromHandle*, then the
-returned addressing information will be the identical to that of the addressing structure provided 
-when *vxCreateImageFromHandle* was called.
- 
-:param: [in, out] ptr A pointer to a pointer to a location to store the requested data.
-:arg: Input case: ptr is a pointer to a non-NULL pointer to a valid pixel buffer. This buffer 
-will be used in one 
-of two ways, depending on the value of the usage parameter. If usage is VX_WRITE_ONLY, then the 
-buffer must contain pixel data that the user wants to replace the image's pixel data with.
-Otherwise (i.e., usage is not VX_WRITE_ONLY), the image's current pixel data will be written to the 
-memory starting at address (*ptr) as storage memory for the access request. The caller must ensure 
-enough memory has been allocated for the requested patch with the requested addressing.
-If image was created via *vxCreateImageFromHandle*, and the pixel buffer pointed to by (*ptr) overlaps 
-the original pixel buffer provided when image was created, then the results of such a call to 
-*vxAccessImagePatch* are undefined.
-:arg: Output case: ptr is a pointer to a NULL pointer. This NULL pointer will be overwritten 
-with a pointer to the 
-address where the requested data can be accessed. If image was created via 
-*vxCreateImageFromHandle* 
-then the overwriting pointer must be within the original pixel buffer provided when image was created.
-:arg: (*ptr) must eventually be provided as the ptr parameter of a call to 
-*vxCommitImagePatch*.
-
-:param: [in] usage This declares the intended usage of the pointer using the *vx_accessor_e* enumeration. For uniform images Only VX_READ_ONLY is supported.
-:note: The addr and ptr parameters must both be input, or both be output, otherwise the behavior is undefined.
-:return: A *vx_status_e* enumeration.
-:retval: VX_ERROR_OPTIMIZED_AWAY The reference is a virtual image and cannot be accessed or committed.
-:retval: VX_ERROR_INVALID_PARAMETERS The :a: start, :a: end, :a: plane_index, :a: stride_x, or :a: stride_y pointer is incorrect.
-:retval: VX_ERROR_INVALID_REFERENCE The image reference is not actually an image reference.
-:note: The user may ask for data outside the bounds of the valid region, but
-such data has an undefined value.
-:note: Users must be cautious to prevent passing in :e: uninitialized pointers or
-addresses of uninitialized pointers to this function.
-:pre: *vxComputeImagePatchSize* if users wish to allocate their own memory.
-:post: *vxCommitImagePatch* with same (*ptr) value.
-:ingroup: group_image
-:include: vx_imagepatch.c
-    '''
-    return lib.vxAccessImagePatch(image, rect, plane_index, addr, ptr, usage)
-    
-def CommitImagePatch(image, rect, plane_index, addr, ptr):
-    '''
-:brief: This allows the User to commit a rectangular patch (subset) of an image from a single plane.
-:param: [in] image The reference to the image from which to extract the patch.
-:param: [in] rect The coordinates to which to set the patch. Must be 0 <= start <= end.
-This may be 0 or a rectangle of zero area in order to indicate that the commit
-must only decrement the reference count.
-:param: [in] plane_index The plane index to which to set the data.
-:param: [in] addr The addressing information for the image patch.
-:param: [in] ptr A pointer to a pixel buffer to be committed. If the user previously provided a 
-pointer to this buffer to *vxAccessImagePatch*, the buffer can be
-freed or re-used after *vxCommitImagePatch* completes. If the pointer was returned by 
-*vxAccessImagePatch*, reads or writes to the location pointed by ptr after 
-*vxCommitImagePatch* completes will result in undefined behavior.
-:return: A *vx_status_e* enumeration.
-:retval: VX_ERROR_OPTIMIZED_AWAY The reference is a virtual image and cannot be accessed or committed.
-:retval: VX_ERROR_INVALID_PARAMETERS The :a: start, :a: end, :a: plane_index, :a: stride_x, or :a: stride_y pointer is incorrect.
-:retval: VX_ERROR_INVALID_REFERENCE The image reference is not actually an image reference.
-:ingroup: group_image
-:include: vx_imagepatch.c
-:note: If the implementation gives the client a pointer from
-*vxAccessImagePatch* then implementation-specific behavior may occur.
-If not, then a copy occurs from the users pointer to the internal data of the object.
-:note: If the rectangle intersects bounds of the current valid region, the
-valid region grows to the union of the two rectangles as long as they occur
-within the bounds of the original image dimensions.
-    '''
-    return lib.vxCommitImagePatch(image, rect, plane_index, addr, ptr)
-    
 def FormatImagePatchAddress1d(ptr, index, addr):
     '''
 :brief: Accesses a specific indexed pixel in an image patch.
-:param: [in] ptr The base pointer of the patch as returned from *vxAccessImagePatch*.
+:param: [in] ptr The base pointer of the patch as returned from *vxMapImagePatch*.
 :param: [in] index The 0 based index of the pixel count in the patch. Indexes increase horizontally by 1 then wrap around to the next row.
-:param: [in] addr The pointer to the addressing mode information returned from *vxAccessImagePatch*.
+:param: [in] addr The pointer to the addressing mode information returned from *vxMapImagePatch*.
 :return: voidReturns the pointer to the specified pixel.
-:pre: *vxAccessImagePatch*
-:include: vx_imagepatch.c
+:pre: *vxMapImagePatch*
 :ingroup: group_image
     '''
     return lib.vxFormatImagePatchAddress1d(ptr, index, addr)
@@ -733,13 +808,12 @@ def FormatImagePatchAddress1d(ptr, index, addr):
 def FormatImagePatchAddress2d(ptr, x, y, addr):
     '''
 :brief: Accesses a specific pixel at a 2d coordinate in an image patch.
-:param: [in] ptr The base pointer of the patch as returned from *vxAccessImagePatch*.
+:param: [in] ptr The base pointer of the patch as returned from *vxMapImagePatch*.
 :param: [in] x The x dimension within the patch.
 :param: [in] y The y dimension within the patch.
-:param: [in] addr The pointer to the addressing mode information returned from *vxAccessImagePatch*.
+:param: [in] addr The pointer to the addressing mode information returned from *vxMapImagePatch*.
 :return: voidReturns the pointer to the specified pixel.
-:pre: *vxAccessImagePatch*
-:include: vx_imagepatch.c
+:pre: *vxMapImagePatch*
 :ingroup: group_image
     '''
     return lib.vxFormatImagePatchAddress2d(ptr, x, y, addr)
@@ -747,24 +821,177 @@ def FormatImagePatchAddress2d(ptr, x, y, addr):
 def GetValidRegionImage(image, rect):
     '''
 :brief: Retrieves the valid region of the image as a rectangle.
-:details: After the image is allocated but has not been written to this
-returns the full rectangle of the image so that functions do not have to manage
-a case for uninitialized data. The image still retains an uninitialized
-value, but once the image is written to via any means such as *vxCommitImagePatch*,
-the valid region is altered to contain the maximum bounds of the written
-area.
 :param: [in] image The image from which to retrieve the valid region.
 :param: [out] rect The destination rectangle.
 :return: vx_status
 :retval: VX_ERROR_INVALID_REFERENCE Invalid image.
 :retval: VX_ERROR_INVALID_PARAMETERS Invalid rect.
 :retval: VX_SUCCESS Valid image.
-:note: This rectangle can be passed directly to *vxAccessImagePatch* to get
-the full valid region of the image. Modifications from *vxCommitImagePatch*
-grows the valid region.
+:note: This rectangle can be passed directly to *vxMapImagePatch* to get
+the full valid region of the image. 
 :ingroup: group_image
     '''
     return lib.vxGetValidRegionImage(image, rect)
+    
+def CopyImagePatch(image, image_rect, image_plane_index, user_addr, user_ptr, usage, user_mem_type):
+    '''
+:brief: Allows the application to copy a rectangular patch from/into an image object plane.
+* :param: [in] image The reference to the image object that is the source or the
+* destination of the copy.
+* :param: [in] image_rect The coordinates of the image patch. The patch must be within
+* the bounds of the image. (start_x, start_y) gives the coordinates of the topleft
+* pixel inside the patch, while (end_x, end_y) gives the coordinates of the bottomright
+* element out of the patch. Must be 0 <= start < end <= number of pixels in the image dimension.
+* :param: [in] image_plane_index The plane index of the image object that is the source or the
+* destination of the patch copy.
+* :param: [in] user_addr The address of a structure describing the layout of the
+* user memory location pointed by user_ptr. In the structure, only dim_x, dim_y,
+* stride_x and stride_y fields must be provided, other fields are ignored by the function.
+* The layout of the user memory must follow a row major order:
+* stride_x >= pixel size in bytes, and stride_y >= stride_xdim_x.
+* :param: [in] user_ptr The address of the memory location where to store the requested data
+* if the copy was requested in read mode, or from where to get the data to store into the image
+* object if the copy was requested in write mode. The accessible memory must be large enough
+* to contain the specified patch with the specified layout:
+* accessible memory in bytes >= (end_y - start_y)stride_y.
+* :param: [in] usage This declares the effect of the copy with regard to the image object
+* using the *vx_accessor_e* enumeration. For uniform images, only VX_READ_ONLY
+* is supported. For other images, Only VX_READ_ONLY and VX_WRITE_ONLY are supported:
+* :arg: VX_READ_ONLY means that data is copied from the image object into the application memory
+* :arg: VX_WRITE_ONLY means that data is copied into the image object from the application memory
+* :param: [in] user_mem_type A *vx_memory_type_e* enumeration that specifies
+* the memory type of the memory referenced by the user_addr.
+* :return: A *vx_status_e* enumeration.
+* :retval: VX_ERROR_OPTIMIZED_AWAY This is a reference to a virtual image that cannot be
+* accessed by the application.
+* :retval: VX_ERROR_INVALID_REFERENCE The image reference is not actually an image reference.
+* :retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
+* :note: The application may ask for data outside the bounds of the valid region, but
+* such data has an undefined value.
+* :ingroup: group_image
+*/
+    '''
+    return lib.vxCopyImagePatch(image, image_rect, image_plane_index, user_addr, user_ptr, usage, user_mem_type)
+    
+def MapImagePatch(image, rect, plane_index, map_id, addr, ptr, usage, mem_type, flags):
+    '''
+:brief: Allows the application to get direct access to a rectangular patch of an image object plane.
+* :param: [in] image The reference to the image object that contains the patch to map.
+* :param: [in] rect The coordinates of image patch. The patch must be within the
+* bounds of the image. (start_x, start_y) gives the coordinate of the topleft
+* element inside the patch, while (end_x, end_y) give the coordinate of
+* the bottomright element out of the patch. Must be 0 <= start < end.
+* :param: [in] plane_index The plane index of the image object to be accessed.
+* :param: [out] map_id The address of a vx_map_id variable where the function
+* returns a map identifier.
+* :arg: (*map_id) must eventually be provided as the map_id parameter of a call to
+* *vxUnmapImagePatch*.
+* :param: [out] addr The address of a structure describing the memory layout of the
+* image patch to access. The function fills the structure pointed by addr with the
+* layout information that the application must consult to access the pixel data
+* at address (*ptr). The layout of the mapped memory follows a row-major order:
+* stride_x>0, stride_y>0 and stride_y >= stride_xdim_x.
+* If the image object being accessed was created via
+* *vxCreateImageFromHandle*, then the returned memory layout will be
+* the identical to that of the addressing structure provided when
+* *vxCreateImageFromHandle* was called.
+* :param: [out] ptr The address of a pointer that the function sets to the
+* address where the requested data can be accessed. This returned (*ptr) address
+* is only valid between the call to this function and the corresponding call to
+* *vxUnmapImagePatch*.
+* If image was created via *vxCreateImageFromHandle* then the returned
+* address (*ptr) will be the address of the patch in the original pixel buffer
+* provided when image was created.
+* :param: [in] usage This declares the access mode for the image patch, using
+* the *vx_accessor_e* enumeration. For uniform images, only VX_READ_ONLY
+* is supported.
+* :arg: VX_READ_ONLY: after the function call, the content of the memory location
+* pointed by (*ptr) contains the image patch data. Writing into this memory location
+* is forbidden and its behavior is undefined.
+* :arg: VX_READ_AND_WRITE : after the function call, the content of the memory
+* location pointed by (*ptr) contains the image patch data; writing into this memory
+* is allowed only for the location of pixels only and will result in a modification
+* of the written pixels in the image object once the patch is unmapped. Writing into
+* a gap between pixels (when addr->stride_x > pixel size in bytes or addr->stride_y > addr->stride_x*addr->dim_x) 
+* is forbidden and its behavior is undefined.
+* :arg: VX_WRITE_ONLY: after the function call, the memory location pointed by (*ptr)
+* contains undefined data; writing each pixel of the patch is required prior to
+* unmapping. Pixels not written by the application before unmap will become
+* undefined after unmap, even if they were well defined before map. Like for
+* VX_READ_AND_WRITE, writing into a gap between pixels is forbidden and its behavior
+* is undefined.
+* :param: [in] mem_type A *vx_memory_type_e* enumeration that
+* specifies the type of the memory where the image patch is requested to be mapped.
+* :param: [in] flags An integer that allows passing options to the map operation.
+* Use the *vx_map_flag_e* enumeration.
+* :return: A *vx_status_e* enumeration.
+* :retval: VX_ERROR_OPTIMIZED_AWAY This is a reference to a virtual image that cannot be
+* accessed by the application.
+* :retval: VX_ERROR_INVALID_REFERENCE The image reference is not actually an image
+* reference.
+* :retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
+* :note: The user may ask for data outside the bounds of the valid region, but
+* such data has an undefined value.
+* :ingroup: group_image
+* :post: *vxUnmapImagePatch * with same (*map_id) value.
+*/
+    '''
+    return lib.vxMapImagePatch(image, rect, plane_index, map_id, addr, ptr, usage, mem_type, flags)
+    
+def UnmapImagePatch(image, map_id):
+    '''
+:brief: Unmap and commit potential changes to a image object patch that were previously mapped.
+* Unmapping an image patch invalidates the memory location from which the patch could
+* be accessed by the application. Accessing this memory location after the unmap function
+* completes has an undefined behavior.
+* :param: [in] image The reference to the image object to unmap.
+* :param: [out] map_id The unique map identifier that was returned by *vxMapImagePatch* .
+* :return: A *vx_status_e* enumeration.
+* :retval: VX_ERROR_INVALID_REFERENCE The image reference is not actually an image reference.
+* :retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
+* :ingroup: group_image
+* :pre: *vxMapImagePatch* with same map_id value
+*/
+    '''
+    return lib.vxUnmapImagePatch(image, map_id)
+    
+def CreateImageFromChannel(img, channel):
+    '''
+:brief: Create a sub-image from a single plane channel of another image.
+
+The sub-image refers to the data in the original image. Updates to this image
+update the parent image and reversely.
+
+The function supports only channels that occupy an entire plane of a multi-planar
+images, as listed below. Other cases are not supported.
+    VX_CHANNEL_Y from YUV4, IYUV, NV12, NV21
+    VX_CHANNEL_U from YUV4, IYUV
+    VX_CHANNEL_V from YUV4, IYUV
+
+:param: [in] img          The reference to the parent image.
+:param: [in] channel      The *vx_channel_e* channel to use.
+
+:returns: An image reference *vx_image* to the sub-image. Any possible errors preventing a
+successful creation should be checked using *vxGetStatus*.
+:ingroup: group_image
+    '''
+    return lib.vxCreateImageFromChannel(img, channel)
+    
+def SetImageValidRectangle(image, rect):
+    '''
+:brief: Sets the valid rectangle for an image according to a supplied rectangle.
+:note: Setting or changing the valid region from within a user node by means other than the call-back, for 
+example by calling *vxSetImageValidRectangle*, might result in an incorrect valid region calculation 
+by the framework.
+:param: [in] image  The reference to the image.
+:param: [in] rect   The value to be set to the image valid rectangle. A NULL indicates that the valid region is the entire image.
+:return: A *vx_status_e* enumeration.
+:retval: VX_SUCCESS No errors.
+:retval: VX_ERROR_INVALID_REFERENCE  The image is not a *vx_image*.
+:retval: VX_ERROR_INVALID_PARAMETERS The rect does not define a proper valid rectangle. 
+:ingroup: group_image
+    '''
+    return lib.vxSetImageValidRectangle(image, rect)
     
 def LoadKernels(context, module):
     '''
@@ -788,6 +1015,28 @@ the platform requires.
 :see: vxGetKernelByName
     '''
     return lib.vxLoadKernels(context, module)
+    
+def UnloadKernels(context, module):
+    '''
+:brief: Unloads all kernels from the OpenVX context that had been loaded from
+* the module using the vxLoadKernels function.
+* :param: [in] context The reference to the implementation context.
+* :param: [in] module The short name of the module to unload. On systems where
+* there are specific naming conventions for modules, the name passed
+* should ignore such conventions. For example: :c: libxyz.so should be
+* passed as just :c: xyz and the implementation will <i>do the right thing</i>
+* that the platform requires.
+* :note: This API uses the system pre-defined paths for modules.
+* :return: A *vx_status_e* enumeration.
+* :retval: VX_SUCCESS No errors.
+* :retval: VX_ERROR_INVALID_REFERENCE If the context is not a *vx_context*.
+* :retval: VX_ERROR_INVALID_PARAMETERS If any of the other parameters are
+incorrect.
+* :ingroup: group_user_kernels
+* :see: vxLoadKernels
+*/
+    '''
+    return lib.vxUnloadKernels(context, module)
     
 def GetKernelByName(context, name):
     '''
@@ -877,9 +1126,16 @@ org.khronos.openvx.remap
 
 org.khronos.openvx.halfscale_gaussian 
 
+org.khronos.openvx.laplacian_pyramid
+
+org.khronos.openvx.laplacian_reconstruct
+
+org.khronos.openvx.non_linear_filter
+
 :param: [in] context The reference to the implementation context.
 :param: [in] name The string of the name of the kernel to get.
-:return: A kernel reference or zero if an error occurred.
+:return: A kernel reference or zero if an error occurred. Any possible errors 
+preventing a successful creation should be checked using *vxGetStatus*.
 :retval: 0 The kernel name is not found in the context.
 :ingroup: group_kernel
 :pre: *vxLoadKernels* if the kernel is not provided by the
@@ -896,7 +1152,8 @@ def GetKernelByEnum(context, kernel):
 loaded libraries.
 :param: [in] context The reference to the implementation context.
 :param: [in] kernel A value from *vx_kernel_e* or a vendor or client-defined value.
-:return: A *vx_kernel*.
+:return: A *vx_kernel*. Any possible errors 
+preventing a successful creation should be checked using *vxGetStatus*.
 :retval: 0 The kernel enumeration is not found in the context.
 :ingroup: group_kernel
 :pre: *vxLoadKernels* if the kernel is not provided by the
@@ -934,39 +1191,38 @@ The object may not be garbage collected until its total reference count is zero.
     '''
     return lib.vxReleaseKernel(kernel)
     
-def AddKernel(context, name, enumeration, func_ptr, numParams, input, output, init, deinit):
+def AddUserKernel(context, name, enumeration, func_ptr, numParams, validate, init, deinit):
     '''
 :brief: Allows users to add custom kernels to the known kernel
 database in OpenVX at run-time. This would primarily be used by the module function
-:c: vxPublishKernels.
+*vxPublishKernels*.
 :param: [in] context The reference to the implementation context.
 :param: [in] name The string to use to match the kernel.
 :param: [in] enumeration The enumerated value of the kernel to be used by clients.
 :param: [in] func_ptr The process-local function pointer to be invoked.
 :param: [in] numParams The number of parameters for this kernel.
-:param: [in] input The pointer to *vx_kernel_input_validate_f*, which validates the
-input parameters to this kernel.
-:param: [in] output The pointer to *vx_kernel_output_validate_f *, which validates the
-output parameters to this kernel.
+:param: [in] validate The pointer to *vx_kernel_validate_f*, which validates
+parameters to this kernel.
 :param: [in] init The kernel initialization function.
 :param: [in] deinit The kernel de-initialization function.
 :ingroup: group_user_kernels
-:return: *vx_kernel*
+:return: *vx_kernel*. Any possible errors 
+preventing a successful creation should be checked using *vxGetStatus*.
 :retval: 0 Indicates that an error occurred when adding the kernel.
 :retval:Kernel added to OpenVX.
     '''
-    return lib.vxAddKernel(context, name, enumeration, func_ptr, numParams, input, output, init, deinit)
+    return lib.vxAddUserKernel(context, name, enumeration, func_ptr, numParams, validate, init, deinit)
     
 def FinalizeKernel(kernel):
     '''
 :brief: This API is called after all parameters have been added to the
 kernel and the kernel is :e: ready to be used. Notice that the reference to the kernel created 
-by vxAddKernel is still valid after the call to vxFinalizeKernel.
-:param: [in] kernel The reference to the loaded kernel from *vxAddKernel*.
+by vxAddUserKernel is still valid after the call to vxFinalizeKernel.
+:param: [in] kernel The reference to the loaded kernel from *vxAddUserKernel*.
 :return: A *vx_status_e* enumeration. If an error occurs, the kernel is not available
 for usage by the clients of OpenVX. Typically this is due to a mismatch
 between the number of parameters requested and given.
-:pre: *vxAddKernel* and *vxAddParameterToKernel*
+:pre: *vxAddUserKernel* and *vxAddParameterToKernel*
 :ingroup: group_user_kernels
     '''
     return lib.vxFinalizeKernel(kernel)
@@ -974,7 +1230,7 @@ between the number of parameters requested and given.
 def AddParameterToKernel(kernel, index, dir, data_type, state):
     '''
 :brief: Allows users to set the signatures of the custom kernel.
-:param: [in] kernel The reference to the kernel added with *vxAddKernel*.
+:param: [in] kernel The reference to the kernel added with *vxAddUserKernel*.
 :param: [in] index The index of the parameter to add.
 :param: [in] dir The direction of the parameter. This must be either *VX_INPUT* or 
 *VX_OUTPUT*. *VX_BIDIRECTIONAL* is not supported for this function. 
@@ -983,22 +1239,27 @@ def AddParameterToKernel(kernel, index, dir, data_type, state):
 :return: A *vx_status_e* enumerated value.
 :retval: VX_SUCCESS Parameter is successfully set on kernel.
 :retval: VX_ERROR_INVALID_REFERENCE The value passed as kernel was not a :c: vx_kernel.
-:pre: *vxAddKernel*
+:pre: *vxAddUserKernel*
 :ingroup: group_user_kernels
     '''
     return lib.vxAddParameterToKernel(kernel, index, dir, data_type, state)
     
 def RemoveKernel(kernel):
     '''
-:brief: Removes a non-finalized *vx_kernel* from the *vx_context* 
-and releases it. Once a *vx_kernel* has been finalized it cannot be removed.
-:param: [in] kernel The reference to the kernel to remove. Returned from *vxAddKernel*.
+:brief: Removes a *vx_kernel* from the *vx_context* 
+and releases it. 
+:param: [in] kernel The reference to the kernel to remove. Returned from *vxAddUserKernel*.
 :note: Any kernel enumerated in the base standard
-cannot be removed; only kernels added through *vxAddKernel* can
+cannot be removed; only kernels added through *vxAddUserKernel* can
 be removed.
-:return: A *vx_status_e* enumeration.
+:return: A *vx_status_e* enumeration. The function returns to the 
+application full control over the memory resources provided at the kernel creation time.
 :retval: VX_ERROR_INVALID_REFERENCE If an invalid kernel is passed in.
 :retval: VX_ERROR_INVALID_PARAMETER If a base kernel is passed in.
+:retval: VX_FAILURE If the application has not released all references to the kernel 
+object OR if the application has not released all references to a node that is using 
+this kernel OR if the application has not released all references to a graph which 
+has nodes that is using this kernel.
 :ingroup: group_user_kernels
     '''
     return lib.vxRemoveKernel(kernel)
@@ -1022,7 +1283,8 @@ def GetKernelParameterByIndex(kernel, index):
 :brief: Retrieves a *vx_parameter* from a *vx_kernel*.
 :param: [in] kernel The reference to the kernel.
 :param: [in] index The index of the parameter.
-:return: A *vx_parameter*.
+:return: A *vx_parameter*.Any possible errors 
+preventing a successful creation should be checked using *vxGetStatus*.
 :retval: 0 Either the kernel or index is invalid.
 :retval:The parameter reference.
 :ingroup: group_parameter
@@ -1125,8 +1387,7 @@ scheduled execution completes.
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS The graph has successfully completed execution and its outputs are the 
 valid results of the most recent execution. 
-:retval: VX_FAILURE An error occurred or the graph was never scheduled.  Use vxQueryGraph 
-for the VX_GRAPH_ATTRIBUTE_STATUS attribute to determine the details.  Output data of the 
+:retval: VX_FAILURE An error occurred or the graph was never scheduled. Output data of the 
 graph is undefined. 
 :pre: *vxScheduleGraph*
 :ingroup: group_graph
@@ -1147,7 +1408,7 @@ def QueryGraph(graph, attribute, ptr, size):
     
 def SetGraphAttribute(graph, attribute, ptr, size):
     '''
-:brief: Allows the set to attributes on the Graph.
+:brief: Allows the attributes of the Graph to be set to the provided value.
 :param: [in] graph The reference to the graph.
 :param: [in] attribute The *vx_graph_attribute_e* type needed.
 :param: [in] ptr The location from which to read the value.
@@ -1192,7 +1453,8 @@ def GetGraphParameterByIndex(graph, index):
 :brief: Retrieves a *vx_parameter* from a *vx_graph*.
 :param: [in] graph The graph.
 :param: [in] index The index of the parameter.
-:return: *vx_parameter* reference.
+:return: *vx_parameter* reference. Any possible errors 
+preventing a successful creation should be checked using *vxGetStatus*.
 :retval: 0 if the index is out of bounds.
 :retval:The parameter reference.
 :ingroup: group_graph_parameters
@@ -1223,6 +1485,7 @@ to use along with the parameter setting API.
 :param: [in] kernel The kernel reference to associate with this new node.
 :returns: A node reference *vx_node*. Any possible errors preventing a 
 successful creation should be checked using *vxGetStatus*.
+:note: A call to this API sets all parameters to NULL. 
 :ingroup: group_adv_node
 :post: Call *vxSetParameterByIndex* for as many parameters as needed to be set.
     '''
@@ -1246,12 +1509,12 @@ def SetNodeAttribute(node, attribute, ptr, size):
     '''
 :brief: Allows a user to set attribute of a node before Graph Validation.
 :param: [in] node The reference to the node to set.
-:param: [in] attribute Use *vx_node_attribute_e* value to query for information.
-:param: [out] ptr The output pointer to where to send the value.
+:param: [in] attribute Use *vx_node_attribute_e* value to set the desired attribute.
+:param: [in] ptr The pointer to the desired value of the attribute.
 :param: [in] size The size in bytes of the objects to which :a: ptr points.
 :note: Some attributes are inherited from the *vx_kernel*, which was used
 to create the node. Some of these can be overridden using this API, notably
-VX_NODE_ATTRIBUTE_LOCAL_DATA_SIZE and VX_NODE_ATTRIBUTE_LOCAL_DATA_PTR.
+VX_NODE_LOCAL_DATA_SIZE and VX_NODE_LOCAL_DATA_PTR.
 :ingroup: group_node
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS The attribute was set.
@@ -1313,12 +1576,55 @@ def RetrieveNodeCallback(node):
     '''
     return lib.vxRetrieveNodeCallback(node)
     
+def SetNodeTarget(node, target_enum, target_string):
+    '''
+:brief: Sets the node target to the provided value. A success invalidates the graph 
+that the node belongs to (*vxVerifyGraph* must be called before the next execution)
+:param: [in] node  The reference to the *vx_node* object.
+:param: [in] target_enum  The target enum to be set to the *vx_node* object.
+Use a *vx_target_e*.
+:param: [in] target_string  The target name ASCII string. This contains a valid value 
+when target_enum is set to *VX_TARGET_STRING*, otherwise it is ignored.
+:ingroup: group_node
+:return: A *vx_status_e* enumeration.
+:retval: VX_SUCCESS Node target set.
+:retval: VX_ERROR_INVALID_REFERENCE If node is not a *vx_node*.
+:retval: VX_ERROR_NOT_SUPPORTED If the node kernel is not supported by the specified target.
+    '''
+    return lib.vxSetNodeTarget(node, target_enum, target_string)
+    
+def ReplicateNode(graph, first_node, replicate, number_of_parameters):
+    '''
+:brief: Creates replicas of the same node first_node to process a set of objects
+stored in *vx_pyramid* or *vx_object_array*.
+first_node needs to have as parameter levels 0 of a *vx_pyramid* or the index 0 of a *vx_object_array*. 
+Replica nodes are not accessible by the application through any means. An application request for removal of 
+first_node from the graph will result in removal of all replicas. Any change of parameter or attribute of 
+first_node will be propagated to the replicas. *vxVerifyGraph* shall enforce consistency of parameters and attributes 
+in the replicas.
+:param: [in] graph The reference to the graph. 
+:param: [in] first_node The reference to the node in the graph that will be replicated.
+:param: [in] replicate an array of size equal to the number of node parameters, vx_true_e for the parameters 
+that should be iterated over (should be a reference to a vx_pyramid or a vx_object_array), 
+vx_false_e for the parameters that should be the same across replicated nodes and for optional 
+parameters that are not used. Should be vx_true_e for all output and bidirectional parameters.
+:param: [in] number_of_parameters number of elements in the replicate array
+:return: A *vx_status_e* enumeration.
+:retval: VX_SUCCESS No errors.
+:retval: VX_ERROR_INVALID_REFERENCE If the first_node is not a *vx_node*, or it is not the first child of a vx_pyramid.
+:retval: VX_ERROR_NOT_COMPATIBLE At least one of replicated parameters is not of level 0 of a pyramid or at index 0 of an object array.
+:retval: VX_FAILURE If the node does not belong to the graph, or the number of objects in the parent objects of inputs and output are not the same.
+:ingroup: group_node
+    '''
+    return lib.vxReplicateNode(graph, first_node, replicate, number_of_parameters)
+    
 def GetParameterByIndex(node, index):
     '''
 :brief: Retrieves a *vx_parameter* from a *vx_node*.
 :param: [in] node The node from which to extract the parameter.
 :param: [in] index The index of the parameter to which to get a reference.
-:return: *vx_parameter*
+:return: *vx_parameter*. Any possible errors 
+preventing a successful creation should be checked using *vxGetStatus*.
 :ingroup: group_parameter
     '''
     return lib.vxGetParameterByIndex(node, index)
@@ -1341,7 +1647,8 @@ def SetParameterByIndex(node, index, value):
 :brief: Sets the specified parameter data for a kernel on the node.
 :param: [in] node The node that contains the kernel.
 :param: [in] index The index of the parameter desired.
-:param: [in] value The reference to the parameter.
+:param: [in] value The desired value of the parameter.
+:note: A user may not provide a NULL value for a mandatory parameter of this API.
 :return: A *vx_status_e* enumeration.
 :ingroup: group_parameter
 :see: vxSetParameterByReference
@@ -1354,6 +1661,7 @@ def SetParameterByReference(parameter, value):
 on a node.
 :param: [in] parameter The reference to the kernel parameter.
 :param: [in] value The value to associate with the kernel parameter.
+:note: A user may not provide a NULL value for a mandatory parameter of this API.
 :return: A *vx_status_e* enumeration.
 :ingroup: group_parameter
 :see: vxGetParameterByIndex
@@ -1410,51 +1718,96 @@ def QueryScalar(scalar, attribute, ptr, size):
     '''
     return lib.vxQueryScalar(scalar, attribute, ptr, size)
     
-def ReadScalarValue(ref, ptr):
+def CopyScalar(scalar, user_ptr, usage, user_mem_type):
     '''
-:brief: Gets the scalar value out of a reference.
-:note: Use this in conjunction with Query APIs that return references which
-should be converted into values.
-:ingroup: group_scalar
-:param: [in] ref The reference from which to get the scalar value.
-:param: [out] ptr An appropriate typed pointer that points to a location to which to copy
-the scalar value.
+:brief: Allows the application to copy from/into a scalar object.
+:param: [in] scalar The reference to the scalar object that is the source or the
+destination of the copy.
+:param: [in] user_ptr The address of the memory location where to store the requested data
+if the copy was requested in read mode, or from where to get the data to store into the
+scalar object if the copy was requested in write mode. In the user memory, the scalar is
+a variable of the type corresponding to *VX_SCALAR_TYPE*.
+The accessible memory must be large enough to contain this variable.
+:param: [in] usage This declares the effect of the copy with regard to the scalar object
+using the *vx_accessor_e* enumeration. Only VX_READ_ONLY and VX_WRITE_ONLY
+are supported:
+:arg: VX_READ_ONLY means that data are copied from the scalar object into the user memory.
+:arg: VX_WRITE_ONLY means that data are copied into the scalar object from the user memory.
+:param: [in] user_mem_type A *vx_memory_type_e* enumeration that specifies
+the memory type of the memory referenced by the user_addr.
 :return: A *vx_status_e* enumeration.
-:retval: VX_ERROR_INVALID_REFERENCE If the ref is not a valid
-reference.
-:retval: VX_ERROR_INVALID_PARAMETERS If :a: ptr is NULL.
-:retval: VX_ERROR_INVALID_TYPE If the type does not match the type in the reference or is a bad value.
-    '''
-    return lib.vxReadScalarValue(ref, ptr)
-    
-def WriteScalarValue(ref, ptr):
-    '''
-:brief: Sets the scalar value in a reference.
-:note: Use this in conjunction with Parameter APIs that return references
-to parameters that need to be altered.
+:retval: VX_ERROR_INVALID_REFERENCE The scalar reference is not actually a scalar reference.
+:retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
 :ingroup: group_scalar
-:param: [in] ref The reference from which to get the scalar value.
-:param: [in] ptr An appropriately typed pointer that points to a location to which to copy
-the scalar value.
-:return: A *vx_status_e* enumeration.
-:retval: VX_ERROR_INVALID_REFERENCE If the ref is not a valid
-reference.
-:retval: VX_ERROR_INVALID_PARAMETERS If :a: ptr is NULL.
-:retval: VX_ERROR_INVALID_TYPE If the type does not match the type in the reference or is a bad value.
     '''
-    return lib.vxWriteScalarValue(ref, ptr)
+    return lib.vxCopyScalar(scalar, user_ptr, usage, user_mem_type)
     
 def QueryReference(ref, attribute, ptr, size):
     '''
-:brief: Queries any reference type for some basic information (count, type).
+:brief: Queries any reference type for some basic information like count or type.
 :param: [in] ref The reference to query.
 :param: [in] attribute The value for which to query. Use *vx_reference_attribute_e*.
 :param: [out] ptr The location at which to store the resulting value.
-:param: [in] size The size in bytes of the container to which :a: ptr points.
+:param: [in] size The size in bytes of the container to which ptr points.
 :return: A *vx_status_e* enumeration.
 :ingroup: group_reference
     '''
     return lib.vxQueryReference(ref, attribute, ptr, size)
+    
+def ReleaseReference(ref_ptr):
+    '''
+:brief: Releases a reference. The reference may potentially refer to multiple OpenVX objects of different types.
+This function can be used instead of calling a specific release function for each individual object type 
+(e.g. vxRelease<object>). The object will not be destroyed until its total reference count is zero.
+:note: After returning from this function the reference is zeroed.
+:param: [in] ref_ptr The pointer to the reference of the object to release.
+:return: A *vx_status_e* enumeration.
+:retval: VX_SUCCESS No errors.
+:retval: VX_ERROR_INVALID_REFERENCE If the reference is not valid.
+:ingroup: group_reference
+    '''
+    return lib.vxReleaseReference(ref_ptr)
+    
+def RetainReference(ref):
+    '''
+:brief: Increments the reference counter of an object
+This function is used to express the fact that the OpenVX object is referenced
+multiple times by an application. Each time this function is called for
+an object, the application will need to release the object one additional
+time before it can be destructed
+:param: [in] ref The reference to retain.
+:return: A *vx_status_e* enumeration.
+:retval: VX_SUCCESS No errors.
+:retval: VX_ERROR_INVALID_REFERENCE if reference is not valid.
+:ingroup: group_reference
+    '''
+    return lib.vxRetainReference(ref)
+    
+def SetReferenceName(ref, name):
+    '''
+:brief: Name a reference
+:ingroup: group_reference
+
+This function is used to associate a name to a referenced object. This name
+can be used by the OpenVX implementation in log messages and any
+other reporting mechanisms.  
+
+The OpenVX implementation will not check if the name is unique in
+the reference scope (context or graph). Several references can then
+have the same name.
+
+:param: [in] ref The reference to the object to be named.
+:param: [in] name Pointer to the '\0' terminated string that identifies
+            the referenced object.
+            The string is copied by the function so that it
+            stays the property of the caller.
+            NULL means that the reference is not named.
+            The length of the string shall be lower than VX_MAX_REFERENCE_NAME bytes.
+:return: A vx_status_e enumeration.
+:retval: VX_SUCCESS No errors.
+:retval: VX_ERROR_INVALID_REFERENCE If reference is not valid.
+    '''
+    return lib.vxSetReferenceName(ref, name)
     
 def QueryDelay(delay, attribute, ptr, size):
     '''
@@ -1504,12 +1857,13 @@ def GetReferenceFromDelay(delay, index):
 :param: [in] delay The reference to the delay object.
 :param: [in] index An index into the delay from which to extract the
 reference.
-:return: *vx_reference*
+:return: *vx_reference*. Any possible errors 
+preventing a successful creation should be checked using *vxGetStatus*.
 :note: The delay index is in the range :f:$ [-count+1,0] :f:$. 0 is always the
 :e: current object.
 :ingroup: group_delay
 :note: A reference from a delay object must not be given to its associated
-release API (e.g. *vxReleaseImage*). Use the *vxReleaseDelay* only.
+release API (e.g. *vxReleaseImage*) unless *vxRetainReference* is used.
     '''
     return lib.vxGetReferenceFromDelay(delay, index)
     
@@ -1518,7 +1872,7 @@ def AgeDelay(delay):
 :brief: Ages the internal delay ring by one. This means that once this API is
 called the reference from index 0 will go to index -1 and so forth until
 :f:$ -count+1 :f:$ is reached. This last object will become 0. Once the delay has
-been aged, it updates the reference in any associated nodes.
+been aged, it updates the reference in any associated nodes. Here :f:$ count :f:$ is the number of slots in delay ring.
 :param: [in] delay
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Delay was aged.
@@ -1526,6 +1880,30 @@ been aged, it updates the reference in any associated nodes.
 :ingroup: group_delay
     '''
     return lib.vxAgeDelay(delay)
+    
+def RegisterAutoAging(graph, delay):
+    '''
+:brief: Register a delay for auto-aging.
+
+This function registers a delay object to be auto-aged by the graph.
+This delay object will be automatically aged after each successful completion of
+this graph. Aging of a delay object cannot be called during graph execution. 
+A graph abandoned due to a node callback will trigger an auto-aging.
+
+If a delay is registered for auto-aging multiple times in a same graph,
+the delay will be only aged a single time at each graph completion.
+If a delay is registered for auto-aging in multiple graphs, this delay will
+aged automatically after each successful completion of any of these graphs.
+
+:param: [in] graph The graph to which the delay is registered for auto-aging.
+:param: [in] delay The delay to automatically age.
+
+:return: A vx_status_e enumeration.
+:retval: VX_SUCCESS                   No errors.
+:retval: VX_ERROR_INVALID_REFERENCE   If the :p: graph or :p: delay is not a valid reference
+:ingroup: group_graph
+    '''
+    return lib.vxRegisterAutoAging(graph, delay)
     
 def AddLogEntry(ref, status, message):
     '''
@@ -1552,15 +1930,17 @@ simultaneous tasks or threads (if the host OS supports this).
     
 def CreateLUT(context, data_type, count):
     '''
-:brief: Creates LUT object of a given type.
+:brief: Creates LUT object of a given type. The value of *VX_LUT_OFFSET* is equal to 0 
+for data_type = *VX_TYPE_UINT8*, and (vx_uint32)(count/2) for *VX_TYPE_INT16*.
 :param: [in] context The reference to the context.
 :param: [in] data_type The type of data stored in the LUT.
 :param: [in] count The number of entries desired.
 :if: OPENVX_STRICT_1_0
-:note: For OpenVX 1.0, count must be equal to 256 and data_type can only be VX_TYPE_UINT8.
+:note: For OpenVX 1.0, data_type can only be VX_TYPE_UINT8 or VX_TYPE_INT16. If data_type 
+is VX_TYPE_UINT8, count should be not greater than 256. If data_type is VX_TYPE_INT16, 
+count should not be greater than 65536.
 :endif:
-:returns: An LUT reference *vx_lut*. Any possible errors preventing a 
-successful creation should be checked using *vxGetStatus*.
+:returns: An LUT reference *vx_lut*. Any possible errors preventing a successful creation should be checked using *vxGetStatus*.
 :ingroup: group_lut
     '''
     return lib.vxCreateLUT(context, data_type, count)
@@ -1590,51 +1970,91 @@ def QueryLUT(lut, attribute, ptr, size):
     '''
     return lib.vxQueryLUT(lut, attribute, ptr, size)
     
-def AccessLUT(lut, ptr, usage):
+def CopyLUT(lut, user_ptr, usage, user_mem_type):
     '''
-:brief: Grants access to a LUT table and increments the object reference count in case of success.
-:details: There are several variations of call methodology:
-:arg: If :a: ptr is NULL (which means the current data of the LUT is not desired),
-the LUT reference count is incremented.
-:arg: If :a: ptr is not NULL but (*ptr) is NULL, (*ptr) will contain the address of the LUT data when the function returns and
-the reference count will be incremented. Whether the (*ptr) address is mapped
-or allocated is undefined. (*ptr) must be returned to *vxCommitLUT*.
-:arg: If :a: ptr is not NULL and (*ptr) is not NULL, the user is signalling the implementation to copy the LUT data into the location specified
-by (*ptr). Users must use *vxQueryLUT* with *VX_LUT_ATTRIBUTE_SIZE* to
-determine how much memory to allocate for the LUT data.
-
-In any case, *vxCommitLUT* must be called after LUT access is complete.
-:param: [in] lut The LUT from which to get the data.
-:param: [in,out] ptr ptr The user-supplied address to a pointer, via which the requested contents 
-are returned.
-:arg: If ptr is NULL, an error occurs.
-:arg: If ptr is not NULL and (*ptr) is NULL, (*ptr) will be set to the address of a memory area 
-managed by the OpenVX framework containing the requested data.
-:arg: If both ptr and (*ptr) are not NULL, requested data will be copied to (*ptr) (optionally in 
-case of write-only access).
-:param: [in] usage This declares the intended usage of the pointer using the*vx_accessor_e* enumeration.
+:brief: Allows the application to copy from/into a LUT object.
+:param: [in] lut The reference to the LUT object that is the source or the
+destination of the copy.
+:param: [in] user_ptr The address of the memory location where to store the requested data
+if the copy was requested in read mode, or from where to get the data to store into the LUT
+object if the copy was requested in write mode. In the user memory, the LUT is
+represented as a array with elements of the type corresponding to
+*VX_LUT_TYPE*, and with a number of elements equal to the value
+returned via *VX_LUT_COUNT*. The accessible memory must be large enough
+to contain this array:
+accessible memory in bytes >= sizeof(data_element)count.
+:param: [in] usage This declares the effect of the copy with regard to the LUT object
+using the *vx_accessor_e* enumeration. Only VX_READ_ONLY and VX_WRITE_ONLY
+are supported:
+:arg: VX_READ_ONLY means that data are copied from the LUT object into the user memory.
+:arg: VX_WRITE_ONLY means that data are copied into the LUT object from the user memory.
+:param: [in] user_mem_type A *vx_memory_type_e* enumeration that specifies
+the memory type of the memory referenced by the user_addr.
 :return: A *vx_status_e* enumeration.
-:post: *vxCommitLUT*
+:retval: VX_ERROR_INVALID_REFERENCE The LUT reference is not actually a LUT reference.
+:retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
 :ingroup: group_lut
     '''
-    return lib.vxAccessLUT(lut, ptr, usage)
+    return lib.vxCopyLUT(lut, user_ptr, usage, user_mem_type)
     
-def CommitLUT(lut, ptr):
+def MapLUT(lut, map_id, ptr, usage, mem_type, flags):
     '''
-:brief: Commits the Lookup Table and decrements the object reference count in case of success.
-:details: Commits the data back to the LUT object and decrements the reference count.
-There are several variations of call methodology:
-:arg: If a user should allocated their own memory for the LUT data copy, the user is
-obligated to free this memory.
-:arg: If :a: ptr is not NULL and the (*ptr) for *vxAccessLUT* was NULL,
-it is undefined whether the implementation will unmap or copy and free the memory.
-:param: [in] lut The LUT to modify.
-:param: [in] ptr The pointer provided or returned by *vxAccessLUT*. This cannot be NULL.
+:brief: Allows the application to get direct access to LUT object.
+:param: [in] lut The reference to the LUT object to map.
+:param: [out] map_id The address of a vx_map_id variable where the function
+returns a map identifier.
+:arg: (*map_id) must eventually be provided as the map_id parameter of a call to
+*vxUnmapLUT*.
+:param: [out] ptr The address of a pointer that the function sets to the
+address where the requested data can be accessed. In the mapped memory area,
+the LUT data are structured as an array with elements of the type corresponding
+to *VX_LUT_TYPE*, with a number of elements equal to
+the value returned via *VX_LUT_COUNT*. Accessing the
+memory out of the bound of this array is forbidden and has an undefined behavior.
+The returned (*ptr) address is only valid between the call to the function and
+the corresponding call to *vxUnmapLUT*.
+:param: [in] usage This declares the access mode for the LUT, using
+the *vx_accessor_e* enumeration.
+:arg: VX_READ_ONLY: after the function call, the content of the memory location
+pointed by (*ptr) contains the LUT data. Writing into this memory location
+is forbidden and its behavior is undefined.
+:arg: VX_READ_AND_WRITE : after the function call, the content of the memory
+location pointed by (*ptr) contains the LUT data; writing into this memory
+is allowed only for the location of entries and will result in a modification
+of the affected entries in the LUT object once the LUT is unmapped.
+:arg: VX_WRITE_ONLY: after the function call, the memory location pointed by(*ptr)
+contains undefined data; writing each entry of LUT is required prior to
+unmapping. Entries not written by the application before unmap will become
+undefined after unmap, even if they were well defined before map.
+:param: [in] mem_type A *vx_memory_type_e* enumeration that
+specifies the type of the memory where the LUT is requested to be mapped.
+:param: [in] flags An integer that allows passing options to the map operation.
+Use 0 for this option.
 :return: A *vx_status_e* enumeration.
-:pre: *vxAccessLUT*.
+:retval: VX_ERROR_INVALID_REFERENCE The LUT reference is not actually a LUT
+reference.
+:retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
 :ingroup: group_lut
+:post: *vxUnmapLUT * with same (*map_id) value.
     '''
-    return lib.vxCommitLUT(lut, ptr)
+    return lib.vxMapLUT(lut, map_id, ptr, usage, mem_type, flags)
+    
+def UnmapLUT(lut, map_id):
+    '''
+:brief: Unmap and commit potential changes to LUT object that was previously mapped.
+Unmapping a LUT invalidates the memory location from which the LUT data could
+be accessed by the application. Accessing this memory location after the unmap function
+completes has an undefined behavior.
+:param: [in] lut The reference to the LUT object to unmap.
+:param: [out] map_id The unique map identifier that was returned when calling
+*vxMapLUT* .
+:return: A *vx_status_e* enumeration.
+:retval: VX_ERROR_INVALID_REFERENCE The LUT reference is not actually a LUT reference.
+:retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
+:ingroup: group_lut
+:pre: *vxMapLUT* returning the same map_id value
+    '''
+    return lib.vxUnmapLUT(lut, map_id)
     
 def CreateDistribution(context, numBins, offset, range):
     '''
@@ -1643,7 +2063,7 @@ defined by a start offset and valid range, divided equally into numBins parts.
 :param: [in] context The reference to the overall context.
 :param: [in] numBins The number of bins in the distribution.
 :param: [in] offset The start offset into the range value that marks the begining of the 1D Distribution.
-:param: [in] range The total number of the values.
+:param: [in] range  The total number of the consecutive values of the distribution interval. 
 :returns: A distribution reference *vx_distribution*. Any possible errors preventing a 
 successful creation should be checked using *vxGetStatus*.
 :ingroup: group_distribution
@@ -1675,38 +2095,94 @@ def QueryDistribution(distribution, attribute, ptr, size):
     '''
     return lib.vxQueryDistribution(distribution, attribute, ptr, size)
     
-def AccessDistribution(distribution, ptr, usage):
+def CopyDistribution(distribution, user_ptr, usage, user_mem_type):
     '''
-:brief: Grants access to a distribution object and increments the object reference count in 
-case of success.
-:param: [in] distribution The reference to the distribution to access.
-:param: [in, out] ptr The user-supplied address to a pointer, via which the requested contents 
-are returned.
-:arg: If ptr is NULL, an error occurs.
-:arg: If ptr is not NULL and (*ptr) is NULL, (*ptr) will be set to the address of a memory area 
-managed by the OpenVX framework containing the requested data.
-:arg: If both ptr and (*ptr) are not NULL, requested data will be copied to (*ptr) (optionally in 
-case of write-only access).
-:param: [in] usage The *vx_accessor_e* value to describe the access of the object.
-:return: A *vx_status_e* enumeration.
-:post: *vxCommitDistribution*
-:ingroup: group_distribution
+:brief: Allows the application to copy from/into a distribution object.
+* :param: [in] distribution The reference to the distribution object that is the source or the
+* destination of the copy.
+* :param: [in] user_ptr The address of the memory location where to store the requested data
+* if the copy was requested in read mode, or from where to get the data to store into the distribution
+* object if the copy was requested in write mode. In the user memory, the distribution is
+* represented as a *vx_uint32* array with a number of elements equal to the value returned via
+* *VX_DISTRIBUTION_BINS*. The accessible memory must be large enough
+* to contain this vx_uint32 array:
+* accessible memory in bytes >= sizeof(vx_uint32)num_bins.
+* :param: [in] usage This declares the effect of the copy with regard to the distribution object
+* using the *vx_accessor_e* enumeration. Only VX_READ_ONLY and VX_WRITE_ONLY
+* are supported:
+* :arg: VX_READ_ONLY means that data are copied from the distribution object into the user memory.
+* :arg: VX_WRITE_ONLY means that data are copied into the distribution object from the user memory.
+* :param: [in] user_mem_type A *vx_memory_type_e* enumeration that specifies
+* the memory type of the memory referenced by the user_addr.
+* :return: A *vx_status_e* enumeration.
+* :retval: VX_ERROR_INVALID_REFERENCE The distribution reference is not actually a distribution reference.
+* :retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
+* :ingroup: group_distribution
+*/
     '''
-    return lib.vxAccessDistribution(distribution, ptr, usage)
+    return lib.vxCopyDistribution(distribution, user_ptr, usage, user_mem_type)
     
-def CommitDistribution(distribution, ptr):
+def MapDistribution(distribution, map_id, ptr, usage, mem_type, flags):
     '''
-:brief: Commits the distribution objec> and decrements the object reference count in case of success. 
-The memory must be a vx_uint32 array of a value at least as big as the value returned via 
-*VX_DISTRIBUTION_ATTRIBUTE_BINS*.
-:param: [in] distribution The Distribution to modify.
-:param: [in] ptr The pointer provided or returned by *vxAccessDistribution*. The ptr cannot
-be NULL.
-:return: A *vx_status_e* enumeration.
-:pre: *vxAccessDistribution*.
-:ingroup: group_distribution
+:brief: Allows the application to get direct access to distribution object.
+* :param: [in] distribution The reference to the distribution object to map.
+* :param: [out] map_id The address of a vx_map_id variable where the function
+* returns a map identifier.
+* :arg: (*map_id) must eventually be provided as the map_id parameter of a call to
+* *vxUnmapDistribution*.
+* :param: [out] ptr The address of a pointer that the function sets to the
+* address where the requested data can be accessed. In the mapped memory area,
+* data are structured as a vx_uint32 array with a number of elements equal to
+* the value returned via *VX_DISTRIBUTION_BINS*. Each
+* element of this array corresponds to a bin of the distribution, with a range-major
+* ordering. Accessing the memory out of the bound of this array
+* is forbidden and has an undefined behavior. The returned (*ptr) address
+* is only valid between the call to the function and the corresponding call to
+* *vxUnmapDistribution*.
+* :param: [in] usage This declares the access mode for the distribution, using
+* the *vx_accessor_e* enumeration.
+* :arg: VX_READ_ONLY: after the function call, the content of the memory location
+* pointed by (*ptr) contains the distribution data. Writing into this memory location
+* is forbidden and its behavior is undefined.
+* :arg: VX_READ_AND_WRITE : after the function call, the content of the memory
+* location pointed by (*ptr) contains the distribution data; writing into this memory
+* is allowed only for the location of bins and will result in a modification of the
+* affected bins in the distribution object once the distribution is unmapped.
+* :arg: VX_WRITE_ONLY: after the function call, the memory location pointed by (*ptr)
+* contains undefined data; writing each bin of distribution is required prior to
+* unmapping. Bins not written by the application before unmap will become
+* undefined after unmap, even if they were well defined before map.
+* :param: [in] mem_type A *vx_memory_type_e* enumeration that
+* specifies the type of the memory where the distribution is requested to be mapped.
+* :param: [in] flags An integer that allows passing options to the map operation.
+* Use 0 for this option.
+* :return: A *vx_status_e* enumeration.
+* :retval: VX_ERROR_INVALID_REFERENCE The distribution reference is not actually a distribution
+* reference.
+* :retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
+* :ingroup: group_distribution
+* :post: *vxUnmapDistribution * with same (*map_id) value.
+*/
     '''
-    return lib.vxCommitDistribution(distribution, ptr)
+    return lib.vxMapDistribution(distribution, map_id, ptr, usage, mem_type, flags)
+    
+def UnmapDistribution(distribution, map_id):
+    '''
+:brief: Unmap and commit potential changes to distribution object that was previously mapped.
+* Unmapping a distribution invalidates the memory location from which the distribution data
+* could be accessed by the application. Accessing this memory location after the unmap
+* function completes has an undefined behavior.
+* :param: [in] distribution The reference to the distribution object to unmap.
+* :param: [out] map_id The unique map identifier that was returned when calling
+* *vxMapDistribution* .
+* :return: A *vx_status_e* enumeration.
+* :retval: VX_ERROR_INVALID_REFERENCE The distribution reference is not actually a distribution reference.
+* :retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
+* :ingroup: group_distribution
+* :pre: *vxMapDistribution* returning the same map_id value
+*/
+    '''
+    return lib.vxUnmapDistribution(distribution, map_id)
     
 def CreateThreshold(c, thresh_type, data_type):
     '''
@@ -1714,9 +2190,6 @@ def CreateThreshold(c, thresh_type, data_type):
 :param: [in] c The reference to the overall context.
 :param: [in] thresh_type The type of threshold to create.
 :param: [in] data_type The data type of the threshold's value(s).
-:if: OPENVX_STRICT_1_0
-:note: For OpenVX 1.0, data_type can only be *VX_TYPE_UINT8*.
-:endif:
 :returns: An threshold reference *vx_threshold*. Any possible errors preventing a 
 successful creation should be checked using *vxGetStatus*.
 :ingroup: group_threshold
@@ -1764,7 +2237,7 @@ def CreateMatrix(c, data_type, columns, rows):
     '''
 :brief: Creates a reference to a matrix object.
 :param: [in] c The reference to the overall context.
-:param: [in] data_type The unit format of the matrix. *VX_TYPE_INT32* or *VX_TYPE_FLOAT32*.
+:param: [in] data_type The unit format of the matrix. *VX_TYPE_UINT8* or *VX_TYPE_INT32* or *VX_TYPE_FLOAT32*.
 :param: [in] columns The first dimensionality.
 :param: [in] rows The second dimensionality.
 :returns: An matrix reference *vx_matrix*. Any possible errors preventing a 
@@ -1798,29 +2271,63 @@ def QueryMatrix(mat, attribute, ptr, size):
     '''
     return lib.vxQueryMatrix(mat, attribute, ptr, size)
     
-def ReadMatrix(mat, array):
+def CopyMatrix(matrix, user_ptr, usage, user_mem_type):
     '''
-:brief: Gets the matrix data (copy).
-:param: [in] mat The reference to the matrix.
-:param: [out] array The array in which to place the matrix.
-:see: vxQueryMatrix and *VX_MATRIX_ATTRIBUTE_COLUMNS* and *VX_MATRIX_ATTRIBUTE_ROWS*
-to get the needed number of elements of the array.
-:return: A *vx_status_e* enumeration.
-:ingroup: group_matrix
+:brief: Allows the application to copy from/into a matrix object.
+* :param: [in] matrix The reference to the matrix object that is the source or the
+* destination of the copy.
+* :param: [in] user_ptr The address of the memory location where to store the requested data
+* if the copy was requested in read mode, or from where to get the data to store into the matrix
+* object if the copy was requested in write mode. In the user memory, the matrix is
+* structured as a row-major 2D array with elements of the type corresponding to
+* *VX_MATRIX_TYPE*, with a number of rows corresponding to
+* *VX_MATRIX_ROWS* and a number of columns corresponding to
+* *VX_MATRIX_COLUMNS*. The accessible memory must be large
+* enough to contain this 2D array:
+* accessible memory in bytes >= sizeof(data_element)rowscolumns.
+* :param: [in] usage This declares the effect of the copy with regard to the matrix object
+* using the *vx_accessor_e* enumeration. Only VX_READ_ONLY and VX_WRITE_ONLY
+* are supported:
+* :arg: VX_READ_ONLY means that data are copied from the matrix object into the user memory.
+* :arg: VX_WRITE_ONLY means that data are copied into the matrix object from the user memory.
+* :param: [in] user_mem_type A *vx_memory_type_e* enumeration that specifies
+* the memory type of the memory referenced by the user_addr.
+* :return: A *vx_status_e* enumeration.
+* :retval: VX_ERROR_INVALID_REFERENCE The matrix reference is not actually a matrix reference.
+* :retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
+* :ingroup: group_matrix
+*/
     '''
-    return lib.vxReadMatrix(mat, array)
+    return lib.vxCopyMatrix(matrix, user_ptr, usage, user_mem_type)
     
-def WriteMatrix(mat, array):
+def CreateMatrixFromPattern(context, pattern, columns, rows):
     '''
-:brief: Sets the matrix data (copy)
-:param: [in] mat The reference to the matrix.
-:param: [in] array The array containing the matrix to be written.
-:see: vxQueryMatrix and *VX_MATRIX_ATTRIBUTE_COLUMNS* and *VX_MATRIX_ATTRIBUTE_ROWS*
-to get the needed number of elements of the array.'
-:return: A *vx_status_e* enumeration.
+:brief: Creates a reference to a matrix object from a boolean pattern.
+
+The matrix created by this function is of type *vx_uint8*, with the value 0 representing False, 
+and the value 255 representing True. It supports patterns described below. See *vx_pattern_e*.
+- VX_PATTERN_BOX is a matrix with dimensions equal to the given number of rows and columns, and all cells equal to 255.  
+  Dimensions of 3x3 and 5x5 must be supported.
+- VX_PATTERN_CROSS is a matrix with dimensions equal to the given number of rows and columns, which both must be odd numbers.  
+  All cells in the center row and center column are equal to 255, and the rest are equal to zero.  
+  Dimensions of 3x3 and 5x5 must be supported.
+- VX_PATTERN_DISK is an RxC matrix, where R and C are odd and cell (c, r) is 255 if: :n:
+  (r-R/2 + 0.5)^2 / (R/2)^2 + (c-C/2 + 0.5)^2/(C/2)^2 is less than or equal to 1,:n: and 0 otherwise.
+- VX_PATTERN_OTHER is any other pattern than the above (matrix created is still binary, with a value of 0 or 255).
+
+If the matrix was created via *vxCreateMatrixFromPattern*, this attribute must be set to the 
+appropriate pattern enum. Otherwise the attribute must be set to VX_PATTERN_OTHER.
+The vx_matrix objects returned by this function are read-only. The behavior when attempting to modify such a matrix is undefined.
+
+:param: [in] context The reference to the overall context.
+:param: [in] pattern The pattern of the matrix. See *VX_MATRIX_PATTERN*. 
+:param: [in] columns The first dimensionality.
+:param: [in] rows The second dimensionality.
+:returns: An matrix reference *vx_matrix* of type *vx_uint8*. Any possible errors preventing a 
+successful creation should be checked using *vxGetStatus*.
 :ingroup: group_matrix
     '''
-    return lib.vxWriteMatrix(mat, array)
+    return lib.vxCreateMatrixFromPattern(context, pattern, columns, rows)
     
 def CreateConvolution(context, columns, rows):
     '''
@@ -1828,10 +2335,10 @@ def CreateConvolution(context, columns, rows):
 :param: [in] context The reference to the overall context.
 :param: [in] columns The columns dimension of the convolution.
 Must be odd and greater than or equal to 3 and less than the value returned
-from *VX_CONTEXT_ATTRIBUTE_CONVOLUTION_MAXIMUM_DIMENSION*.
+from *VX_CONTEXT_CONVOLUTION_MAX_DIMENSION*.
 :param: [in] rows The rows dimension of the convolution.
 Must be odd and greater than or equal to 3 and less than the value returned
-from *VX_CONTEXT_ATTRIBUTE_CONVOLUTION_MAXIMUM_DIMENSION*.
+from *VX_CONTEXT_CONVOLUTION_MAX_DIMENSION*.
 :returns: A convolution reference *vx_convolution*. Any possible errors preventing a 
 successful creation should be checked using *vxGetStatus*.
 :ingroup: group_convolution
@@ -1875,29 +2382,33 @@ def SetConvolutionAttribute(conv, attribute, ptr, size):
     '''
     return lib.vxSetConvolutionAttribute(conv, attribute, ptr, size)
     
-def ReadConvolutionCoefficients(conv, array):
+def CopyConvolutionCoefficients(conv, user_ptr, usage, user_mem_type):
     '''
-:brief: Gets the convolution data (copy).
-:param: [in] conv The reference to the convolution.
-:param: [out] array The array to place the convolution.
-:see: vxQueryConvolution and *VX_CONVOLUTION_ATTRIBUTE_SIZE* to get the
-needed number of bytes of the array.
+:brief: Allows the application to copy coefficients from/into a convolution object.
+:param: [in] conv The reference to the convolution object that is the source or the destination of the copy.
+:param: [in] user_ptr The address of the memory location where to store the requested
+coefficient data if the copy was requested in read mode, or from where to get the
+coefficient data to store into the convolution object if the copy was requested in
+write mode. In the user memory, the convolution coefficient data is structured as a
+row-major 2D array with elements of the type corresponding
+to *VX_TYPE_CONVOLUTION*, with a number of rows corresponding to
+*VX_CONVOLUTION_ROWS* and a number of columns corresponding to
+*VX_CONVOLUTION_COLUMNS*. The accessible memory must be large
+enough to contain this 2D array:
+accessible memory in bytes >= sizeof(data_element)rowscolumns.
+:param: [in] usage This declares the effect of the copy with regard to the convolution object
+using the *vx_accessor_e* enumeration. Only VX_READ_ONLY and VX_WRITE_ONLY
+are supported:
+:arg: VX_READ_ONLY means that data are copied from the convolution object into the user memory.
+:arg: VX_WRITE_ONLY means that data are copied into the convolution object from the user memory.
+:param: [in] user_mem_type A *vx_memory_type_e* enumeration that specifies
+the memory type of the memory referenced by the user_addr.
 :return: A *vx_status_e* enumeration.
+:retval: VX_ERROR_INVALID_REFERENCE The convolution reference is not actually a convolution reference.
+:retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
 :ingroup: group_convolution
     '''
-    return lib.vxReadConvolutionCoefficients(conv, array)
-    
-def WriteConvolutionCoefficients(conv, array):
-    '''
-:brief: Sets the convolution data (copy)
-:param: [in] conv The reference to the convolution.
-:param: [in] array The array containing the convolution to be written.
-:see: *vxQueryConvolution* and *VX_CONVOLUTION_ATTRIBUTE_SIZE* to get the
-needed number of bytes of the array.
-:return: A *vx_status_e* enumeration.
-:ingroup: group_convolution
-    '''
-    return lib.vxWriteConvolutionCoefficients(conv, array)
+    return lib.vxCopyConvolutionCoefficients(conv, user_ptr, usage, user_mem_type)
     
 def CreatePyramid(context, levels, scale, width, height, format):
     '''
@@ -1906,7 +2417,7 @@ def CreatePyramid(context, levels, scale, width, height, format):
 :param: [in] levels The number of levels desired. This is required to be a non-zero value.
 :param: [in] scale Used to indicate the scale between pyramid levels. This is required to be a non-zero positive value.
 :if: OPENVX_STRICT_1_0
-In OpenVX 1.0, the only permissible values are *VX_SCALE_PYRAMID_HALF* or *VX_SCALE_PYRAMID_ORB*.
+Only permissible values are *VX_SCALE_PYRAMID_HALF* or *VX_SCALE_PYRAMID_ORB*.
 :endif:
 :param: [in] width The width of the 0th level image in pixels.
 :param: [in] height The height of the 0th level image in pixels.
@@ -1936,7 +2447,7 @@ vx_pyramid virt[] = {
 :param: [in] levels The number of levels desired. This is required to be a non-zero value.
 :param: [in] scale Used to indicate the scale between pyramid levels. This is required to be a non-zero positive value.
 :if: OPENVX_STRICT_1_0
-In OpenVX 1.0, the only permissible values are *VX_SCALE_PYRAMID_HALF* or *VX_SCALE_PYRAMID_ORB*.
+Only permissible values are *VX_SCALE_PYRAMID_HALF* or *VX_SCALE_PYRAMID_ORB*.
 :endif:
 :param: [in] width The width of the 0th level image in pixels. This may be set to zero to indicate to the interface that the value is unspecified.
 :param: [in] height The height of the 0th level image in pixels. This may be set to zero to indicate to the interface that the value is unspecified.
@@ -1944,7 +2455,7 @@ In OpenVX 1.0, the only permissible values are *VX_SCALE_PYRAMID_HALF* or *VX_SC
 :returns: A pyramid reference *vx_pyramid*. Any possible errors preventing a 
 successful creation should be checked using *vxGetStatus*.
 :note: Images extracted with *vxGetPyramidLevel* behave as Virtual Images and
-cause *vxAccessImagePatch* to return errors.
+cause *vxMapImagePatch* to return errors.
 :ingroup: group_pyramid
     '''
     return lib.vxCreateVirtualPyramid(graph, levels, scale, width, height, format)
@@ -1981,7 +2492,8 @@ elsewhere in OpenVX. A call to vxReleaseImage is necessary to release an image f
 call of vxGetPyramidLevel.
 :param: [in] pyr The pyramid object.
 :param: [in] index The index of the level, such that index is less than levels.
-:return: A *vx_image* reference.
+:return: A *vx_image* reference. Any possible errors 
+preventing a successful creation should be checked using *vxGetStatus*.
 :retval: 0 Indicates that the index or the object is invalid.
 :ingroup: group_pyramid
     '''
@@ -2059,12 +2571,15 @@ def CreateArray(context, item_type, capacity):
 User must specify the Array capacity (i.e., the maximal number of items that the array can hold).
 
 :param: [in] context      The reference to the overall Context.
-:param: [in] item_type    The type of objects to hold. Use:
+:param: [in] item_type    The type of objects to hold. Types allowed are: plain scalar types (i.e. 
+                         type with enum below *VX_TYPE_SCALAR_MAX*), *VX_TYPE_RECTANGLE*,
+                         *VX_TYPE_KEYPOINT*, *VX_TYPE_COORDINATES2D*, *VX_TYPE_COORDINATES3D* and 
+                         user registered structures. Use:
                          :arg: *VX_TYPE_RECTANGLE* for *vx_rectangle_t*.
                          :arg: *VX_TYPE_KEYPOINT* for *vx_keypoint_t*.
                          :arg: *VX_TYPE_COORDINATES2D* for *vx_coordinates2d_t*.
                          :arg: *VX_TYPE_COORDINATES3D* for *vx_coordinates3d_t*.
-                         :arg: *vx_enum* Returned from *vxRegisterUserStruct*.
+                         :arg: *vx_enum* returned from *vxRegisterUserStruct*.
 :param: [in] capacity     The maximal number of items that the array can hold.
 
 :returns: An array reference *vx_array*. Any possible errors preventing a 
@@ -2093,7 +2608,10 @@ vx_array virt[] = {
 :endcode:
 
 :param: [in] graph        The reference to the parent graph.
-:param: [in] item_type    The type of objects to hold.
+:param: [in] item_type    The type of objects to hold. Types allowed are: plain scalar types (i.e. 
+                         type with enum below *VX_TYPE_SCALAR_MAX*), *VX_TYPE_RECTANGLE*,
+                         *VX_TYPE_KEYPOINT*, *VX_TYPE_COORDINATES2D*, *VX_TYPE_COORDINATES3D* and 
+                         user registered structures. 
                          This may to set to zero to indicate an unspecified item type.
 :param: [in] capacity     The maximal number of items that the array can hold.
                          This may be to set to zero to indicate an unspecified capacity.
@@ -2150,7 +2668,7 @@ the function returns *VX_FAILURE* error code.
 
 :param: [in] arr          The reference to the Array.
 :param: [in] count        The total number of elements to insert.
-:param: [in] ptr          The location at which to store the input values.
+:param: [in] ptr          The location from which to read the input values.
 :param: [in] stride       The number of bytes between the beginning of two consecutive elements.
 
 :return: A *vx_status_e* enumeration.
@@ -2179,67 +2697,202 @@ def TruncateArray(arr, new_num_items):
     '''
     return lib.vxTruncateArray(arr, new_num_items)
     
-def AccessArrayRange(arr, start, end, stride, ptr, usage):
+def CopyArrayRange(array, range_start, range_end, user_stride, user_ptr, usage, user_mem_type):
     '''
-:brief: Grants access to a sub-range of an Array. The number of elements in the sub-range is given by (end - start).
-
-:param: [in] arr          The reference to the Array.
-:param: [in] start        The start index.
-:param: [in] end          The end index. (end - start) elements are accessed from start.
-:param: [in, out] stride  A pointer to 'number of bytes' between the beginning of two consequent 
-elements. 
-:arg: Input case: ptr is a pointer to a non-NULL pointer. The stride parameter must be the address 
-of a vx_size scalar that describes how the user will access the requested array data at address 
-(*ptr).
-:arg: Output Case: ptr is a pointer to a NULL pointer. The function fills the vx_size scalar 
-pointed by stride with the element stride information that the user must consult to access the 
-array elements at address (*ptr).
-:param: [out] ptr        A pointer to a pointer to a location to store the requested data.
-:arg: Input Case: ptr is a pointer to a non-NULL pointer to a valid buffer. This buffer will be 
-used in one of two ways, depending on the value of the usage parameter. If usage is 
-VX_WRITE_ONLY, then the buffer must contain element data that the user wants to replace the 
-array's element data with. Otherwise (i.e., usage is not VX_WRITE_ONLY), the array's current 
-element data will be written to the memory starting at address (*ptr) as storage memory for the 
-access request. The caller must ensure enough memory has been allocated for the requested array 
-range with the requested stride.
-:arg: Output Case: ptr is a pointer to a NULL pointer.  This NULL pointer will be overwritten with 
-a pointer to the address where the requested data can be accessed. (*ptr) must eventually be provided 
-as the ptr parameter of a call to vxCommitArrayRange. 
-:param: [in] usage        This declares the intended usage of the pointer using the *vx_accessor_e* enumeration.
-
-:note: The stride and ptr parameters must both be input, or both be output, otherwise the behavior 
-is undefined.
-
-:return: A *vx_status_e* enumeration.
-:retval: VX_SUCCESS                   No errors.
-:retval: VX_ERROR_OPTIMIZED_AWAY      If the reference is a virtual array and cannot be accessed or committed.
-:retval: VX_ERROR_INVALID_REFERENCE   If the :a: arr is not a *vx_array*.
-:retval: VX_ERROR_INVALID_PARAMETERS  If any of the other parameters are incorrect.
-:post: *vxCommitArrayRange*
-:ingroup: group_array
+:brief: Allows the application to copy a range from/into an array object.
+* :param: [in] array The reference to the array object that is the source or the
+* destination of the copy.
+* :param: [in] range_start The index of the first item of the array object to copy.
+* :param: [in] range_end The index of the item following the last item of the
+* array object to copy. (range_end range_start) items are copied from index
+* range_start included. The range must be within the bounds of the array:
+* 0 <= range_start < range_end <= number of items in the array.
+* :param: [in] user_stride The number of bytes between the beginning of two consecutive
+* items in the user memory pointed by user_ptr. The layout of the user memory must
+* follow an item major order:
+* user_stride >= element size in bytes.
+* :param: [in] user_ptr The address of the memory location where to store the requested data
+* if the copy was requested in read mode, or from where to get the data to store into the array
+* object if the copy was requested in write mode. The accessible memory must be large enough
+* to contain the specified range with the specified stride:
+* accessible memory in bytes >= (range_end range_start)user_stride.
+* :param: [in] usage This declares the effect of the copy with regard to the array object
+* using the *vx_accessor_e* enumeration. Only VX_READ_ONLY and VX_WRITE_ONLY
+* are supported:
+* :arg: VX_READ_ONLY means that data are copied from the array object into the user memory.
+* :arg: VX_WRITE_ONLY means that data are copied into the array object from the user memory.
+* :param: [in] user_mem_type A *vx_memory_type_e* enumeration that specifies
+* the memory type of the memory referenced by the user_addr.
+* :return: A *vx_status_e* enumeration.
+* :retval: VX_ERROR_OPTIMIZED_AWAY This is a reference to a virtual array that cannot be
+* accessed by the application.
+* :retval: VX_ERROR_INVALID_REFERENCE The array reference is not actually an array reference.
+* :retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
+* :ingroup: group_array
+*/
     '''
-    return lib.vxAccessArrayRange(arr, start, end, stride, ptr, usage)
+    return lib.vxCopyArrayRange(array, range_start, range_end, user_stride, user_ptr, usage, user_mem_type)
     
-def CommitArrayRange(arr, start, end, ptr):
+def MapArrayRange(array, range_start, range_end, map_id, stride, ptr, usage, mem_type, flags):
     '''
-:brief: Commits data back to the Array object.
+:brief: Allows the application to get direct access to a range of an array object.
+* :param: [in] array The reference to the array object that contains the range to map.
+* :param: [in] range_start The index of the first item of the array object to map.
+* :param: [in] range_end The index of the item following the last item of the
+* array object to map. (range_end range_start) items are mapped, starting from index
+* range_start included. The range must be within the bounds of the array:
+* Must be 0 <= range_start < range_end <= number of items.
+* :param: [out] map_id The address of a vx_map_id variable where the function
+* returns a map identifier.
+* :arg: (*map_id) must eventually be provided as the map_id parameter of a call to
+* *vxUnmapArrayRange*.
+* :param: [out] stride The address of a vx_size variable where the function
+* returns the memory layout of the mapped array range. The function sets (*stride)
+* to the number of bytes between the beginning of two consecutive items.
+* The application must consult (*stride) to access the array items starting from
+* address (*ptr). The layout of the mapped array follows an item major order:
+* (*stride) >= item size in bytes.
+* :param: [out] ptr The address of a pointer that the function sets to the
+* address where the requested data can be accessed. The returned (*ptr) address
+* is only valid between the call to the function and the corresponding call to
+* *vxUnmapArrayRange*.
+* :param: [in] usage This declares the access mode for the array range, using
+* the *vx_accessor_e* enumeration.
+* :arg: VX_READ_ONLY: after the function call, the content of the memory location
+* pointed by (*ptr) contains the array range data. Writing into this memory location
+* is forbidden and its behavior is undefined.
+* :arg: VX_READ_AND_WRITE : after the function call, the content of the memory
+* location pointed by (*ptr) contains the array range data; writing into this memory
+* is allowed only for the location of items and will result in a modification of the
+* affected items in the array object once the range is unmapped. Writing into
+* a gap between items (when (*stride) > item size in bytes) is forbidden and its
+* behavior is undefined.
+* :arg: VX_WRITE_ONLY: after the function call, the memory location pointed by (*ptr)
+* contains undefined data; writing each item of the range is required prior to
+* unmapping. Items not written by the application before unmap will become
+* undefined after unmap, even if they were well defined before map. Like for
+* VX_READ_AND_WRITE, writing into a gap between items is forbidden and its behavior
+* is undefined.
+* :param: [in] mem_type A *vx_memory_type_e* enumeration that
+* specifies the type of the memory where the array range is requested to be mapped.
+* :param: [in] flags An integer that allows passing options to the map operation.
+* Use the *vx_map_flag_e* enumeration.
+* :return: A *vx_status_e* enumeration.
+* :retval: VX_ERROR_OPTIMIZED_AWAY This is a reference to a virtual array that cannot be
+* accessed by the application.
+* :retval: VX_ERROR_INVALID_REFERENCE The array reference is not actually an array
+* reference.
+* :retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
+* :ingroup: group_array
+* :post: *vxUnmapArrayRange * with same (*map_id) value.
+*/
+    '''
+    return lib.vxMapArrayRange(array, range_start, range_end, map_id, stride, ptr, usage, mem_type, flags)
+    
+def UnmapArrayRange(array, map_id):
+    '''
+:brief: Unmap and commit potential changes to an array object range that was previously mapped.
+* Unmapping an array range invalidates the memory location from which the range could
+* be accessed by the application. Accessing this memory location after the unmap function
+* completes has an undefined behavior.
+* :param: [in] array The reference to the array object to unmap.
+* :param: [out] map_id The unique map identifier that was returned when calling
+* *vxMapArrayRange* .
+* :return: A *vx_status_e* enumeration.
+* :retval: VX_ERROR_INVALID_REFERENCE The array reference is not actually an array reference.
+* :retval: VX_ERROR_INVALID_PARAMETERS An other parameter is incorrect.
+* :ingroup: group_array
+* :pre: *vxMapArrayRange* returning the same map_id value
+*/
+    '''
+    return lib.vxUnmapArrayRange(array, map_id)
+    
+def CreateObjectArray(context, exemplar, count):
+    '''
+:brief: Creates a reference to an ObjectArray of count objects.
 
-:details: This allows a user to commit data to a sub-range of an Array. The number of elements in the sub-range is given by (end - start).
+It uses the metadata of the exemplar to determine the object attributes, 
+ignoring the object data. It does not alter the exemplar or keep or release 
+the reference to the exemplar. For the definition of supported attributes see 
+*vxSetMetaFormatAttribute*. In case the exemplar is a virtual object 
+it must be of immutable metadata, thus it is not allowed to be dimensionless or formatless. 
 
-:param: [in] arr          The reference to the Array.
-:param: [in] start        The start index.
-:param: [in] end          The end index. (end - start) elements are accessed from start.
-:param: [in] ptr          The user supplied pointer.
+:param: [in] context      The reference to the overall Context.
+:param: [in] exemplar     The exemplar object that defines the metadata of the created objects in the ObjectArray. 
+:param: [in] count        Number of Objects to create in the ObjectArray.  
 
+:returns: An ObjectArray reference *vx_object_array*. Any possible errors preventing a 
+successful creation should be checked using *vxGetStatus*. Data objects are not initialized by this function.
+
+:ingroup: group_object_array
+    '''
+    return lib.vxCreateObjectArray(context, exemplar, count)
+    
+def CreateVirtualObjectArray(graph, exemplar, count):
+    '''
+:brief: Creates an opaque reference to a virtual ObjectArray with no direct user access.
+
+This function creates an ObjectArray of count objects with similar behavior as 
+*vxCreateObjectArray*. The only difference is that the objects that are 
+created are virtual in the given graph.
+
+:param: [in] graph      Reference to the graph where to create the virtual ObjectArray.  
+:param: [in] exemplar   The exemplar object that defines the type of object in the ObjectArray. 
+                       Only exemplar type of *vx_image*, *vx_array* and 
+                       *vx_pyramid* are allowed.  
+:param: [in] count      Number of Objects to create in the ObjectArray. 
+:returns:               A ObjectArray reference *vx_object_array*. Any possible errors preventing a 
+                       successful creation should be checked using *vxGetStatus*.
+:ingroup: group_object_array
+    '''
+    return lib.vxCreateVirtualObjectArray(graph, exemplar, count)
+    
+def GetObjectArrayItem(arr, index):
+    '''
+:brief:                 Retrieves the reference to the OpenVX Object in location index of the ObjectArray. 
+               
+This is a vx_reference, which can be used elsewhere in OpenVX. A call to vxRelease<Object> or *vxReleaseReference*
+is necessary to release the Object for each call to this function. 
+
+:param: [in] arr       The ObjectArray.
+:param: [in] index     The index of the object in the ObjectArray.
+:return: A reference to an OpenVX data object. 
+:ingroup: group_object_array
+    '''
+    return lib.vxGetObjectArrayItem(arr, index)
+    
+def ReleaseObjectArray(arr):
+    '''
+:brief: Releases a reference of an ObjectArray object.
+
+The object may not be garbage collected until its total reference and its contained objects 
+count is zero. After returning from this function the reference is zeroed/cleared.
+
+:param: [in] arr          The pointer to the ObjectArray to release.
+:return: A *vx_status_e* enumeration.
+:retval: VX_SUCCESS No errors.
+:retval: VX_ERROR_INVALID_REFERENCE If arr is not a *vx_object_array*.
+:ingroup: group_object_array
+    '''
+    return lib.vxReleaseObjectArray(arr)
+    
+def QueryObjectArray(arr, attribute, ptr, size):
+    '''
+:brief: Queries an atribute from the ObjectArray. 
+
+:param: [in] arr          The reference to the ObjectArray.
+:param: [in] attribute    The attribute to query. Use a *vx_object_array_attribute_e*.
+:param: [out] ptr         The location at which to store the resulting value.
+:param: [in] size         The size in bytes of the container to which :a: ptr points.
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS                   No errors.
-:retval: VX_ERROR_OPTIMIZED_AWAY      If the reference is a virtual array and cannot be accessed or committed.
-:retval: VX_ERROR_INVALID_REFERENCE   If the :a: arr is not a *vx_array*.
+:retval: VX_ERROR_INVALID_REFERENCE   If the :a: arr is not a *vx_object_array*.
+:retval: VX_ERROR_NOT_SUPPORTED       If the :a: attribute is not a value supported on this implementation.
 :retval: VX_ERROR_INVALID_PARAMETERS  If any of the other parameters are incorrect.
 
-:ingroup: group_array
+:ingroup: group_object_array
     '''
-    return lib.vxCommitArrayRange(arr, start, end, ptr)
+    return lib.vxQueryObjectArray(arr, attribute, ptr, size)
     
 def SetMetaFormatAttribute(meta, attribute, ptr, size):
     '''
@@ -2249,20 +2902,20 @@ The vx_meta_format object contains two types of information : data object meta d
 some specific information that defines how the valid region of an image changes
 
 The meta data attributes that can be set are identified by this list:
-- vx_image : VX_IMAGE_ATTRIBUTE_FORMAT, VX_IMAGE_ATTRIBUTE_HEIGHT, VX_IMAGE_ATTRIBUTE_WIDTH
-- vx_array : VX_ARRAY_ATTRIBUTE_CAPACITY, VX_ARRAY_ATTRIBUTE_ITEMTYPE
-- vx_pyramid : VX_PYRAMID_ATTRIBUTE_FORMAT, VX_PYRAMID_ATTRIBUTE_HEIGHT, VX_PYRAMID_ATTRIBUTE_WIDTH, VX_PYRAMID_ATTRIBUTE_LEVELS, VX_PYRAMID_ATTRIBUTE_SCALE
-- vx_scalar : VX_SCALAR_ATTRIBUTE_TYPE
-- vx_matrix : VX_MATRIX_ATTRIBUTE_TYPE, VX_MATRIX_ATTRIBUTE_ROWS, VX_MATRIX_ATTRIBUTE_COLUMNS
-- vx_distribution : VX_DISTRIBUTION_ATTRIBUTE_BINS, VX_DISTRIBUTION_ATTRIBUTE_OFFSET, VX_DISTRIBUTION_ATTRIBUTE_RANGE
-- vx_remap : VX_REMAP_ATTRIBUTE_SOURCE_WIDTH, VX_REMAP_ATTRIBUTE_SOURCE_HEIGHT, VX_REMAP_ATTRIBUTE_DESTINATION_WIDTH, VX_REMAP_ATTRIBUTE_DESTINATION_HEIGHT
-- vx_lut : VX_LUT_ATTRIBUTE_TYPE, VX_LUT_ATTRIBUTE_COUNT
-- vx_threshold : VX_THRESHOLD_ATTRIBUTE_TYPE
-- VX_META_FORMAT_ATTRIBUTE_DELTA_RECTANGLE
+- vx_image : VX_IMAGE_FORMAT, VX_IMAGE_HEIGHT, VX_IMAGE_WIDTH
+- vx_array : VX_ARRAY_CAPACITY, VX_ARRAY_ITEMTYPE
+- vx_pyramid : VX_PYRAMID_FORMAT, VX_PYRAMID_HEIGHT, VX_PYRAMID_WIDTH, VX_PYRAMID_LEVELS, VX_PYRAMID_SCALE
+- vx_scalar : VX_SCALAR_TYPE
+- vx_matrix : VX_MATRIX_TYPE, VX_MATRIX_ROWS, VX_MATRIX_COLUMNS
+- vx_distribution : VX_DISTRIBUTION_BINS, VX_DISTRIBUTION_OFFSET, VX_DISTRIBUTION_RANGE
+- vx_remap : VX_REMAP_SOURCE_WIDTH, VX_REMAP_SOURCE_HEIGHT, VX_REMAP_DESTINATION_WIDTH, VX_REMAP_DESTINATION_HEIGHT
+- vx_lut : VX_LUT_TYPE, VX_LUT_COUNT
+- vx_threshold : VX_THRESHOLD_TYPE
+- VX_VALID_RECT_CALLBACK
 :note: For vx_image, a specific attribute can be used to specify the valid region evolution. This information is not a meta data.
 
 :param: [in] meta The reference to the vx_meta_format struct to set 
-:param: [in] attribute Use the subset of data object attributes that define the meta data of this object or attributes from *vx_meta_format_attribute_e*.
+:param: [in] attribute Use the subset of data object attributes that define the meta data of this object or attributes from *vx_meta_format*.
 :param: [in] ptr The input pointer of the value to set on the meta format object.
 :param: [in] size The size in bytes of the object to which :a: ptr points.
 :ingroup: group_user_kernels
@@ -2274,6 +2927,21 @@ The meta data attributes that can be set are identified by this list:
 :retval: VX_ERROR_INVALID_TYPE attribute type did not match known meta format type.
     '''
     return lib.vxSetMetaFormatAttribute(meta, attribute, ptr, size)
+    
+def SetMetaFormatFromReference(meta, exemplar):
+    '''
+:brief: Set a meta format object from an exemplar data object reference
+
+This function sets a vx_meta_format object from the meta data of the exemplar
+
+:param: [in] meta The meta format object to set
+:param: [in] exemplar The exemplar data object.
+:ingroup: group_user_kernels
+:return: A vx_status_e enumeration.
+:retval: VX_SUCCESS The meta format was correctly set.
+:retval: VX_ERROR_INVALID_REFERENCE the reference was not a reference to a data object
+    '''
+    return lib.vxSetMetaFormatFromReference(meta, exemplar)
     
 def ColorConvertNode(graph, input, output):
     '''
@@ -2292,7 +2960,7 @@ def ChannelExtractNode(graph, input, channel, output):
     '''
 :brief: [Graph] Creates a channel extract node.
 :param: [in] graph The reference to the graph.
-:param: [in] input The input image. Must be one of the defined vx_df_image_e multi-planar formats.
+:param: [in] input The input image. Must be one of the defined vx_df_image_e multi-channel formats.
 :param: [in] channel The *vx_channel_e* channel to extract.
 :param: [out] output The output image. Must be *VX_DF_IMAGE_U8*.
 *:see: VX_KERNEL_CHANNEL_EXTRACT*
@@ -2368,9 +3036,9 @@ def ScaleImageNode(graph, src, dst, type):
 :param: [out] dst The destination image of type *VX_DF_IMAGE_U8*.
 :param: [in] type The interpolation type to use. :see: vx_interpolation_type_e.
 :ingroup: group_vision_function_scale_image
-:note: The destination image must have a defined size and format. Only 
- *VX_NODE_ATTRIBUTE_BORDER_MODE* value *VX_BORDER_MODE_UNDEFINED*, 
- *VX_BORDER_MODE_REPLICATE* or *VX_BORDER_MODE_CONSTANT* is supported.
+:note: The destination image must have a defined size and format. The border modes 
+ *VX_NODE_BORDER* value *VX_BORDER_UNDEFINED*, 
+ *VX_BORDER_REPLICATE* and *VX_BORDER_CONSTANT* are supported.
 :return: *vx_node*.
 :retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*
     '''
@@ -2378,14 +3046,14 @@ def ScaleImageNode(graph, src, dst, type):
     
 def TableLookupNode(graph, input, lut, output):
     '''
-:brief: [Graph] Creates a Table Lookup node.
+:brief: [Graph] Creates a Table Lookup node. If a value from the input image is not present in the lookup table, the result is undefined.
 :param: [in] graph The reference to the graph.
-:param: [in] input The input image in *VX_DF_IMAGE_U8*.
-:param: [in] lut The LUT which is of type *VX_TYPE_UINT8*.
-:param: [out] output The output image of type *VX_DF_IMAGE_U8*.
+:param: [in] input The input image in *VX_DF_IMAGE_U8* or *VX_DF_IMAGE_S16*.
+:param: [in] lut The LUT which is of type *VX_TYPE_UINT8* or *VX_TYPE_INT16*.
+:param: [out] output The output image of the same type as the input image.
 :ingroup: group_vision_function_lut
 :return: *vx_node*.
-:retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*
+:retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*.
     '''
     return lib.vxTableLookupNode(graph, input, lut, output)
     
@@ -2444,8 +3112,9 @@ def ThresholdNode(graph, input, thresh, output):
 :param: [in] graph The reference to the graph.
 :param: [in] input The input image. *VX_DF_IMAGE_U8* is supported.
 :param: [in] thresh The thresholding object that defines the parameters of
-the operation.
-:param: [out] output The output Boolean image. Values are either 0 or 255.
+the operation. The *VX_THRESHOLD_TRUE_VALUE* and *VX_THRESHOLD_FALSE_VALUE* are taken into account. 
+:param: [out] output The output Boolean image with values either *VX_THRESHOLD_TRUE_VALUE* or 
+*VX_THRESHOLD_FALSE_VALUE* from the :e: thresh parameter.
 :ingroup: group_vision_function_threshold
 :return: *vx_node*.
 :retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*
@@ -2524,12 +3193,27 @@ def Gaussian3x3Node(graph, input, output):
     '''
     return lib.vxGaussian3x3Node(graph, input, output)
     
+def NonLinearFilterNode(graph, function, input, mask, output):
+    '''
+:brief: [Graph] Creates a Non-linear Filter Node.
+:param: [in] graph The reference to the graph.
+:param: [in] function The non-linear filter function. See *vx_non_linear_filter_e*.
+:param: [in] input The input image in *VX_DF_IMAGE_U8* format.
+:param: [in] mask The mask to be applied to the Non-linear function. *VX_MATRIX_ORIGIN* attribute is used 
+ to place the mask appropriately when computing the resulting image. See *vxCreateMatrixFromPattern*.  
+:param: [out] output The output image in *VX_DF_IMAGE_U8* format.
+:return: *vx_node*.
+:retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus* 
+:ingroup: group_vision_function_nonlinear_filter
+    '''
+    return lib.vxNonLinearFilterNode(graph, function, input, mask, output)
+    
 def ConvolveNode(graph, input, conv, output):
     '''
 :brief: [Graph] Creates a custom convolution node.
 :param: [in] graph The reference to the graph.
 :param: [in] input The input image in *VX_DF_IMAGE_U8* format.
-:param: [in] conv The vx_int16 convolution matrix.
+:param: [in] conv The *vx_int16* convolution matrix.
 :param: [out] output The output image in *VX_DF_IMAGE_U8* or *VX_DF_IMAGE_S16* format.
 :ingroup: group_vision_function_custom_convolution
 :return: *vx_node*.
@@ -2549,6 +3233,35 @@ def GaussianPyramidNode(graph, input, gaussian):
 :retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*
     '''
     return lib.vxGaussianPyramidNode(graph, input, gaussian)
+    
+def LaplacianPyramidNode(graph, input, laplacian, output):
+    '''
+:brief: [Graph] Creates a node for a Laplacian Image Pyramid.
+:param: [in] graph The reference to the graph.
+:param: [in] input The input image in *VX_DF_IMAGE_U8* format.
+:param: [out] laplacian The Laplacian pyramid with *VX_DF_IMAGE_S16* to construct.
+:param: [out] output The lowest resolution image of type *VX_DF_IMAGE_S16* necessary to reconstruct the input image from the pyramid.
+:ingroup: group_vision_function_laplacian_pyramid
+:see: group_pyramid
+:return: *vx_node*.
+:retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*
+    '''
+    return lib.vxLaplacianPyramidNode(graph, input, laplacian, output)
+    
+def LaplacianReconstructNode(graph, laplacian, input, output):
+    '''
+:brief: [Graph] Reconstructs an image from a Laplacian Image pyramid.
+:param: [in] graph The reference to the graph.
+:param: [in] laplacian The Laplacian pyramid with *VX_DF_IMAGE_S16* format.
+:param: [in] input The lowest resolution image of type *VX_DF_IMAGE_S16* for the Laplacian pyramid
+:param: [out] output The output image of type *VX_DF_IMAGE_U8* with the highest possible resolution reconstructed from the Laplacian pyramid.
+:ingroup: group_vision_function_laplacian_reconstruct
+:see: group_pyramid
+:return: *vx_node*.
+:retval: 0 Node could not be created.
+:retval:Node handle.
+    '''
+    return lib.vxLaplacianReconstructNode(graph, laplacian, input, output)
     
 def AccumulateImageNode(graph, input, accum):
     '''
@@ -2706,7 +3419,7 @@ def ConvertDepthNode(graph, input, output, policy, shift):
 :param: [in] graph The reference to the graph.
 :param: [in] input The input image.
 :param: [out] output The output image.
-:param: [in] policy A scalar containing a *VX_TYPE_ENUM* of the vx_convert_policy_e enumeration.
+:param: [in] policy A *VX_TYPE_ENUM* of the *vx_convert_policy_e* enumeration.
 :param: [in] shift A scalar containing a *VX_TYPE_INT32* of the shift value.
 :ingroup: group_vision_function_convertdepth
 :return: *vx_node*.
@@ -2719,10 +3432,13 @@ def CannyEdgeDetectorNode(graph, input, hyst, gradient_size, norm_type, output):
 :brief: [Graph] Creates a Canny Edge Detection Node.
 :param: [in] graph The reference to the graph.
 :param: [in] input The input *VX_DF_IMAGE_U8* image.
-:param: [in] hyst The double threshold for hysteresis.
+:param: [in] hyst The double threshold for hysteresis. The threshold data_type shall be either *VX_TYPE_UINT8* 
+or *VX_TYPE_INT16*. The *VX_THRESHOLD_TRUE_VALUE* and *VX_THRESHOLD_FALSE_VALUE* 
+of *vx_threshold* are ignored.
 :param: [in] gradient_size The size of the Sobel filter window, must support at least 3, 5, and 7.
 :param: [in] norm_type A flag indicating the norm used to compute the gradient, *VX_NORM_L1* or VX_NORM_L2.
-:param: [out] output The output image in *VX_DF_IMAGE_U8* format with values either 0 or 255.
+:param: [out] output The output image in *VX_DF_IMAGE_U8* format with values either 
+*VX_THRESHOLD_TRUE_VALUE* or *VX_THRESHOLD_FALSE_VALUE* from hyst parameter.
 :ingroup: group_vision_function_canny
 :return: *vx_node*.
 :retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*
@@ -2736,11 +3452,11 @@ def WarpAffineNode(graph, input, matrix, type, output):
 :param: [in] input The input *VX_DF_IMAGE_U8* image.
 :param: [in] matrix The affine matrix. Must be 2x3 of type VX_TYPE_FLOAT32.
 :param: [in] type The interpolation type from *vx_interpolation_type_e*.
-*VX_INTERPOLATION_TYPE_AREA* is not supported.
+*VX_INTERPOLATION_AREA* is not supported.
 :param: [out] output The output *VX_DF_IMAGE_U8* image.
 :ingroup: group_vision_function_warp_affine
-:note: Only *VX_NODE_ATTRIBUTE_BORDER_MODE* value *VX_BORDER_MODE_UNDEFINED* or
-*VX_BORDER_MODE_CONSTANT* is supported.
+:note: The border modes *VX_NODE_BORDER* value *VX_BORDER_UNDEFINED* and
+*VX_BORDER_CONSTANT* are supported.
 :return: *vx_node*.
 :retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*
     '''
@@ -2753,11 +3469,11 @@ def WarpPerspectiveNode(graph, input, matrix, type, output):
 :param: [in] input The input *VX_DF_IMAGE_U8* image.
 :param: [in] matrix The perspective matrix. Must be 3x3 of type *VX_TYPE_FLOAT32*.
 :param: [in] type The interpolation type from *vx_interpolation_type_e*.
-*VX_INTERPOLATION_TYPE_AREA* is not supported.
+*VX_INTERPOLATION_AREA* is not supported.
 :param: [out] output The output *VX_DF_IMAGE_U8* image.
 :ingroup: group_vision_function_warp_perspective
-:note: Only *VX_NODE_ATTRIBUTE_BORDER_MODE* value *VX_BORDER_MODE_UNDEFINED* or
-*VX_BORDER_MODE_CONSTANT* is supported.
+:note: The border modes *VX_NODE_BORDER* value *VX_BORDER_UNDEFINED* and 
+*VX_BORDER_CONSTANT* are supported.
 :return: *vx_node*.
 :retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*
     '''
@@ -2775,7 +3491,7 @@ def HarrisCornersNode(graph, input, strength_thresh, min_distance, sensitivity, 
 implementation must support at least 3, 5, and 7.
 :param: [in] block_size The block window size used to compute the Harris Corner score.
 The implementation must support at least 3, 5, and 7.
-:param: [out] corners The array of *VX_TYPE_KEYPOINT* objects.
+:param: [out] corners The array of *VX_TYPE_KEYPOINT* objects. The order of the keypoints in this array is implementation dependent.
 :param: [out] num_corners The total number of detected corners in image (optional). Use a VX_TYPE_SIZE scalar.
 :ingroup: group_vision_function_harris
 :return: *vx_node*.
@@ -2791,7 +3507,8 @@ def FastCornersNode(graph, input, strength_thresh, nonmax_suppression, corners, 
 :param: [in] strength_thresh Threshold on difference between intensity of the central pixel and pixels on Bresenham's circle of radius 3 (*VX_TYPE_FLOAT32* scalar).
 :param: [in] nonmax_suppression If true, non-maximum suppression is applied to
 detected corners before being placed in the *vx_array* of *VX_TYPE_KEYPOINT* objects.
-:param: [out] corners Output corner *vx_array* of *VX_TYPE_KEYPOINT*.
+:param: [out] corners Output corner *vx_array* of *VX_TYPE_KEYPOINT*. The order of the 
+                     keypoints in this array is implementation dependent.
 :param: [out] num_corners The total number of detected corners in image (optional). Use a VX_TYPE_SIZE scalar.
 :ingroup: group_vision_function_fast
 :return: *vx_node*.
@@ -2817,7 +3534,7 @@ def OpticalFlowPyrLKNode(graph, old_images, new_images, old_points, new_points_e
 :param: [in] num_iterations The number of iterations. Use a *VX_TYPE_UINT32* scalar.
 :param: [in] use_initial_estimate Use a *VX_TYPE_BOOL* scalar.
 :param: [in] window_dimension The size of the window on which to perform the algorithm. See 
- *VX_CONTEXT_ATTRIBUTE_OPTICAL_FLOW_WINDOW_MAXIMUM_DIMENSION*
+ *VX_CONTEXT_OPTICAL_FLOW_MAX_WINDOW_DIMENSION*
 :ingroup: group_vision_function_opticalflowpyrlk
 :return: *vx_node*.
 :retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*
@@ -2831,10 +3548,10 @@ def RemapNode(graph, input, table, policy, output):
 :param: [in] input The input *VX_DF_IMAGE_U8* image.
 :param: [in] table The remap table object.
 :param: [in] policy An interpolation type from *vx_interpolation_type_e*.
-*VX_INTERPOLATION_TYPE_AREA* is not supported.
+*VX_INTERPOLATION_AREA* is not supported.
 :param: [out] output The output *VX_DF_IMAGE_U8* image.
-:note: Only *VX_NODE_ATTRIBUTE_BORDER_MODE* value *VX_BORDER_MODE_UNDEFINED* or
-*VX_BORDER_MODE_CONSTANT* is supported.
+:note: The border modes *VX_NODE_BORDER* value *VX_BORDER_UNDEFINED* and 
+*VX_BORDER_CONSTANT* are supported.
 :return: A *vx_node*.
 :retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*  
 :ingroup: group_vision_function_remap
@@ -2843,7 +3560,7 @@ def RemapNode(graph, input, table, policy, output):
     
 def HalfScaleGaussianNode(graph, input, output, kernel_size):
     '''
-:brief: [Graph] Performs a Gaussian Blur on an image then half-scales it.
+:brief: [Graph] Performs a Gaussian Blur on an image then half-scales it. The interpolation mode used is nearest-neighbor.
 :details: The output image size is determined by:
 :f:[
 W_{output} = :frac:{W_{input} + 1}{2} \\
@@ -2853,7 +3570,7 @@ H_{output} = :frac:{H_{input} + 1}{2}
 :param: [in] graph The reference to the graph.
 :param: [in] input The input *VX_DF_IMAGE_U8* image.
 :param: [out] output The output *VX_DF_IMAGE_U8* image.
-:param: [in] kernel_size The input size of the Gaussian filter. Supported values are 3 and 5. 
+:param: [in] kernel_size The input size of the Gaussian filter. Supported values are 1, 3 and 5. 
 :ingroup: group_vision_function_scale_image
 :return: *vx_node*.
 :retval: vx_node A node reference. Any possible errors preventing a successful creation should be checked using *vxGetStatus*

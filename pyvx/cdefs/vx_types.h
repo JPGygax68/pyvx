@@ -26,17 +26,17 @@
  * MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
  */
 
-//#ifndef _OPENVX_TYPES_H_
-//#define _OPENVX_TYPES_H_
+#ifndef _OPENVX_TYPES_H_
+#define _OPENVX_TYPES_H_
 
 /*!
  * \file vx_types.h
  * \brief The type definitions required by OpenVX Library.
  */
 
-//#include <stdint.h>
-//#include <stddef.h>
-//#include <string.h>
+#include <stdint.h>
+#include <stddef.h>
+#include <string.h>
 
 /*!
  * \internal
@@ -46,43 +46,43 @@
  * It can optionally be defined in the make system according the the compiler and intent.
  * \ingroup group_basic_features
  */
-//#ifndef VX_API_ENTRY
-//#   if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
-//#       if defined(OPENVX_BUILDING)
-//#           if defined(__GNUC__)
-//#               define VX_API_ENTRY __attribute__((dllexport))
-//#           else
-//#               define VX_API_ENTRY __declspec(dllexport)
-//#           endif
-//#       else
-//#           if defined(__GNUC__)
-//#               define VX_API_ENTRY __attribute__((dllimport))
-//#           else
-//#               define VX_API_ENTRY __declspec(dllimport)
-//#           endif
-//#       endif
-//#   else
-//#       if (__GNUC__ >= 4)
-//#           define VX_API_ENTRY __attribute__((visibility("default")))
-//#       else
-//#           define VX_API_ENTRY
-//#       endif
-//#   endif
-//#endif
-//#ifndef VX_API_CALL
-//#   if defined(_WIN32)
-//#       define VX_API_CALL __stdcall
-//#   else
-//#       define VX_API_CALL
-//#   endif
-//#endif
-//#ifndef VX_CALLBACK
-//#   if defined(_WIN32)
-//#       define VX_CALLBACK __stdcall
-//#   else
-//#       define VX_CALLBACK
-//#   endif
-//#endif
+#ifndef VX_API_ENTRY
+#   if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
+#       if defined(OPENVX_BUILDING)
+#           if defined(__GNUC__)
+#               define VX_API_ENTRY __attribute__((dllexport))
+#           else
+#               define VX_API_ENTRY __declspec(dllexport)
+#           endif
+#       else
+#           if defined(__GNUC__)
+#               define VX_API_ENTRY __attribute__((dllimport))
+#           else
+#               define VX_API_ENTRY __declspec(dllimport)
+#           endif
+#       endif
+#   else
+#       if (__GNUC__ >= 4)
+#           define VX_API_ENTRY __attribute__((visibility("default")))
+#       else
+#           define VX_API_ENTRY
+#       endif
+#   endif
+#endif
+#ifndef VX_API_CALL
+#   if defined(_WIN32)
+#       define VX_API_CALL __stdcall
+#   else
+#       define VX_API_CALL
+#   endif
+#endif
+#ifndef VX_CALLBACK
+#   if defined(_WIN32)
+#       define VX_CALLBACK __stdcall
+#   else
+#       define VX_CALLBACK
+#   endif
+#endif
 
 /*! \brief An 8 bit ASCII character.
  * \ingroup group_basic_features
@@ -131,13 +131,13 @@ typedef int64_t  vx_int64;
 
 typedef uint32_t vx_bitfield;
 
-//#if defined(EXPERIMENTAL_PLATFORM_SUPPORTS_16_FLOAT)
+#if defined(EXPERIMENTAL_PLATFORM_SUPPORTS_16_FLOAT)
 
 /*! \brief A 16-bit float value.
  * \ingroup group_basic_features
  */
-typedef float...   vx_float16;
-//#endif
+typedef hfloat   vx_float16;
+#endif
 
 /*! \brief A 32-bit float value.
  * \ingroup group_basic_features
@@ -343,9 +343,9 @@ enum vx_type_e {
     VX_TYPE_ENUM            = 0x00C,/*!< \brief A <tt>\ref vx_enum</tt>. Equivalent in size to a <tt>\ref vx_int32</tt>. */
     VX_TYPE_SIZE            = 0x00D,/*!< \brief A <tt>\ref vx_size</tt>. */
     VX_TYPE_DF_IMAGE        = 0x00E,/*!< \brief A <tt>\ref vx_df_image</tt>. */
-//#if defined(EXPERIMENTAL_PLATFORM_SUPPORTS_16_FLOAT)
+#if defined(EXPERIMENTAL_PLATFORM_SUPPORTS_16_FLOAT)
     VX_TYPE_FLOAT16         = 0x00F,/*!< \brief A <tt>\ref vx_float16</tt>. */
-//#endif
+#endif
     VX_TYPE_BOOL            = 0x010,/*!< \brief A <tt>\ref vx_bool</tt>. */
 
     /* add new scalar types here */
@@ -362,11 +362,11 @@ enum vx_type_e {
     VX_TYPE_KHRONOS_OBJECT_START = 0x800,/*!< \brief A Khronos defined object base index. */
     VX_TYPE_VENDOR_OBJECT_START  = 0xC00,/*!< \brief A vendor defined object base index. */
 
-    VX_TYPE_KHRONOS_STRUCT_MAX   = ..., //VX_TYPE_USER_STRUCT_START - 1,/*!< \brief A value for comparison between Khronos defined structs and user structs. */
+    VX_TYPE_KHRONOS_STRUCT_MAX   = VX_TYPE_USER_STRUCT_START - 1,/*!< \brief A value for comparison between Khronos defined structs and user structs. */
 
-    VX_TYPE_USER_STRUCT_END      = ..., //VX_TYPE_VENDOR_STRUCT_START - 1,/*!< \brief A value for comparison between user structs and vendor structs. */
-    VX_TYPE_VENDOR_STRUCT_END    = ..., //VX_TYPE_KHRONOS_OBJECT_START - 1,/*!< \brief A value for comparison between vendor structs and Khronos defined objects. */
-    VX_TYPE_KHRONOS_OBJECT_END   = ..., //VX_TYPE_VENDOR_OBJECT_START - 1,/*!< \brief A value for comparison between Khronos defined objects and vendor structs. */
+    VX_TYPE_USER_STRUCT_END      = VX_TYPE_VENDOR_STRUCT_START - 1,/*!< \brief A value for comparison between user structs and vendor structs. */
+    VX_TYPE_VENDOR_STRUCT_END    = VX_TYPE_KHRONOS_OBJECT_START - 1,/*!< \brief A value for comparison between vendor structs and Khronos defined objects. */
+    VX_TYPE_KHRONOS_OBJECT_END   = VX_TYPE_VENDOR_OBJECT_START - 1,/*!< \brief A value for comparison between Khronos defined objects and vendor structs. */
     VX_TYPE_VENDOR_OBJECT_END    = 0xFFF,/*!< \brief A value used for bound checking of vendor objects */
 
 
@@ -449,7 +449,6 @@ typedef vx_enum vx_action;
  * \ingroup group_node_callback
  */
 typedef vx_action (VX_CALLBACK *vx_nodecomplete_f)(vx_node node);
-//typedef vx_action (*vx_nodecomplete_f)(vx_node_node);
 
 /*! \brief Vendor IDs are 2 nibbles in size and are located in the upper byte of
  * the 4 bytes of an enumeration.
@@ -493,43 +492,43 @@ typedef vx_action (VX_CALLBACK *vx_nodecomplete_f)(vx_node node);
 /*! \brief A macro to extract the vendor ID from the enumerated value.
  * \ingroup group_basic_features
  */
-//#define VX_VENDOR(e)                        (((vx_uint32)e & VX_VENDOR_MASK) >> 20)
+#define VX_VENDOR(e)                        (((vx_uint32)e & VX_VENDOR_MASK) >> 20)
 
 /*! \brief A macro to extract the type from an enumerated attribute value.
  * \ingroup group_basic_features
  */
-//#define VX_TYPE(e)                          (((vx_uint32)e & VX_TYPE_MASK) >> 8)
+#define VX_TYPE(e)                          (((vx_uint32)e & VX_TYPE_MASK) >> 8)
 
 /*! \brief A macro to extract the enum type from an enumerated value.
  * \ingroup group_basic_features
  */
-//#define VX_ENUM_TYPE(e)                     (((vx_uint32)e & VX_ENUM_TYPE_MASK) >> 12)
+#define VX_ENUM_TYPE(e)                     (((vx_uint32)e & VX_ENUM_TYPE_MASK) >> 12)
 
 /*! \brief A macro to extract the kernel library enumeration from a enumerated kernel value.
  * \ingroup group_basic_features
  */
-//#define VX_LIBRARY(e)                       (((vx_uint32)e & VX_LIBRARY_MASK) >> 12)
+#define VX_LIBRARY(e)                       (((vx_uint32)e & VX_LIBRARY_MASK) >> 12)
 
 /*! \def VX_DF_IMAGE
  * \brief Converts a set of four chars into a \c uint32_t container of a VX_DF_IMAGE code.
  * \note Use a <tt>\ref vx_df_image</tt> variable to hold the value.
  * \ingroup group_basic_features
  */
-//#define VX_DF_IMAGE(a,b,c,d)                ((a) | (b << 8) | (c << 16) | (d << 24))
+#define VX_DF_IMAGE(a,b,c,d)                  ((a) | (b << 8) | (c << 16) | (d << 24))
 
 /*! \def VX_ATTRIBUTE_BASE
  * \brief Defines the manner in which to combine the Vendor and Object IDs to get
  * the base value of the enumeration.
  * \ingroup group_basic_features
  */
-//#define VX_ATTRIBUTE_BASE(vendor, object)   (((vendor) << 20) | (object << 8))
+#define VX_ATTRIBUTE_BASE(vendor, object)   (((vendor) << 20) | (object << 8))
 
 /*! \def VX_KERNEL_BASE
  * \brief Defines the manner in which to combine the Vendor and Library IDs to get
  * the base value of the enumeration.
  * \ingroup group_basic_features
  */
-//#define VX_KERNEL_BASE(vendor, lib)         (((vendor) << 20) | (lib << 12))
+#define VX_KERNEL_BASE(vendor, lib)         (((vendor) << 20) | (lib << 12))
 
 /*! \def VX_ENUM_BASE
  * \brief Defines the manner in which to combine the Vendor and Object IDs to get
@@ -539,7 +538,7 @@ typedef vx_action (VX_CALLBACK *vx_nodecomplete_f)(vx_node node);
  * <tt>\ref vx_vendor_id_e</tt>, <tt>\ref vx_type_e</tt>, <tt>\ref vx_enum_e</tt>, <tt>\ref vx_df_image_e</tt>, and \c vx_bool.
  * \ingroup group_basic_features
  */
-//#define VX_ENUM_BASE(vendor, id)            (((vendor) << 20) | (id << 12))
+#define VX_ENUM_BASE(vendor, id)            (((vendor) << 20) | (id << 12))
 
 /*! \brief The set of supported enumerations in OpenVX.
  * \details These can be extracted from enumerated values using <tt>\ref VX_ENUM_TYPE</tt>.
@@ -578,9 +577,9 @@ enum vx_enum_e {
  */
 enum vx_action_e {
     /*! \brief Continue executing the graph with no changes. */
-    VX_ACTION_CONTINUE = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_ACTION) + 0x0,
+    VX_ACTION_CONTINUE = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_ACTION) + 0x0,
     /*! \brief Stop executing the graph. */
-    VX_ACTION_ABANDON  = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_ACTION) + 0x1,
+    VX_ACTION_ABANDON  = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_ACTION) + 0x1,
 };
 
 /*! \brief An indication of how a kernel will treat the given parameter.
@@ -588,11 +587,11 @@ enum vx_action_e {
  */
 enum vx_direction_e {
     /*! \brief The parameter is an input only. */
-    VX_INPUT = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTION) + 0x0,
+    VX_INPUT = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTION) + 0x0,
     /*! \brief The parameter is an output only. */
-    VX_OUTPUT = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTION) + 0x1,
+    VX_OUTPUT = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTION) + 0x1,
     /*! \brief The parameter is both an input and output. */
-    VX_BIDIRECTIONAL = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTION) + 0x2,
+    VX_BIDIRECTIONAL = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTION) + 0x2,
 };
 
 /*! \brief These enumerations are given to the <tt>\ref vxHint</tt> API to enable/disable platform
@@ -604,15 +603,15 @@ enum vx_hint_e {
     /*! \brief Indicates to the implementation that user do not apply any specific
      *  requirements for performance.
      */
-    VX_HINT_PERFORMANCE_DEFAULT = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_HINT) + 0x1,
+    VX_HINT_PERFORMANCE_DEFAULT = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_HINT) + 0x1,
     /*! \brief Indicates the user preference is low power consumption versus
      * highest performance.
      */
-    VX_HINT_PERFORMANCE_LOW_POWER = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_HINT) + 0x2,
+    VX_HINT_PERFORMANCE_LOW_POWER = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_HINT) + 0x2,
     /*! \brief Indicates the user preference for highest performance over
      * low power consumption.
      */
-    VX_HINT_PERFORMANCE_HIGH_SPEED = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_HINT) + 0x3,
+    VX_HINT_PERFORMANCE_HIGH_SPEED = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_HINT) + 0x3,
 };
 
 /*! \brief These enumerations are given to the \c vxDirective API to enable/disable
@@ -624,13 +623,13 @@ enum vx_hint_e {
  */
 enum vx_directive_e {
     /*! \brief Disables recording information for graph debugging. */
-    VX_DIRECTIVE_DISABLE_LOGGING = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTIVE) + 0x0,
+    VX_DIRECTIVE_DISABLE_LOGGING = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTIVE) + 0x0,
     /*! \brief Enables recording information for graph debugging. */
-    VX_DIRECTIVE_ENABLE_LOGGING = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTIVE) + 0x1,
+    VX_DIRECTIVE_ENABLE_LOGGING = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTIVE) + 0x1,
     /*! \brief Disables performance counters for the context. By default performance counters are disabled */
-    VX_DIRECTIVE_DISABLE_PERFORMANCE = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTIVE) + 0x2,
+    VX_DIRECTIVE_DISABLE_PERFORMANCE = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTIVE) + 0x2,
     /*! \brief Enables performance counters for the context. */
-    VX_DIRECTIVE_ENABLE_PERFORMANCE = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTIVE) + 0x3,
+    VX_DIRECTIVE_ENABLE_PERFORMANCE = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_DIRECTIVE) + 0x3,
 };
 
 /*! \brief The Graph State Enumeration.
@@ -638,15 +637,15 @@ enum vx_directive_e {
  */
 enum vx_graph_state_e {
    /*! \brief The graph should be verified before execution */
-   VX_GRAPH_STATE_UNVERIFIED = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_GRAPH_STATE) + 0x0,
+   VX_GRAPH_STATE_UNVERIFIED = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_GRAPH_STATE) + 0x0,
    /*! \brief The graph has been verified and has not been executed or scheduled for execution yet */
-   VX_GRAPH_STATE_VERIFIED = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_GRAPH_STATE) + 0x1,
+   VX_GRAPH_STATE_VERIFIED = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_GRAPH_STATE) + 0x1,
    /*! \brief The graph either has been scheduled and not completed, or is being executed */
-   VX_GRAPH_STATE_RUNNING = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_GRAPH_STATE) + 0x2,
+   VX_GRAPH_STATE_RUNNING = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_GRAPH_STATE) + 0x2,
    /*! \brief The graph execution was abandoned */
-   VX_GRAPH_STATE_ABANDONED = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_GRAPH_STATE) + 0x3,
+   VX_GRAPH_STATE_ABANDONED = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_GRAPH_STATE) + 0x3,
    /*! \brief The graph execution is completed and the graph is not scheduled for execution */
-   VX_GRAPH_STATE_COMPLETED = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_GRAPH_STATE) + 0x4,
+   VX_GRAPH_STATE_COMPLETED = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_GRAPH_STATE) + 0x4,
 };
 
 /*! \brief The graph attributes list.
@@ -654,16 +653,16 @@ enum vx_graph_state_e {
  */
 enum vx_graph_attribute_e {
     /*! \brief Returns the number of nodes in a graph. Read-only. Use a <tt>\ref vx_uint32</tt> parameter.*/
-    VX_GRAPH_NUMNODES = ..., // VX_ATTRIBUTE_BASE(VX_ID_KHRONOS, VX_TYPE_GRAPH) + 0x0,
+    VX_GRAPH_NUMNODES = VX_ATTRIBUTE_BASE(VX_ID_KHRONOS, VX_TYPE_GRAPH) + 0x0,
     /*! \brief Returns the overall performance of the graph. Read-only. Use a <tt>\ref vx_perf_t</tt> parameter.
      * The accuracy of timing information is platform dependent.
      * \note Performance tracking must have been enabled. See <tt>\ref vx_directive_e</tt>
      */
-    VX_GRAPH_PERFORMANCE = ..., // VX_ATTRIBUTE_BASE(VX_ID_KHRONOS, VX_TYPE_GRAPH) + 0x2,
+    VX_GRAPH_PERFORMANCE = VX_ATTRIBUTE_BASE(VX_ID_KHRONOS, VX_TYPE_GRAPH) + 0x2,
     /*! \brief Returns the number of explicitly declared parameters on the graph. Read-only. Use a <tt>\ref vx_uint32</tt> parameter. */
-    VX_GRAPH_NUMPARAMETERS = ..., // VX_ATTRIBUTE_BASE(VX_ID_KHRONOS, VX_TYPE_GRAPH) + 0x3,
+    VX_GRAPH_NUMPARAMETERS = VX_ATTRIBUTE_BASE(VX_ID_KHRONOS, VX_TYPE_GRAPH) + 0x3,
     /*! \brief Returns the state of the graph. See <tt>\ref vx_graph_state_e</tt> enum. */
-    VX_GRAPH_STATE = ..., // VX_ATTRIBUTE_BASE(VX_ID_KHRONOS, VX_TYPE_GRAPH) + 0x4,
+    VX_GRAPH_STATE = VX_ATTRIBUTE_BASE(VX_ID_KHRONOS, VX_TYPE_GRAPH) + 0x4,
 };
 
 /*! \brief The Conversion Policy Enumeration.
@@ -673,9 +672,9 @@ enum vx_convert_policy_e {
     /*! \brief Results are the least significant bits of the output operand, as if
      * stored in two's complement binary format in the size of its bit-depth.
      */
-    VX_CONVERT_POLICY_WRAP = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_CONVERT_POLICY) + 0x0,
+    VX_CONVERT_POLICY_WRAP = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_CONVERT_POLICY) + 0x0,
     /*! \brief Results are saturated to the bit depth of the output operand. */
-    VX_CONVERT_POLICY_SATURATE = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_CONVERT_POLICY) + 0x1,
+    VX_CONVERT_POLICY_SATURATE = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_CONVERT_POLICY) + 0x1,
 };
 
 /*! \brief Based on the VX_DF_IMAGE definition.
@@ -684,65 +683,65 @@ enum vx_convert_policy_e {
  */
 enum vx_df_image_e {
     /*! \brief A virtual image of no defined type. */
-    VX_DF_IMAGE_VIRT = ..., // VX_DF_IMAGE('V','I','R','T'),
+    VX_DF_IMAGE_VIRT = VX_DF_IMAGE('V','I','R','T'),
     /*! \brief A single plane of 24-bit pixel as 3 interleaved 8-bit units of
      * R then G then B data. This uses the BT709 full range by default.
      */
-    VX_DF_IMAGE_RGB  = ..., // VX_DF_IMAGE('R','G','B','2'),
+    VX_DF_IMAGE_RGB  = VX_DF_IMAGE('R','G','B','2'),
     /*! \brief A single plane of 32-bit pixel as 4 interleaved 8-bit units of
      * R then G then B data, then a <i>don't care</i> byte.
      * This uses the BT709 full range by default.
      */
-    VX_DF_IMAGE_RGBX = ..., // VX_DF_IMAGE('R','G','B','A'),
+    VX_DF_IMAGE_RGBX = VX_DF_IMAGE('R','G','B','A'),
     /*! \brief A 2-plane YUV format of Luma (Y) and interleaved UV data at
      * 4:2:0 sampling. This uses the BT709 full range by default.
      */
-    VX_DF_IMAGE_NV12 = ..., // VX_DF_IMAGE('N','V','1','2'),
+    VX_DF_IMAGE_NV12 = VX_DF_IMAGE('N','V','1','2'),
     /*! \brief A 2-plane YUV format of Luma (Y) and interleaved VU data at
      * 4:2:0 sampling. This uses the BT709 full range by default.
      */
-    VX_DF_IMAGE_NV21 = ..., // VX_DF_IMAGE('N','V','2','1'),
+    VX_DF_IMAGE_NV21 = VX_DF_IMAGE('N','V','2','1'),
     /*! \brief A single plane of 32-bit macro pixel of U0, Y0, V0, Y1 bytes.
      * This uses the BT709 full range by default.
      */
-    VX_DF_IMAGE_UYVY = ..., // VX_DF_IMAGE('U','Y','V','Y'),
+    VX_DF_IMAGE_UYVY = VX_DF_IMAGE('U','Y','V','Y'),
     /*! \brief A single plane of 32-bit macro pixel of Y0, U0, Y1, V0 bytes.
      * This uses the BT709 full range by default.
      */
-    VX_DF_IMAGE_YUYV = ..., // VX_DF_IMAGE('Y','U','Y','V'),
+    VX_DF_IMAGE_YUYV = VX_DF_IMAGE('Y','U','Y','V'),
     /*! \brief A 3 plane of 8-bit 4:2:0 sampled Y, U, V planes.
      * This uses the BT709 full range by default.
      */
-    VX_DF_IMAGE_IYUV = ..., // VX_DF_IMAGE('I','Y','U','V'),
+    VX_DF_IMAGE_IYUV = VX_DF_IMAGE('I','Y','U','V'),
     /*! \brief A 3 plane of 8 bit 4:4:4 sampled Y, U, V planes.
      * This uses the BT709 full range by default.
      */
-    VX_DF_IMAGE_YUV4 = ..., // VX_DF_IMAGE('Y','U','V','4'),
+    VX_DF_IMAGE_YUV4 = VX_DF_IMAGE('Y','U','V','4'),
     /*! \brief A single plane of unsigned 8-bit data.
      * The range of data is not specified, as it may be extracted from a YUV or
      * generated.
      */
-    VX_DF_IMAGE_U8 = ..., // VX_DF_IMAGE('U','0','0','8'),
+    VX_DF_IMAGE_U8 = VX_DF_IMAGE('U','0','0','8'),
     /*! \brief A single plane of unsigned 16-bit data.
      * The range of data is not specified, as it may be extracted from a YUV or
      * generated.
      */
-    VX_DF_IMAGE_U16  = ..., // VX_DF_IMAGE('U','0','1','6'),
+    VX_DF_IMAGE_U16  = VX_DF_IMAGE('U','0','1','6'),
     /*! \brief A single plane of signed 16-bit data.
      * The range of data is not specified, as it may be extracted from a YUV or
      * generated.
      */
-    VX_DF_IMAGE_S16  = ..., // VX_DF_IMAGE('S','0','1','6'),
+    VX_DF_IMAGE_S16  = VX_DF_IMAGE('S','0','1','6'),
     /*! \brief A single plane of unsigned 32-bit data.
      * The range of data is not specified, as it may be extracted from a YUV or
      * generated.
      */
-    VX_DF_IMAGE_U32  = ..., // VX_DF_IMAGE('U','0','3','2'),
+    VX_DF_IMAGE_U32  = VX_DF_IMAGE('U','0','3','2'),
     /*! \brief A single plane of unsigned 32-bit data.
      * The range of data is not specified, as it may be extracted from a YUV or
      * generated.
      */
-    VX_DF_IMAGE_S32  = ..., // VX_DF_IMAGE('S','0','3','2'),
+    VX_DF_IMAGE_S32  = VX_DF_IMAGE('S','0','3','2'),
 };
 
 /*! \brief The Target Enumeration.
@@ -750,11 +749,11 @@ enum vx_df_image_e {
  */
 enum vx_target_e {
     /*! \brief Any available target. An OpenVX implementation must support at least one target associated with this value */
-    VX_TARGET_ANY = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_TARGET) + 0x0000,
+    VX_TARGET_ANY = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_TARGET) + 0x0000,
     /*! \brief Target, explicitly specified by its (case-insensitive) name string. */
-    VX_TARGET_STRING = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_TARGET) + 0x0001,
+    VX_TARGET_STRING = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_TARGET) + 0x0001,
     /*! \brief Start of Vendor specific target enumerates. */
-    VX_TARGET_VENDOR_BEGIN = ..., // VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_TARGET) + 0x1000,
+    VX_TARGET_VENDOR_BEGIN = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_TARGET) + 0x1000,
 };
 
 /*! \brief The reference attributes list.
@@ -1346,36 +1345,36 @@ enum vx_round_policy_e {
     VX_ROUND_POLICY_TO_NEAREST_EVEN = VX_ENUM_BASE(VX_ID_KHRONOS, VX_ENUM_ROUND_POLICY) + 0x2,
 };
 
-//#if defined(_WIN32) || defined(UNDER_CE)
-//#if defined(_WIN64)
-///*! Use to aid in debugging values in OpenVX.
-// * \ingroup group_basic_features
-// */
-//#define VX_FMT_REF  "%I64u"
-///*! Use to aid in debugging values in OpenVX.
-// * \ingroup group_basic_features
-// */
-//#define VX_FMT_SIZE "%I64u"
-//#else
-///*! Use to aid in debugging values in OpenVX.
-// * \ingroup group_basic_features
-// */
-//#define VX_FMT_REF  "%lu"
-///*! Use to aid in debugging values in OpenVX.
-// * \ingroup group_basic_features
-// */
-//#define VX_FMT_SIZE "%lu"
-//#endif
-//#else
-///*! Use to aid in debugging values in OpenVX.
-// * \ingroup group_basic_features
-// */
-//#define VX_FMT_REF  "%p"
-///*! Use to aid in debugging values in OpenVX.
-// * \ingroup group_basic_features
-// */
-//#define VX_FMT_SIZE "%zu"
-//#endif
+#if defined(_WIN32) || defined(UNDER_CE)
+#if defined(_WIN64)
+/*! Use to aid in debugging values in OpenVX.
+ * \ingroup group_basic_features
+ */
+#define VX_FMT_REF  "%I64u"
+/*! Use to aid in debugging values in OpenVX.
+ * \ingroup group_basic_features
+ */
+#define VX_FMT_SIZE "%I64u"
+#else
+/*! Use to aid in debugging values in OpenVX.
+ * \ingroup group_basic_features
+ */
+#define VX_FMT_REF  "%lu"
+/*! Use to aid in debugging values in OpenVX.
+ * \ingroup group_basic_features
+ */
+#define VX_FMT_SIZE "%lu"
+#endif
+#else
+/*! Use to aid in debugging values in OpenVX.
+ * \ingroup group_basic_features
+ */
+#define VX_FMT_REF  "%p"
+/*! Use to aid in debugging values in OpenVX.
+ * \ingroup group_basic_features
+ */
+#define VX_FMT_SIZE "%zu"
+#endif
 /*! Use to indicate the 1:1 ratio in Q22.10 format.
  * \ingroup group_basic_features
  */
@@ -1414,7 +1413,7 @@ typedef struct _vx_imagepatch_addressing_t {
 /*! \brief Use to initialize a <tt>\ref vx_imagepatch_addressing_t</tt> structure on the stack.
  * \ingroup group_image
  */
-#define VX_IMAGEPATCH_ADDR_INIT ... // {0u, 0u, 0, 0, 0u, 0u, 0u, 0u}
+#define VX_IMAGEPATCH_ADDR_INIT {0u, 0u, 0, 0, 0u, 0u, 0u, 0u}
 
 /*! \brief The performance measurement structure. The time or durations are in units of nano seconds.
  * \ingroup group_performance
@@ -1433,7 +1432,7 @@ typedef struct _vx_perf_t {
 /*! \brief Initializes a <tt>\ref vx_perf_t</tt> on the stack.
  * \ingroup group performance
  */
-#define VX_PERF_INIT    ... // {0ul, 0ul, 0ul, 0ul, 0ul, 0ul}
+#define VX_PERF_INIT    {0ul, 0ul, 0ul, 0ul, 0ul, 0ul}
 
 /*! \brief The Kernel Information Structure. This is returned by the Context
  * to indicate which kernels are available in the OpenVX implementation.
@@ -1456,12 +1455,12 @@ typedef struct _vx_kernel_info_t {
 /*! \brief Use to indicate a half-scale pyramid.
  * \ingroup group_pyramid
  */
-//#define VX_SCALE_PYRAMID_HALF       (0.5f)
+#define VX_SCALE_PYRAMID_HALF       (0.5f)
 
 /*! \brief Use to indicate a ORB scaled pyramid whose scaling factor is \f$ \frac{1}{\root 4 \of {2}} \f$.
  * \ingroup group_pyramid
  */
-//#define VX_SCALE_PYRAMID_ORB        ((vx_float32)0.8408964f)
+#define VX_SCALE_PYRAMID_ORB        ((vx_float32)0.8408964f)
 
 /*! \brief The keypoint data structure.
  * \ingroup group_basic_features
@@ -1541,8 +1540,7 @@ typedef struct _vx_border_t {
 * \note The symbol exported from the user module must be <tt>vxPublishKernels</tt> in extern C format.
 * \ingroup group_user_kernels
 */
-//typedef vx_status(VX_API_CALL *vx_publish_kernels_f)(vx_context context);
-typedef vx_status (*vx_publish_kernels_f)(vx_context context);
+typedef vx_status(VX_API_CALL *vx_publish_kernels_f)(vx_context context);
 
 /*!
 * \brief The entry point into modules unloaded by <tt>\ref vxUnloadKernels</tt>.
@@ -1550,8 +1548,7 @@ typedef vx_status (*vx_publish_kernels_f)(vx_context context);
 * \note The symbol exported from the user module must be <tt>vxUnpublishKernels</tt> in extern C format.
 * \ingroup group_user_kernels
 */
-//typedef vx_status(VX_API_CALL *vx_unpublish_kernels_f)(vx_context context);
-typedef vx_status(*vx_unpublish_kernels_f)(vx_context context);
+typedef vx_status(VX_API_CALL *vx_unpublish_kernels_f)(vx_context context);
 
 /*!
 * \brief The pointer to the Host side kernel.
@@ -1648,4 +1645,4 @@ enum vx_map_flag_e {
      VX_NOGAP_X = 1,  /*!< \brief No Gap. */
 };
 
-// #endif
+#endif

@@ -17,7 +17,7 @@ def ChannelExtract(context, input, channel, output):
     '''
 :brief: [Immediate] Invokes an immediate Channel Extract.
 :param: [in] context The reference to the overall context.
-:param: [in] input The input image. Must be one of the defined *vx_df_image_e* multiplanar formats.
+:param: [in] input The input image. Must be one of the defined *vx_df_image_e* multi-channel formats.
 :param: [in] channel The *vx_channel_e* enumeration to extract.
 :param: [out] output The output image. Must be *VX_DF_IMAGE_U8*.
 :ingroup: group_vision_function_channelextract
@@ -57,33 +57,33 @@ def Sobel3x3(context, input, output_x, output_y):
     '''
     return lib.vxuSobel3x3(context, input, output_x, output_y)
     
-def Magnitude(context, grad_x, grad_y, output):
+def Magnitude(context, grad_x, grad_y, mag):
     '''
 :brief: [Immediate] Invokes an immediate Magnitude.
 :param: [in] context The reference to the overall context.
 :param: [in] grad_x The input x image. This must be in *VX_DF_IMAGE_S16* format.
 :param: [in] grad_y The input y image. This must be in *VX_DF_IMAGE_S16* format.
-:param: [out] output The magnitude image. This will be in *VX_DF_IMAGE_S16* format.
+:param: [out] mag The magnitude image. This will be in *VX_DF_IMAGE_S16* format.
 :ingroup: group_vision_function_magnitude
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Success
 :retval:An error occurred. See *vx_status_e*.
     '''
-    return lib.vxuMagnitude(context, grad_x, grad_y, output)
+    return lib.vxuMagnitude(context, grad_x, grad_y, mag)
     
-def Phase(context, grad_x, grad_y, output):
+def Phase(context, grad_x, grad_y, orientation):
     '''
 :brief: [Immediate] Invokes an immediate Phase.
 :param: [in] context The reference to the overall context.
 :param: [in] grad_x The input x image. This must be in *VX_DF_IMAGE_S16* format.
 :param: [in] grad_y The input y image. This must be in *VX_DF_IMAGE_S16* format.
-:param: [out] output The phase image. This will be in *VX_DF_IMAGE_U8* format.
+:param: [out] orientation The phase image. This will be in *VX_DF_IMAGE_U8* format.
 :ingroup: group_vision_function_phase
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Success
 :retval:An error occurred. See *vx_status_e*.
     '''
-    return lib.vxuPhase(context, grad_x, grad_y, output)
+    return lib.vxuPhase(context, grad_x, grad_y, orientation)
     
 def ScaleImage(context, src, dst, type):
     '''
@@ -103,8 +103,8 @@ def TableLookup(context, input, lut, output):
     '''
 :brief: [Immediate] Processes the image through the LUT.
 :param: [in] context The reference to the overall context.
-:param: [in] input The input image in *VX_DF_IMAGE_U8*
-:param: [in] lut The LUT which is of type VX_TYPE_UINT8
+:param: [in] input The input image in *VX_DF_IMAGE_U8* or *VX_DF_IMAGE_S16*.
+:param: [in] lut The LUT which is of type *VX_TYPE_UINT8* or *VX_TYPE_INT16*.
 :param: [out] output The output image of type *VX_DF_IMAGE_U8*
 :ingroup: group_vision_function_lut
 :return: A *vx_status_e* enumeration.
@@ -173,8 +173,9 @@ def Threshold(context, input, thresh, output):
 :param: [in] context The reference to the overall context.
 :param: [in] input The input image. *VX_DF_IMAGE_U8* is supported.
 :param: [in] thresh The thresholding object that defines the parameters of
-the operation.
-:param: [out] output The output Boolean image. Values are either 0 or 255.
+the operation. The *VX_THRESHOLD_TRUE_VALUE* and *VX_THRESHOLD_FALSE_VALUE* are taken into account.
+:param: [out] output The output Boolean image with values either *VX_THRESHOLD_TRUE_VALUE* or 
+*VX_THRESHOLD_FALSE_VALUE* from the :e: thresh parameter.
 :ingroup: group_vision_function_threshold
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Success
@@ -260,20 +261,36 @@ def Gaussian3x3(context, input, output):
     '''
     return lib.vxuGaussian3x3(context, input, output)
     
-def Convolve(context, input, matrix, output):
+def NonLinearFilter(context, function, input, mask, output):
+    '''
+:brief: [Immediate] Creates a Non-linear Filter Node.
+:param: [in] context The reference to the overall context.
+:param: [in] function The non-linear filter function. See *vx_non_linear_filter_e*.
+:param: [in] input The input image in *VX_DF_IMAGE_U8* format.
+:param: [in] mask The mask to be applied to the Non-linear function. *VX_MATRIX_ORIGIN* attribute is used 
+to place the mask appropriately when computing the resulting image. See *vxCreateMatrixFromPattern*.  
+:param: [out] output The output image in *VX_DF_IMAGE_U8* format.
+:return: A *vx_status_e* enumeration.
+:retval: VX_SUCCESS Success
+:retval:An error occurred. See *vx_status_e*.
+:ingroup: group_vision_function_nonlinear_filter
+    '''
+    return lib.vxuNonLinearFilter(context, function, input, mask, output)
+    
+def Convolve(context, input, conv, output):
     '''
 :brief: [Immediate] Computes a convolution on the input image with the supplied
 matrix.
 :param: [in] context The reference to the overall context.
 :param: [in] input The input image in *VX_DF_IMAGE_U8* format.
-:param: [in] matrix The convolution matrix.
+:param: [in] conv The *vx_int16* convolution matrix.
 :param: [out] output The output image in *VX_DF_IMAGE_U8* or *VX_DF_IMAGE_S16* format.
 :ingroup: group_vision_function_custom_convolution
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Success
 :retval:An error occurred. See *vx_status_e*.
     '''
-    return lib.vxuConvolve(context, input, matrix, output)
+    return lib.vxuConvolve(context, input, conv, output)
     
 def GaussianPyramid(context, input, gaussian):
     '''
@@ -288,6 +305,36 @@ def GaussianPyramid(context, input, gaussian):
     '''
     return lib.vxuGaussianPyramid(context, input, gaussian)
     
+def LaplacianPyramid(context, input, laplacian, output):
+    '''
+:brief: [Immediate] Computes a Laplacian pyramid from an input image.
+:param: [in] context The reference to the overall context.
+:param: [in] input The input image in *VX_DF_IMAGE_U8* format.
+:param: [out] laplacian The Laplacian pyramid with *VX_DF_IMAGE_S16* to construct.
+:param: [out] output The lowest resolution image of type *VX_DF_IMAGE_S16* necessary to reconstruct the input image from the pyramid.
+:ingroup: group_vision_function_laplacian_pyramid
+:see: group_pyramid
+:return: A *vx_status* enumeration.
+:retval: VX_SUCCESS Success.
+:retval:An error occured. See *vx_status_e*
+    '''
+    return lib.vxuLaplacianPyramid(context, input, laplacian, output)
+    
+def LaplacianReconstruct(context, laplacian, input, output):
+    '''
+:brief: [Immediate] Reconstructs an image from a Laplacian Image pyramid.
+:param: [in] context The reference to the overall context.
+:param: [in] laplacian The Laplacian pyramid with *VX_DF_IMAGE_S16* format.
+:param: [in] input The lowest resolution image of type *VX_DF_IMAGE_S16* for the Laplacian pyramid
+:param: [out] output The output image of type *VX_DF_IMAGE_U8* with the highest possible resolution reconstructed from the Laplacian pyramid.
+:ingroup: group_vision_function_laplacian_reconstruct
+:see: group_pyramid
+:return: A *vx_status* enumeration.
+:retval: VX_SUCCESS Success.
+:retval:An error occured. See *vx_status_e*
+    '''
+    return lib.vxuLaplacianReconstruct(context, laplacian, input, output)
+    
 def AccumulateImage(context, input, accum):
     '''
 :brief: [Immediate] Computes an accumulation.
@@ -301,19 +348,19 @@ def AccumulateImage(context, input, accum):
     '''
     return lib.vxuAccumulateImage(context, input, accum)
     
-def AccumulateWeightedImage(context, input, scale, accum):
+def AccumulateWeightedImage(context, input, alpha, accum):
     '''
 :brief: [Immediate] Computes a weighted accumulation.
 :param: [in] context The reference to the overall context.
 :param: [in] input The input *VX_DF_IMAGE_U8* image.
-:param: [in] scale A *VX_TYPE_FLOAT32* type, the input value with the range :f:$ 0.0 :le: :alpha: :le: 1.0 :f:$.
+:param: [in] alpha A *VX_TYPE_FLOAT32* type, the input value with the range :f:$ 0.0 :le: :alpha: :le: 1.0 :f:$.
 :param: [in,out] accum The *VX_DF_IMAGE_U8* accumulation image.
 :ingroup: group_vision_function_accumulate_weighted
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Success
 :retval:An error occurred. See *vx_status_e*.
     '''
-    return lib.vxuAccumulateWeightedImage(context, input, scale, accum)
+    return lib.vxuAccumulateWeightedImage(context, input, alpha, accum)
     
 def AccumulateSquareImage(context, input, shift, accum):
     '''
@@ -334,12 +381,12 @@ def MinMaxLoc(context, input, minVal, maxVal, minLoc, maxLoc, minCount, maxCount
 :brief: [Immediate] Computes the minimum and maximum values of the image.
 :param: [in] context The reference to the overall context.
 :param: [in] input The input image in *VX_DF_IMAGE_U8* or *VX_DF_IMAGE_S16* format.
-:param: [out] minVal The minimum value in the image.
-:param: [out] maxVal The maximum value in the image.
-:param: [out] minLoc The minimum locations (optional). If the input image has several minimums, the kernel will return all of them).
-:param: [out] maxLoc The maximum locations (optional). If the input image has several maximums, the kernel will return all of them).
-:param: [out] minCount The total number of detected minimums in image (optional).
-:param: [out] maxCount The total number of detected maximums in image (optional).
+:param: [out] minVal The minimum value in the image, which corresponds to the type of the input.
+:param: [out] maxVal The maximum value in the image, which corresponds to the type of the input.
+:param: [out] minLoc The minimum *VX_TYPE_COORDINATES2D* locations (optional). If the input image has several minimums, the kernel will return up to the capacity of the array.
+:param: [out] maxLoc The maximum *VX_TYPE_COORDINATES2D* locations (optional). If the input image has several maximums, the kernel will return up to the capacity of the array.
+:param: [out] minCount The total number of detected minimums in image (optional). Use a *VX_TYPE_UINT32* scalar.
+:param: [out] maxCount The total number of detected maximums in image (optional). Use a *VX_TYPE_UINT32* scalar.
 :ingroup: group_vision_function_minmaxloc
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Success
@@ -353,8 +400,8 @@ def ConvertDepth(context, input, output, policy, shift):
 :param: [in] context The reference to the overall context.
 :param: [in] input The input image.
 :param: [out] output The output image.
-:param: [in] policy A vx_convert_policy_e enumeration.
-:param: [in] shift The shift value.
+:param: [in] policy A *VX_TYPE_ENUM* of the *vx_convert_policy_e* enumeration.
+:param: [in] shift A scalar containing a *VX_TYPE_INT32* of the shift value.
 :ingroup: group_vision_function_convertdepth
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Success
@@ -367,10 +414,13 @@ def CannyEdgeDetector(context, input, hyst, gradient_size, norm_type, output):
 :brief: [Immediate] Computes Canny Edges on the input image into the output image.
 :param: [in] context The reference to the overall context.
 :param: [in] input The input *VX_DF_IMAGE_U8* image.
-:param: [in] hyst The double threshold for hysteresis.
+:param: [in] hyst The double threshold for hysteresis. The threshold data_type shall be either *VX_TYPE_UINT8* 
+or *VX_TYPE_INT16*. The *VX_THRESHOLD_TRUE_VALUE* and *VX_THRESHOLD_FALSE_VALUE* 
+of *vx_threshold* are ignored.
 :param: [in] gradient_size The size of the Sobel filter window, must support at least 3, 5 and 7.
 :param: [in] norm_type A flag indicating the norm used to compute the gradient, VX_NORM_L1 or VX_NORM_L2.
-:param: [out] output The output image in *VX_DF_IMAGE_U8* format.
+:param: [out] output The output image in *VX_DF_IMAGE_U8* format with values either 
+*VX_THRESHOLD_TRUE_VALUE* or *VX_THRESHOLD_FALSE_VALUE* from hyst parameter.
 :ingroup: group_vision_function_canny
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Success
@@ -380,11 +430,11 @@ def CannyEdgeDetector(context, input, hyst, gradient_size, norm_type, output):
     
 def HalfScaleGaussian(context, input, output, kernel_size):
     '''
-:brief: [Immediate] Performs a Gaussian Blur on an image then half-scales it.
+:brief: [Immediate] Performs a Gaussian Blur on an image then half-scales it. The interpolation mode used is nearest-neighbor.
 :param: [in] context The reference to the overall context.
 :param: [in] input The input *VX_DF_IMAGE_U8* image.
 :param: [out] output The output *VX_DF_IMAGE_U8* image.
-:param: [in] kernel_size The input size of the Gaussian filter. Supported values are 3 and 5.
+:param: [in] kernel_size The input size of the Gaussian filter. Supported values are 1, 3 and 5.
 :ingroup: group_vision_function_scale_image
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Success
@@ -453,7 +503,7 @@ def Multiply(context, in1, in2, scale, overflow_policy, rounding_policy, out):
 :param: [in] context The reference to the overall context.
 :param: [in] in1 A *VX_DF_IMAGE_U8* or *VX_DF_IMAGE_S16* input image.
 :param: [in] in2 A *VX_DF_IMAGE_U8* or *VX_DF_IMAGE_S16* input image.
-:param: [in] scale The scale value.
+:param: [in] scale A non-negative *VX_TYPE_FLOAT32* multiplied to each product before overflow handling.
 :param: [in] overflow_policy A *vx_convert_policy_e* enumeration.
 :param: [in] rounding_policy A *vx_round_policy_e* enumeration.
 :param: [out] out The output image in *VX_DF_IMAGE_U8* or *VX_DF_IMAGE_S16* format.
@@ -501,7 +551,7 @@ def WarpAffine(context, input, matrix, type, output):
 :param: [in] input The input *VX_DF_IMAGE_U8* image.
 :param: [in] matrix The affine matrix. Must be 2x3 of type VX_TYPE_FLOAT32.
 :param: [in] type The interpolation type from vx_interpolation_type_e.
-VX_INTERPOLATION_TYPE_AREA is not supported.
+VX_INTERPOLATION_AREA is not supported.
 :param: [out] output The output *VX_DF_IMAGE_U8* image.
 :ingroup: group_vision_function_warp_affine
 :return: A *vx_status_e* enumeration.
@@ -517,7 +567,7 @@ def WarpPerspective(context, input, matrix, type, output):
 :param: [in] input The input *VX_DF_IMAGE_U8* image.
 :param: [in] matrix The perspective matrix. Must be 3x3 of type VX_TYPE_FLOAT32.
 :param: [in] type The interpolation type from vx_interpolation_type_e.
-VX_INTERPOLATION_TYPE_AREA is not supported.
+VX_INTERPOLATION_AREA is not supported.
 :param: [out] output The output *VX_DF_IMAGE_U8* image.
 :ingroup: group_vision_function_warp_perspective
 :return: A *vx_status_e* enumeration.
@@ -538,7 +588,7 @@ def HarrisCorners(context, input, strength_thresh, min_distance, sensitivity, gr
 implementation must support at least 3, 5, and 7.
 :param: [in] block_size The block window size used to compute the harris corner score.
 The implementation must support at least 3, 5, and 7.
-:param: [out] corners The array of *VX_TYPE_KEYPOINT* structs.
+:param: [out] corners The array of *VX_TYPE_KEYPOINT* structs. The order of the keypoints in this array is implementation dependent.
 :param: [out] num_corners The total number of detected corners in image (optional). Use a VX_TYPE_SIZE scalar
 :ingroup: group_vision_function_harris
 :return: A *vx_status_e* enumeration.
@@ -555,7 +605,7 @@ def FastCorners(context, input, strength_thresh, nonmax_suppression, corners, nu
 :param: [in] strength_thresh Threshold on difference between intensity of the central pixel and pixels on Bresenham's circle of radius 3 (*VX_TYPE_FLOAT32* scalar)
 :param: [in] nonmax_suppression If true, non-maximum suppression is applied to
 detected corners before being places in the *vx_array* of *VX_TYPE_KEYPOINT* structs.
-:param: [out] corners Output corner *vx_array* of *VX_TYPE_KEYPOINT*.
+:param: [out] corners Output corner *vx_array* of *VX_TYPE_KEYPOINT*. The order of the keypoints in this array is implementation dependent.
 :param: [out] num_corners The total number of detected corners in image (optional). Use a VX_TYPE_SIZE scalar.
 :ingroup: group_vision_function_fast
 :return: A *vx_status_e* enumeration.
@@ -568,8 +618,8 @@ def OpticalFlowPyrLK(context, old_images, new_images, old_points, new_points_est
     '''
 :brief: [Immediate] Computes an optical flow on two images.
 :param: [in] context The reference to the overall context.
-:param: [in] old_images Input of first (old) image pyramid
-:param: [in] new_images Input of destination (new) image pyramid
+:param: [in] old_images Input of first (old) image pyramid in *VX_DF_IMAGE_U8*.
+:param: [in] new_images Input of destination (new) image pyramid in *VX_DF_IMAGE_U8*
 :param: [in] old_points an array of key points in a vx_array of *VX_TYPE_KEYPOINT* those key points are defined at
  the old_images high resolution pyramid
 :param: [in] new_points_estimates an array of estimation on what is the output key points in a *vx_array* of
@@ -582,7 +632,7 @@ def OpticalFlowPyrLK(context, old_images, new_images, old_points, new_points_est
 :param: [in] num_iterations is the number of iterations. Use a *VX_TYPE_UINT32* scalar.
 :param: [in] use_initial_estimate Can be set to either *vx_false_e* or *vx_true_e*.
 :param: [in] window_dimension The size of the window on which to perform the algorithm. See 
- *VX_CONTEXT_ATTRIBUTE_OPTICAL_FLOW_WINDOW_MAXIMUM_DIMENSION*
+ *VX_CONTEXT_OPTICAL_FLOW_MAX_WINDOW_DIMENSION*
 
 :ingroup: group_vision_function_opticalflowpyrlk
 :return: A *vx_status_e* enumeration.
@@ -598,7 +648,7 @@ def Remap(context, input, table, policy, output):
 :param: [in] input The input *VX_DF_IMAGE_U8* image.
 :param: [in] table The remap table object.
 :param: [in] policy The interpolation policy from vx_interpolation_type_e.
-VX_INTERPOLATION_TYPE_AREA is not supported.
+VX_INTERPOLATION_AREA is not supported.
 :param: [out] output The output *VX_DF_IMAGE_U8* image.
 :return: A *vx_status_e* enumeration.
 :ingroup: group_vision_function_remap

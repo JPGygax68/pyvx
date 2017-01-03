@@ -13,9 +13,9 @@ class APIFilter:
 
     def read_header(self, filename):
         args = ["-I"+incdir for incdir in self.include_dirs]
-        args += ["-D%s%s%s" % (k, '=' if len(v) > 0 else '', v) for k, v in self.ppdefs.items()]
-        #self.tu = self.index.parse(filename, args=args, options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD)
-        self.tu = self.index.parse(filename, args=args)
+        args += ["-D%s%s%s" % (k, '=' if len(v) > 0 else '', v) for k, v in self.ppdefs.items() if v != '']
+        self.tu = self.index.parse(filename, args=args, options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD)
+        #self.tu = self.index.parse(filename, args=args)
 
     def apply(self):
 
@@ -29,6 +29,9 @@ class APIFilter:
             return ' '.join(c.spelling for c in cursor.get_children())
 
         def node_to_string(cursor: Cursor) -> str:
+            """Converts an AST node back to a C declaration.
+            CAUTION! This code was evolved by trial and error, and just barely covers the needs of PyVX. It cannot
+            reliably be used in any other context."""
 
             ARRAY_KINDS = [TypeKind.CONSTANTARRAY, TypeKind.INCOMPLETEARRAY, TypeKind.VARIABLEARRAY,
                            TypeKind.DEPENDENTSIZEDARRAY]
@@ -52,7 +55,8 @@ class APIFilter:
                         ca = t.get_canonical() # type: Type
                         if ca.kind in ARRAY_KINDS:
                             return ca.element_type.spelling
-                        return ca.spelling
+                        else:
+                            return ca.spelling
 
             def var_decl_to_str(c: Cursor) -> str:
                 t = c.type # type: Type
@@ -97,15 +101,26 @@ class APIFilter:
                 return 'typedef %s %s;' % (utdt.spelling, cursor.spelling)
             elif cursor.kind == CursorKind.FUNCTION_DECL:
                 rt = cursor.type.get_result()  # type: Type
-                ch = [_ for _ in cursor.get_children()]
-                args = ['%s' % var_decl_to_str(_) for _ in ch[1 if ch[0].kind == CursorKind.TYPE_REF else 0:]]
                 ca = cursor.type.get_canonical() # type: Type
+                #ch = [_ for _ in cursor.get_children()]
+                #args = ['%s' % var_decl_to_str(_) for _ in ch[1 if ch[0].kind == CursorKind.TYPE_REF else 0:]]
+                args = ['%s' % var_decl_to_str(_) for _ in cursor.get_children() if _.kind == CursorKind.PARM_DECL]
+                ch = [_ for _ in cursor.get_children()]
+                tk = [_ for _ in ch[1].get_tokens()]
+                #cc = self.ppdefs.get(tk[1].cursor.spelling, tk[1].cursor.spelling) \
+                #    if tk[1].cursor.kind == CursorKind.MACRO_INSTANTIATION else tk[1].cursor.spelling
+                cc = self.ppdefs[tk[1].cursor.spelling] \
+                    if tk[1].cursor.kind == CursorKind.MACRO_INSTANTIATION else ''
                 if ca.kind == TypeKind.FUNCTIONPROTO and ca.is_function_variadic(): args += ['...']
-                return '%s %s(%s);' % (rt.spelling, cursor.spelling, ', '.join(args))
-            #elif cursor.kind == CursorKind.MACRO_DEFINITION:
-            #    #return "/* IMPLEMENTING NOW: MACRO DEFINITION */"
-            #    #return '#define %s %s' % (cursor.spelling, ''.join([_.spelling for _ in cursor.get_tokens()][:1]))
-            #    return '#define %s ...' % cursor.spelling
+                return '%s %s %s(%s);' % (rt.spelling, cc, cursor.spelling, ', '.join(args))
+            elif cursor.kind == CursorKind.MACRO_DEFINITION:
+                #return '#define %s %s' % (cursor.spelling, ''.join([_.spelling for _ in cursor.get_tokens()][:1]))
+                #return '#define %s ...' % cursor.spelling
+                v = ''.join([_.spelling for _ in cursor.get_tokens()][1:-1])
+                self.ppdefs[cursor.spelling] = v
+                return None
+            elif cursor.kind == CursorKind.MACRO_INSTANTIATION:
+                return None
             else:
                 return "/* NOT IMPLEMENTED YET: %s: %s */" % (cursor.spelling, cursor.kind)
                 pass
@@ -113,8 +128,8 @@ class APIFilter:
             # TODO (the following is a placeholder)
             return "/* %s: %s */" % (cursor.spelling, cursor.kind)
 
-        return '\n'.join([node_to_string(c) for c in self.tu.cursor.get_children()
-                          if c.spelling[:2].lower() == "vx"])
+        return '\n'.join(_ for _ in [node_to_string(c) for c in self.tu.cursor.get_children()
+                          if c.spelling[:2].lower() == "vx"] if not _ is None)
 
     def dbg_print_all(self):
 
