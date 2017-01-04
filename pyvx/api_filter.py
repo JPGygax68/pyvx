@@ -22,7 +22,7 @@ class APIFilter:
         args += ["-D%s%s%s" % (k, '=' if len(v) > 0 else '', v) for k, v in self.ppdefs.items() if v != '']
         args += ["-include%s" % incfile for incfile in self.include_before]
         self.tu = self.index.parse(filename, args=args, options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD)
-        # self.tu = self.index.parse(filename, args=args)
+        return self.tu
 
     def get_api_declaration(self):
 
@@ -135,6 +135,8 @@ class APIFilter:
                                      if re.match(self.prefix, c.spelling)] if not _ is None)
 
     def get_simple_macro_definitions(self):
+        """Removes parentheses and keeps only integer definitions. Returns a list of #define directives."""
+
         return ['#define %s %s' % (k, m[1]) for (k, m) in
                 [(k, re.match(r'^\s*(([0-9]+[uU]?)|(0[xX][0-9a-fA-F]+))\s*$', v.strip('()')))
                  for k, v in self.ppdefs.items()] if m]

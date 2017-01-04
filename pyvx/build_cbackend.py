@@ -22,11 +22,6 @@ def build(name, openvx_install, default):
     os.chdir(os.path.dirname(mydir))
     assert name != 'default'
 
-    hdr = os.path.join(openvx_install, 'include', 'VX', 'vx.h')
-    if not os.path.exists(hdr):
-        print("ERROR: Can't find header", hdr)
-        exit(-1)
-
     bindir = os.path.join(openvx_install, 'bin')
     libdir = os.path.join(openvx_install, 'lib')
     incdir = os.path.join(openvx_install, 'include')
@@ -40,22 +35,20 @@ def build(name, openvx_install, default):
 
     ffi = FFI()
 
-    vx_file  = os.path.join(incdir, "VX", "vx.h" )
-    vxu_file = os.path.join(incdir, "VX", "vxu.h")
+    #vx_file  = os.path.join(incdir, "VX", "vx.h" )
+    #vxu_file = os.path.join(incdir, "VX", "vxu.h")
+    vx_file  = os.path.join(mydir, "cdefs", "vx.h" )
+    vxu_file = os.path.join(mydir, "cdefs", "vxu.h")
 
     apifilter = APIFilter([vx_file], r'^(vx[A-Z_]|VX_).*$', include_dirs = [incdir], ppdefs = DEFS)
     vx_code = apifilter.get_api_declaration()
-    #print("Preprocessor definitions:\n%s" % '\n'.join('%s %s' % (k, v) for k, v in apifilter.ppdefs.items()))
-    #code += '\n' + '\n'.join(["#define %s %s" % (k, v) for k, v in DEFS.items() if re.match(r'[0-9]+', v)])
-    # Remove parentheses and keep only integer definitions
     vx_code += '\n' + '\n'.join(apifilter.get_simple_macro_definitions())
-    print("vx.h code:\n%s" % vx_code)
+    #print("vx.h code:\n%s" % vx_code)
     ffi.cdef(vx_code)
 
     apifilter = APIFilter([vxu_file], r'^vxu[A-Z_].*$', include_dirs=[incdir], ppdefs = DEFS, include_before=[vx_file])
     vxu_code = apifilter.get_api_declaration()
-    #vxu_code += '\n' + '\n'.join(apifilter.get_simple_macro_definitions())
-    print("vxu.h code:\n%s" % vxu_code)
+    #print("vxu.h code:\n%s" % vxu_code)
     ffi.cdef(vxu_code)
 
     # Metadata query declarations
@@ -68,8 +61,6 @@ def build(name, openvx_install, default):
         char *_get_backend_install_path();
     ''')
 
-    #exit(-1)
-        
     ffi.set_source("pyvx.backend.%s" % name,
         """
             #include <VX/vx.h>
