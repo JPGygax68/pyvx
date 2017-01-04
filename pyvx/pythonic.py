@@ -33,7 +33,7 @@ class VxObjectMeta(type):
                 if a.query is None:
                     a.query = getattr(vx, 'Query' + name)
                 if a.enum is None:
-                    a.enum = getattr(vx, name.upper() + '_ATTRIBUTE_' + n.upper())
+                    a.enum = getattr(vx, name.upper() + '_' + n.upper()) # + '_ATTRIBUTE_' + n.upper())
         cls = type.__new__(cls, name, bases, attrs)
         return cls
 

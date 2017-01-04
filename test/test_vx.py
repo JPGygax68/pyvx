@@ -14,17 +14,17 @@ class TestVX(object):
         c = vx.CreateContext()
         assert vx.GetStatus(vx.reference(c)) == vx.SUCCESS
         assert vx.QueryReference(vx.reference(c), vx.REF_ATTRIBUTE_TYPE, 'vx_enum') == (vx.SUCCESS, vx.TYPE_CONTEXT)
-        s, v = vx.QueryContext(c, vx.CONTEXT_ATTRIBUTE_VENDOR_ID, 'vx_uint16')
+        s, v = vx.QueryContext(c, vx.CONTEXT_VENDOR_ID, 'vx_uint16')
         assert s == vx.SUCCESS
         assert isinstance(v, int)
-        s, v = vx.QueryContext(c, vx.CONTEXT_ATTRIBUTE_IMPLEMENTATION, 'vx_char[VX_MAX_IMPLEMENTATION_NAME]', str)
+        s, v = vx.QueryContext(c, vx.CONTEXT_IMPLEMENTATION, 'vx_char[VX_MAX_IMPLEMENTATION_NAME]', str)
         assert s == vx.SUCCESS
         assert isinstance(v, unicode)
 
-        s = vx.SetContextAttribute(c, vx.CONTEXT_ATTRIBUTE_IMMEDIATE_BORDER_MODE,
+        s = vx.SetContextAttribute(c, vx.CONTEXT_IMMEDIATE_BORDER_MODE,
                                       vx.border_mode_t(vx.BORDER_MODE_CONSTANT, 42))
         assert s == vx.SUCCESS
-        s, v = vx.QueryContext(c, vx.CONTEXT_ATTRIBUTE_IMMEDIATE_BORDER_MODE, 'vx_border_mode_t')
+        s, v = vx.QueryContext(c, vx.CONTEXT_IMMEDIATE_BORDER_MODE, 'vx_border_mode_t')
         assert s == vx.SUCCESS
         assert v.mode == vx.BORDER_MODE_CONSTANT
         assert v.constant_value == 42
