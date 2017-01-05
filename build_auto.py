@@ -30,11 +30,29 @@ for entry in api.split('/*!'):
     args = [re.split(r'\s+', a.strip())[-1] for a in args.split(',')]
     if args[-1] == '...':
         args.pop()
-    doc = re.sub(r' \*[ \/]?', '', doc) # remove comment closure */
-    doc = re.subn(r'\\ref\s+', '', doc)[0] # remove \ref markers
-    doc = re.subn(r'\\([a-z]+)', r':\1:', doc)[0] # re-wrap other markers in colons
-    doc = re.subn(r'<\/?tt>', r'*', doc)[0] # replace "typewriter" tags with asterisks *
+
     doc = doc.strip()
+    assert doc[-2:] == '*/'
+    doc = doc[:-2]
+    #doc = re.sub(r' \*[ \/]?', '', doc) # remove asterisk in front of comment lines, and at end */
+    doc = re.sub(r'^\s+\*\s+', '', doc, 0, re.MULTILINE) # remove asterisk and whitespace introducing lines
+    lines = []
+    for line in doc.splitlines():
+        para = line[0] == '\\'
+        # Markers
+        line = re.subn(r'\\ref\s+', '', line)[0]  # remove \ref markers
+        line = re.subn(r'\\brief\s+(.*)', r'\1', line)[0]
+        line = re.subn(r'\\param\s+(\[[^\]]+\])\s+([^\s]+)\s+(.*)', r' :param \2: \1 \3', line)[0]
+        line = re.subn(r'\\return\s+(.*)', r':return: \1', line)[0]
+        line = re.subn(r'\\retval\s+(.*)', r':retval: \1', line)[0]
+        line = re.subn(r'\\a\s+([^\s]+)', r'*\1*', line)[0] # emphasis; TODO: more doxygen tags?
+        line = re.subn(r'\\([^\s]+)\s+(.*)', r' :\1: \2', line)[0]
+        line = re.subn(r'<\/?tt>', r'*', line)[0]  # replace "typewriter" tags with asterisks *
+        if para or len(lines) == 0:
+            lines.append(line)
+        else:
+            lines[-1] += ' ' + line
+    doc = '\n'.join(lines)
 
     fullname = re.split(r'\s+', name.strip())[-1]
     assert fullname[:2] == 'vx'

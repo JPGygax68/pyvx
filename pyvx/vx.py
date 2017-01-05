@@ -336,13 +336,13 @@ def QueryScalar(scalar, attribute, c_type, python_type=None):
     return _get_attribute(lib.vxQueryScalar, scalar, attribute, c_type, python_type)
 
 def ReadScalarValue(scalar):
-    s, data_type = QueryScalar(scalar, SCALAR_ATTRIBUTE_TYPE, "vx_enum")
+    s, data_type = QueryScalar(scalar, SCALAR_TYPE, "vx_enum")
     ptr = ffi.new(_enum2ctype(data_type) + '*')
     s = lib.vxReadScalarValue(scalar, ptr)
     return s, ptr[0]
 
 def WriteScalarValue(scalar, value):
-    s, data_type = QueryScalar(scalar, SCALAR_ATTRIBUTE_TYPE, "vx_enum")
+    s, data_type = QueryScalar(scalar, SCALAR_TYPE, "vx_enum")
     ptr = ffi.new(_enum2ctype(data_type) + '*', value)
     return lib.vxWriteScalarValue(scalar, ptr)
 
