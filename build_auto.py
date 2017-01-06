@@ -24,6 +24,8 @@ for entry in api.split('/*!'):
     i = entry.find(';')
     entry = entry[:i].strip()
     name, args = entry.split('(')
+    fullname = re.split(r'\s+', name.strip())[-1]
+    assert fullname[:2] == 'vx'
     assert args[-1] == ')'
     args = args[:-1]
     args = args.replace('[VX_MAX_KERNEL_NAME]', '[]')
@@ -34,28 +36,28 @@ for entry in api.split('/*!'):
     doc = doc.strip()
     assert doc[-2:] == '*/'
     doc = doc[:-2]
-    #doc = re.sub(r' \*[ \/]?', '', doc) # remove asterisk in front of comment lines, and at end */
     doc = re.sub(r'^\s+\*\s+', '', doc, 0, re.MULTILINE) # remove asterisk and whitespace introducing lines
     lines = []
     for line in doc.splitlines():
         para = line[0] == '\\'
+        if para or len(lines) == 0:
+            lines.append(line)
+        else:
+            lines[-1] += ' ' + line
+        line = lines[-1]
         # Markers
         line = re.subn(r'\\ref\s+', '', line)[0]  # remove \ref markers
         line = re.subn(r'\\brief\s+(.*)', r'\1', line)[0]
         line = re.subn(r'\\param\s+(\[[^\]]+\])\s+([^\s]+)\s+(.*)', r' :param \2: \1 \3', line)[0]
         line = re.subn(r'\\return\s+(.*)', r':return: \1', line)[0]
         line = re.subn(r'\\retval\s+(.*)', r':retval: \1', line)[0]
-        line = re.subn(r'\\a\s+([^\s]+)', r'*\1*', line)[0] # emphasis; TODO: more doxygen tags?
-        line = re.subn(r'\\([^\s]+)\s+(.*)', r' :\1: \2', line)[0]
+        line = re.subn(r'\\a\s+([^\s]+)', r'*\1*', line)[0]  # emphasis; TODO: more doxygen tags?
+        line = re.subn(r'\\f\$\s+(.*?)\s+\\f\$', r':math:`\1`', line)[0]  # inline math
+        line = re.subn(r'\\([^\s]+)\s+(.*)', r' :\1: \2', line)[0] # any tags not caught above
         line = re.subn(r'<\/?tt>', r'*', line)[0]  # replace "typewriter" tags with asterisks *
-        if para or len(lines) == 0:
-            lines.append(line)
-        else:
-            lines[-1] += ' ' + line
+        lines[-1] = line
     doc = '\n'.join(lines)
 
-    fullname = re.split(r'\s+', name.strip())[-1]
-    assert fullname[:2] == 'vx'
     args = ', '.join(a.strip(' []*') for a in args)
 
     if fullname[:3] == 'vxu':

@@ -349,7 +349,7 @@ def AccumulateWeightedImage(context, input, alpha, accum):
 [Immediate] Computes a weighted accumulation.
  :param context: [in] The reference to the overall context.
  :param input: [in] The input *VX_DF_IMAGE_U8* image.
- :param alpha: [in] A *VX_TYPE_FLOAT32* type, the input value with the range  :f$: 0.0 \le \alpha \le 1.0 \f$.
+ :param alpha: [in] A *VX_TYPE_FLOAT32* type, the input value with the range :math:`0.0  :le: \alpha \le 1.0`.
  :param accum: [in,out] The *VX_DF_IMAGE_U8* accumulation image.
  :ingroup: group_vision_function_accumulate_weighted
 :return: A *vx_status_e* enumeration.
@@ -363,7 +363,7 @@ def AccumulateSquareImage(context, input, shift, accum):
 [Immediate] Computes a squared accumulation.
  :param context: [in] The reference to the overall context.
  :param input: [in] The input *VX_DF_IMAGE_U8* image.
- :param shift: [in] A *VX_TYPE_UINT32* type, the input value with the range  :f$: 0 \le shift \le 15 \f$.
+ :param shift: [in] A *VX_TYPE_UINT32* type, the input value with the range :math:`0  :le: shift \le 15`.
  :param accum: [in,out] The accumulation image in *VX_DF_IMAGE_S16*
  :ingroup: group_vision_function_accumulate_square
 :return: A *vx_status_e* enumeration.
@@ -576,7 +576,7 @@ def HarrisCorners(context, input, strength_thresh, min_distance, sensitivity, gr
  :param input: [in] The input *VX_DF_IMAGE_U8* image.
  :param strength_thresh: [in] The *VX_TYPE_FLOAT32* minimum threshold which to eliminate Harris Corner scores (computed using the normalized Sobel kernel).
  :param min_distance: [in] The *VX_TYPE_FLOAT32* radial Euclidean distance for non-maximum suppression.
- :param sensitivity: [in] The *VX_TYPE_FLOAT32* scalar sensitivity threshold  :f$: k \f$ from the Harris-Stephens equation.
+ :param sensitivity: [in] The *VX_TYPE_FLOAT32* scalar sensitivity threshold :math:`k` from the Harris-Stephens equation.
  :param gradient_size: [in] The gradient window size to use on the input. The implementation must support at least 3, 5, and 7.
  :param block_size: [in] The block window size used to compute the harris corner score. The implementation must support at least 3, 5, and 7.
  :param corners: [out] The array of *VX_TYPE_KEYPOINT* structs. The order of the keypoints in this array is implementation dependent.

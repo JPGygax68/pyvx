@@ -466,7 +466,7 @@ def GetStatus(reference):
     '''
 Provides a generic API to return status values from Object constructors if they fail.
  :note: Users do not need to strictly check every object creator as the errors should properly propagate and be detected during verification time or run-time.
-\code vx_image img = vxCreateImage(context, 639, 480, VX_DF_IMAGE_UYVY); vx_status status = vxGetStatus((vx_reference)img); // status == VX_ERROR_INVALID_DIMENSIONS vxReleaseImage(&img);
+ :code: vx_image img = vxCreateImage(context, 639, 480, VX_DF_IMAGE_UYVY); vx_status status = vxGetStatus((vx_reference)img); // status == VX_ERROR_INVALID_DIMENSIONS vxReleaseImage(&img);
 \endcode
  :pre: Appropriate Object Creator function.
  :post: Appropriate Object Release function.
@@ -503,7 +503,7 @@ def AllocateUserKernelId(context, pKernelEnumId):
 def AllocateUserKernelLibraryId(context, pLibraryId):
     '''
 * Allocates and registers user-defined kernel library ID to a context. * The allocated library ID is from available pool of library IDs (1..255) reserved for dynamic allocation. The returned libraryId can be used by user-kernel library developer to specify individual kernel enum IDs in  a header file, shown below:
-\code #define MY_KERNEL_ID1(libraryId) (VX_KERNEL_BASE(VX_ID_USER,libraryId) + 0); #define MY_KERNEL_ID2(libraryId) (VX_KERNEL_BASE(VX_ID_USER,libraryId) + 1); #define MY_KERNEL_ID3(libraryId) (VX_KERNEL_BASE(VX_ID_USER,libraryId) + 2);
+ :code: #define MY_KERNEL_ID1(libraryId) (VX_KERNEL_BASE(VX_ID_USER,libraryId) + 0); #define MY_KERNEL_ID2(libraryId) (VX_KERNEL_BASE(VX_ID_USER,libraryId) + 1); #define MY_KERNEL_ID3(libraryId) (VX_KERNEL_BASE(VX_ID_USER,libraryId) + 2);
 \endcode
  :param context: [in] The reference to the implementation context.
  :param pLibraryId: [out] pointer to *vx_enum* for user-kernel libraryId.
@@ -569,7 +569,7 @@ def CreateVirtualImage(graph, width, height, color):
     '''
 Creates an opaque reference to an image buffer with no direct user access. This function allows setting the image width, height, or format.
  :details: Virtual data objects allow users to connect various nodes within a graph via data references without access to that data, but they also permit the implementation to take maximum advantage of possible optimizations. Use this API to create a data reference to link two or more nodes together when the intermediate data are not required to be accessed by outside entities. This API in particular allows the user to define the image format of the data without requiring the exact dimensions. Virtual objects are scoped within the graph they are declared a part of, and can't be shared outside of this scope. All of the following constructions of virtual images are valid.
-\code vx_context context = vxCreateContext(); vx_graph graph = vxCreateGraph(context); vx_image virt[] = { vxCreateVirtualImage(graph, 0, 0, VX_DF_IMAGE_U8), // no specified dimension vxCreateVirtualImage(graph, 320, 240, VX_DF_IMAGE_VIRT), // no specified format vxCreateVirtualImage(graph, 640, 480, VX_DF_IMAGE_U8), // no user access };
+ :code: vx_context context = vxCreateContext(); vx_graph graph = vxCreateGraph(context); vx_image virt[] = { vxCreateVirtualImage(graph, 0, 0, VX_DF_IMAGE_U8), // no specified dimension vxCreateVirtualImage(graph, 320, 240, VX_DF_IMAGE_VIRT), // no specified format vxCreateVirtualImage(graph, 640, 480, VX_DF_IMAGE_U8), // no user access };
 \endcode
  :param graph: [in] The reference to the parent graph.
  :param width: [in] The width of the image in pixels. A value of zero informs the interface that the value is unspecified.
@@ -764,7 +764,7 @@ Loads one or more kernels into the OpenVX context. This is the interface by whic
     
 def UnloadKernels(context, module):
     '''
-Unloads all kernels from the OpenVX context that had been loaded from * the module using the vxLoadKernels function. *  :param context: [in] The reference to the implementation context. *  :param module: [in] The short name of the module to unload. On systems where * there are specific naming conventions for modules, the name passed * should ignore such conventions. For example:  :c: libxyz.so should be * passed as just  :c: xyz and the implementation will <i>do the right thing</i> * that the platform requires. *  :note: This API uses the system pre-defined paths for modules. * :return: A *vx_status_e* enumeration. * :retval: VX_SUCCESS No errors. * :retval: VX_ERROR_INVALID_REFERENCE If the context is not a *\ref vx_context*. * :retval: VX_ERROR_INVALID_PARAMETERS If any of the other parameters are incorrect. *  :ingroup: group_user_kernels *  :see: vxLoadKernels
+Unloads all kernels from the OpenVX context that had been loaded from * the module using the vxLoadKernels function. *  :param context: [in] The reference to the implementation context. *  :param module: [in] The short name of the module to unload. On systems where * there are specific naming conventions for modules, the name passed * should ignore such conventions. For example:  :c: libxyz.so should be * passed as just  :c: xyz and the implementation will <i>do the right thing</i> * that the platform requires. *  :note: This API uses the system pre-defined paths for modules. * :return: A *vx_status_e* enumeration. * :retval: VX_SUCCESS No errors. * :retval: VX_ERROR_INVALID_REFERENCE If the context is not a *vx_context*. * :retval: VX_ERROR_INVALID_PARAMETERS If any of the other parameters are incorrect. *  :ingroup: group_user_kernels *  :see: vxLoadKernels
     '''
     return lib.vxUnloadKernels(context, module)
     
@@ -1132,7 +1132,7 @@ def AssignNodeCallback(node, callback):
 Assigns a callback to a node. If a callback already exists in this node, this function must return an error and the user may clear the callback by passing a NULL pointer as the callback.
  :param node: [in] The reference to the node.
  :param callback: [in] The callback to associate with completion of this specific node.
- :warning: This must be used with <b><i>extreme</i></b> caution as it can \e ruin optimizations in the power/performance efficiency of a graph.
+ :warning: This must be used with <b><i>extreme</i></b> caution as it can  :e: ruin optimizations in the power/performance efficiency of a graph.
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Callback assigned.
 :retval: VX_ERROR_INVALID_REFERENCE The value passed as node was not a *vx_node*.
@@ -1378,7 +1378,7 @@ Retrieves a reference from a delay object.
  :param delay: [in] The reference to the delay object.
  :param index: [in] An index into the delay from which to extract the reference.
 :return: *vx_reference*. Any possible errors  preventing a successful creation should be checked using *vxGetStatus*.
- :note: The delay index is in the range \f$ [-count+1,0] \f$. 0 is always the
+ :note: The delay index is in the range :math:`[-count+1,0]`. 0 is always the
  :e: current object.
  :ingroup: group_delay
  :note: A reference from a delay object must not be given to its associated release API (e.g. *vxReleaseImage*) unless *vxRetainReference* is used.   
@@ -1388,7 +1388,7 @@ Retrieves a reference from a delay object.
 def AgeDelay(delay):
     '''
 Ages the internal delay ring by one. This means that once this API is called the reference from index 0 will go to index -1 and so forth until
- :f$: -count+1 \f$ is reached. This last object will become 0. Once the delay has been aged, it updates the reference in any associated nodes. Here  :f$: count \f$ is the number of slots in delay ring.
+:math:`-count+1` is reached. This last object will become 0. Once the delay has been aged, it updates the reference in any associated nodes. Here :math:`count` is the number of slots in delay ring.
  :param: [in] delay
 :return: A *vx_status_e* enumeration.
 :retval: VX_SUCCESS Delay was aged.
@@ -1662,7 +1662,7 @@ Allows the application to copy from/into a matrix object. *  :param matrix: [in]
     
 def CreateMatrixFromPattern(context, pattern, columns, rows):
     '''
-Creates a reference to a matrix object from a boolean pattern. * The matrix created by this function is of type *vx_uint8*, with the value 0 representing False,  and the value 255 representing True. It supports patterns described below. See *vx_pattern_e*. - VX_PATTERN_BOX is a matrix with dimensions equal to the given number of rows and columns, and all cells equal to 255.   Dimensions of 3x3 and 5x5 must be supported. - VX_PATTERN_CROSS is a matrix with dimensions equal to the given number of rows and columns, which both must be odd numbers.   All cells in the center row and center column are equal to 255, and the rest are equal to zero.   Dimensions of 3x3 and 5x5 must be supported. - VX_PATTERN_DISK is an RxC matrix, where R and C are odd and cell (c, r) is 255 if: \n (r-R/2 + 0.5)^2 / (R/2)^2 + (c-C/2 + 0.5)^2/(C/2)^2 is less than or equal to 1, :n: and 0 otherwise. - VX_PATTERN_OTHER is any other pattern than the above (matrix created is still binary, with a value of 0 or 255). * If the matrix was created via *vxCreateMatrixFromPattern*, this attribute must be set to the  appropriate pattern enum. Otherwise the attribute must be set to VX_PATTERN_OTHER. The vx_matrix objects returned by this function are read-only. The behavior when attempting to modify such a matrix is undefined. *  :param context: [in] The reference to the overall context.
+Creates a reference to a matrix object from a boolean pattern. * The matrix created by this function is of type *vx_uint8*, with the value 0 representing False,  and the value 255 representing True. It supports patterns described below. See *vx_pattern_e*. - VX_PATTERN_BOX is a matrix with dimensions equal to the given number of rows and columns, and all cells equal to 255.   Dimensions of 3x3 and 5x5 must be supported. - VX_PATTERN_CROSS is a matrix with dimensions equal to the given number of rows and columns, which both must be odd numbers.   All cells in the center row and center column are equal to 255, and the rest are equal to zero.   Dimensions of 3x3 and 5x5 must be supported. - VX_PATTERN_DISK is an RxC matrix, where R and C are odd and cell (c, r) is 255 if:  :n: (r-R/2 + 0.5)^2 / (R/2)^2 + (c-C/2 + 0.5)^2/(C/2)^2 is less than or equal to 1, :n: and 0 otherwise. - VX_PATTERN_OTHER is any other pattern than the above (matrix created is still binary, with a value of 0 or 255). * If the matrix was created via *vxCreateMatrixFromPattern*, this attribute must be set to the  appropriate pattern enum. Otherwise the attribute must be set to VX_PATTERN_OTHER. The vx_matrix objects returned by this function are read-only. The behavior when attempting to modify such a matrix is undefined. *  :param context: [in] The reference to the overall context.
  :param pattern: [in] The pattern of the matrix. See *VX_MATRIX_PATTERN*. 
  :param columns: [in] The first dimensionality.
  :param rows: [in] The second dimensionality.
@@ -1754,7 +1754,7 @@ def CreateVirtualPyramid(graph, levels, scale, width, height, format):
     '''
 Creates a reference to a virtual pyramid object of the supplied number of levels.
  :details: Virtual Pyramids can be used to connect Nodes together when the contents of the pyramids will not be accessed by the user of the API. All of the following constructions are valid:
-\code vx_context context = vxCreateContext(); vx_graph graph = vxCreateGraph(context); vx_pyramid virt[] = { vxCreateVirtualPyramid(graph, 4, VX_SCALE_PYRAMID_HALF, 0, 0, VX_DF_IMAGE_VIRT), // no dimension and format specified for level 0 vxCreateVirtualPyramid(graph, 4, VX_SCALE_PYRAMID_HALF, 640, 480, VX_DF_IMAGE_VIRT), // no format specified. vxCreateVirtualPyramid(graph, 4, VX_SCALE_PYRAMID_HALF, 640, 480, VX_DF_IMAGE_U8), // no access };
+ :code: vx_context context = vxCreateContext(); vx_graph graph = vxCreateGraph(context); vx_pyramid virt[] = { vxCreateVirtualPyramid(graph, 4, VX_SCALE_PYRAMID_HALF, 0, 0, VX_DF_IMAGE_VIRT), // no dimension and format specified for level 0 vxCreateVirtualPyramid(graph, 4, VX_SCALE_PYRAMID_HALF, 640, 480, VX_DF_IMAGE_VIRT), // no format specified. vxCreateVirtualPyramid(graph, 4, VX_SCALE_PYRAMID_HALF, 640, 480, VX_DF_IMAGE_U8), // no access };
 \endcode
  :param graph: [in] The reference to the parent graph.
  :param levels: [in] The number of levels desired. This is required to be a non-zero value.
@@ -1884,8 +1884,8 @@ def CreateArray(context, item_type, capacity):
 def CreateVirtualArray(graph, item_type, capacity):
     '''
 * Creates an opaque reference to a virtual Array with no direct user access. * Virtual Arrays are useful when item type or capacity are unknown ahead of time and the Array is used as internal graph edge. Virtual arrays are scoped within the parent graph only. * All of the following constructions are allowed.
-\code vx_context context = vxCreateContext(); vx_graph graph = vxCreateGraph(context); vx_array virt[] = { vxCreateVirtualArray(graph, 0, 0), // totally unspecified vxCreateVirtualArray(graph, VX_TYPE_KEYPOINT, 0), // unspecified capacity vxCreateVirtualArray(graph, VX_TYPE_KEYPOINT, 1000), // no access };
-\endcode *  :param graph: [in] The reference to the parent graph.
+ :code: vx_context context = vxCreateContext(); vx_graph graph = vxCreateGraph(context); vx_array virt[] = { vxCreateVirtualArray(graph, 0, 0), // totally unspecified vxCreateVirtualArray(graph, VX_TYPE_KEYPOINT, 0), // unspecified capacity vxCreateVirtualArray(graph, VX_TYPE_KEYPOINT, 1000), // no access };
+ :endcode: *  :param graph: [in] The reference to the parent graph.
  :param item_type: [in] The type of objects to hold. Types allowed are: plain scalar types (i.e.  type with enum below *VX_TYPE_SCALAR_MAX*), *VX_TYPE_RECTANGLE*, *VX_TYPE_KEYPOINT*, *VX_TYPE_COORDINATES2D*, *VX_TYPE_COORDINATES3D* and  user registered structures.  This may to set to zero to indicate an unspecified item type.
  :param capacity: [in] The maximal number of items that the array can hold. This may be to set to zero to indicate an unspecified capacity.
  :see: vxCreateArray for a type list.
@@ -2368,7 +2368,7 @@ def AccumulateWeightedImageNode(graph, input, alpha, accum):
 [Graph] Creates a weighted accumulate node.
  :param graph: [in] The reference to the graph.
  :param input: [in] The input *VX_DF_IMAGE_U8* image.
- :param alpha: [in] The input *VX_TYPE_FLOAT32* scalar value with a value in the range of  :f$: 0.0 \le \alpha \le 1.0 \f$.
+ :param alpha: [in] The input *VX_TYPE_FLOAT32* scalar value with a value in the range of :math:`0.0  :le: \alpha \le 1.0`.
  :param accum: [in,out] The *VX_DF_IMAGE_U8* accumulation image.
  :ingroup: group_vision_function_accumulate_weighted
 :return: *vx_node*.
@@ -2381,7 +2381,7 @@ def AccumulateSquareImageNode(graph, input, shift, accum):
 [Graph] Creates an accumulate square node.
  :param graph: [in] The reference to the graph.
  :param input: [in] The input *VX_DF_IMAGE_U8* image.
- :param shift: [in] The input *VX_TYPE_UINT32* with a value in the range of  :f$: 0 \le shift \le 15 \f$.
+ :param shift: [in] The input *VX_TYPE_UINT32* with a value in the range of :math:`0  :le: shift \le 15`.
  :param accum: [in,out] The accumulation image in *VX_DF_IMAGE_S16*.
  :ingroup: group_vision_function_accumulate_square
 :return: *vx_node*.
@@ -2567,7 +2567,7 @@ def HarrisCornersNode(graph, input, strength_thresh, min_distance, sensitivity, 
  :param input: [in] The input *VX_DF_IMAGE_U8* image.
  :param strength_thresh: [in] The *VX_TYPE_FLOAT32* minimum threshold with which to eliminate Harris Corner scores (computed using the normalized Sobel kernel).
  :param min_distance: [in] The *VX_TYPE_FLOAT32* radial Euclidean distance for non-maximum suppression.
- :param sensitivity: [in] The *VX_TYPE_FLOAT32* scalar sensitivity threshold  :f$: k \f$ from the Harris-Stephens equation.
+ :param sensitivity: [in] The *VX_TYPE_FLOAT32* scalar sensitivity threshold :math:`k` from the Harris-Stephens equation.
  :param gradient_size: [in] The gradient window size to use on the input. The implementation must support at least 3, 5, and 7.
  :param block_size: [in] The block window size used to compute the Harris Corner score. The implementation must support at least 3, 5, and 7.
  :param corners: [out] The array of *VX_TYPE_KEYPOINT* objects. The order of the keypoints in this array is implementation dependent.
@@ -2632,7 +2632,7 @@ def HalfScaleGaussianNode(graph, input, output, kernel_size):
     '''
 [Graph] Performs a Gaussian Blur on an image then half-scales it. The interpolation mode used is nearest-neighbor.
  :details: The output image size is determined by:
-\f[ W_{output} =  :frac{W_{input}: + 1}{2} \\ , H_{output} =  :frac{H_{input}: + 1}{2}
+ :f[: W_{output} =  :frac{W_{input}: + 1}{2}  :\: , H_{output} = \frac{H_{input} + 1}{2}
 \f]
  :param graph: [in] The reference to the graph.
  :param input: [in] The input *VX_DF_IMAGE_U8* image.
