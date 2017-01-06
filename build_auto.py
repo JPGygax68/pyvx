@@ -36,35 +36,53 @@ for entry in api.split('/*!'):
     doc = doc.strip()
     assert doc[-2:] == '*/'
     doc = doc[:-2]
-    doc = re.sub(r'^\s*\*\s+', '', doc, 0, re.MULTILINE) # remove asterisk and whitespace introducing lines
+    doc = doc.strip('!')
+    doc = re.subn(r'^\s*\* ?', '', doc, 0, re.MULTILINE)[0] # remove asterisk and whitespace introducing lines
+
     lines = []
+    in_code = False
     for line in doc.splitlines():
-        if len(lines) == 0 or len(line) > 0 and line[0] == '\\':
+        if in_code or len(lines) == 0 or len(line) > 0 and line[0] == '\\':
             lines.append(line)
+            if re.match(r'\\code\b', line): in_code = True
+            if in_code and re.match(r'\\endcode\b', line): in_code = False
         else:
             lines[-1] += ' ' + line
     lines2 = []
+    in_code = False
     for line in lines:
-        # Markers
-        line = re.subn(r'\*', r'\*', line)[0] # "neutralize" asterisks
-        #line = re.subn(r':', r'\:', line)[0] # ditto for colons
-        line = re.subn(r'\\ref\s+', '', line)[0]  # remove \ref markers
-        line = re.subn(r'\\brief\s+(.*)', r'\1', line)[0]
-        line = re.subn(r'\\param\s+(\[[^\]]+\])\s+([^\s]+)\s+(.*)', r' :\2: \1 \3', line)[0]
-        line = re.subn(r'\\arg\s(.[^\: ]+)\s*\:(.*)', r'\n  :\1: \2', line)[0] # Special form introducing values
-        line = re.subn(r'\\arg\s(.*)', r'\n  \1', line)[0] # General form
-        line = re.subn(r'\\return\s+(.*)', r':Returns: \1', line)[0]
-        line = re.subn(r'\\retval\s+([^\s]+)\s+(.*)', r'\n  :\1: \2', line)[0] # :Return value: \1', line)[0]
-        line = re.subn(r'\\pre\s+(.*)$', r':Precondition: \1', line)[0]  # Precondition
-        line = re.subn(r'\\post\s+(.*)$', r':Postcondition: \1', line)[0] # Postcondition
-        line = re.subn(r'\\a\s+([^\s]+)', r'*\1*', line)[0]  # emphasis; TODO: more doxygen tags?
-        line = re.subn(r'\\f\$\s+(.*?)\s+\\f\$', r':math:`\1`', line)[0]  # inline math
-        line = re.subn(r'\\ingroup\s+(.*)$', r':In group: \1', line)[0]  # degrade to text
-        line = re.subn(r'\\see\s+(.*)$', r':See: \1', line)[0]  # degrade to text
-        line = re.subn(r'\\note\s+(.*)$', r':Note: \1', line)[0]  # degrade to text
-        #line = re.subn(r'\\([^\s]+)\s+(.*)', r' :\1: \2', line)[0] # any tags not caught above
-        line = re.subn(r'<\/?tt>', r'*', line)[0]  # replace "typewriter" tags with asterisks *
-        lines2.append(line)
+        if in_code:
+            if re.match(r'\\endcode\b', line):
+                in_code = False
+                lines2.append('')
+            else:
+                lines2.append('    ' + line)
+        else:
+            if re.match(r'\\code\b', line):
+                in_code = True
+                lines2[-1] += '::\n'
+            else:
+                # Markers
+                line = re.subn(r'\*', r'\*', line)[0] # "neutralize" asterisks
+                #line = re.subn(r':', r'\:', line)[0] # ditto for colons
+                line = re.subn(r'\\ref\s+', '', line)[0]  # remove \ref markers
+                line = re.subn(r'\\brief\s+(.*)', r'\1\n', line)[0]
+                line = re.subn(r'\\details\s+(.*)$', r'\1\n', line)[0]  # degrade to text
+                line = re.subn(r'\\param\s+(\[[^\]]+\])\s+([^\s]+)\s+(.*)', r':\2: \1 \3', line)[0]
+                line = re.subn(r'\\arg\s(.[^\: ]+)\s*\:(.*)', r'\n  :\1: \2', line)[0] # Special form introducing values
+                line = re.subn(r'\\arg\s(.*)', r'\n  \1', line)[0] # General form
+                line = re.subn(r'\\return[s]?\s+(.*)', r':Returns: \1', line)[0]
+                line = re.subn(r'\\retval\s+([^\s]+)\s+(.*)', r'\n  :\1: \2', line)[0] # :Return value: \1', line)[0]
+                line = re.subn(r'\\pre\s+(.*)$', r':Precondition: \1', line)[0]  # Precondition
+                line = re.subn(r'\\post\s+(.*)$', r':Postcondition: \1', line)[0] # Postcondition
+                line = re.subn(r'\\a\s+([^\s]+)', r'*\1*', line)[0]  # emphasis; TODO: more doxygen tags?
+                line = re.subn(r'\\f\$\s+(.*?)\s+\\f\$', r':math:`\1`', line)[0]  # inline math
+                line = re.subn(r'\\ingroup\s+(.*)$', r':In group: \1', line)[0]  # degrade to text
+                line = re.subn(r'\\see\s+(.*)$', r':See: \1', line)[0]  # degrade to text
+                line = re.subn(r'\\note\s+(.*)$', r':Note: \1', line)[0]  # degrade to text
+                #line = re.subn(r'\\([^\s]+)\s+(.*)', r' :\1: \2', line)[0] # any tags not caught above
+                line = re.subn(r'<\/?tt>', r'*', line)[0]  # replace "typewriter" tags with asterisks *
+                lines2.append(line)
     doc = '\n'.join(lines2)
 
     args = ', '.join(a.strip(' []*') for a in args)
