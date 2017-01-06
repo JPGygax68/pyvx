@@ -533,14 +533,15 @@ def AddArrayItems(arr, count, ptr, stride):
         ptr = ffi.from_buffer(ptr)
     return lib.vxAddArrayItems(arr, count, ptr, stride)
 
-def AccessArrayRange(arr, start, end, stride, ptr, usage):
-    if ptr is not None:
-        ptr = ffi.from_buffer(ptr)
-    ptr_p = ffi.new('void **', ptr)
-    stride_p = ffi.new('vx_size *', stride)
-    status = lib.vxAccessArrayRange(arr, start, end, stride_p, ptr_p, usage)
-    _, item_size = QueryArray(arr, ARRAY_ATTRIBUTE_ITEMSIZE, 'vx_size')
-    return (status, stride_p[0], ffi.buffer(ptr_p[0], item_size * (end - start + 1)))
+# DEPRECATED
+#def AccessArrayRange(arr, start, end, stride, ptr, usage):
+#    if ptr is not None:
+#        ptr = ffi.from_buffer(ptr)
+#    ptr_p = ffi.new('void **', ptr)
+#    stride_p = ffi.new('vx_size *', stride)
+#    status = lib.vxAccessArrayRange(arr, start, end, stride_p, ptr_p, usage)
+#    _, item_size = QueryArray(arr, ARRAY_ATTRIBUTE_ITEMSIZE, 'vx_size')
+#    return (status, stride_p[0], ffi.buffer(ptr_p[0], item_size * (end - start + 1)))
 
 def CommitArrayRange(arr, start, end, ptr):
     ptr = ffi.from_buffer(ptr)
